@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "resolvePackageJsonImports": true,
+    "paths": {
+      "#components/*": [
+        "./src/components/*.tsx"
+      ],
+      "#hooks/*": [
+        "./src/hooks/*.ts"
+      ],
+      "#lib/*": [
+        "./src/lib/*.ts"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ]
+}

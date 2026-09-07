@@ -1,0 +1,68 @@
+{
+  "name": "@frame/shell",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/frame-shell.d.ts",
+      "import": "./dist/frame-shell.js",
+      "default": "./dist/frame-shell.js"
+    },
+    "./integrated-session": {
+      "types": "./dist/integrated-session.d.ts",
+      "import": "./dist/integrated-session.js",
+      "default": "./dist/integrated-session.js"
+    },
+    "./navigation": {
+      "types": "./dist/navigation.d.ts",
+      "import": "./dist/navigation.js",
+      "default": "./dist/navigation.js"
+    },
+    "./navigation-context": {
+      "types": "./dist/navigation-context.d.ts",
+      "import": "./dist/navigation-context.js",
+      "default": "./dist/navigation-context.js"
+    },
+    "./page-header": {
+      "types": "./dist/page-header.d.ts",
+      "import": "./dist/page-header.js",
+      "default": "./dist/page-header.js"
+    },
+    "./preferences": {
+      "types": "./dist/preferences-context.d.ts",
+      "import": "./dist/preferences-context.js",
+      "default": "./dist/preferences-context.js"
+    },
+    "./version": {
+      "types": "./dist/version.d.ts",
+      "import": "./dist/version.js",
+      "default": "./dist/version.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "tsc -p tsconfig.build.json && node ../../scripts/copy-assets.mjs"
+  },
+  "dependencies": {
+    "@frame/theme": "0.1.0",
+    "@frame/ui": "0.1.0",
+    "lucide-react": "^1.25.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.2",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "typescript": "5.9.3"
+  },
+  "peerDependencies": {
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=24.10.0"
+  }
+}

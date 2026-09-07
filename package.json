@@ -1,0 +1,35 @@
+{
+  "name": "saas-sdk",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "npm@11.6.1",
+  "engines": {
+    "node": ">=24.10.0"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "tools/create-frame-app"
+  ],
+  "scripts": {
+    "build:packages": "node scripts/build-packages.mjs",
+    "build:examples": "npm run build --workspace @frame/example-app --workspace @frame/local-alpha --workspace @frame/local-beta --workspace @frame/remote-gamma",
+    "build": "npm run build:packages && npm run build:examples",
+    "test:node": "node --test packages/*/src/*.test.ts tools/create-frame-app/src/*.test.mjs",
+    "test:python": "python3 -m unittest discover -s packages/fastapi-auth-sdk/tests -p 'test_*.py'",
+    "test": "npm run build:packages && npm run test:node && npm run test:python",
+    "typecheck": "npm run build:packages && node scripts/typecheck.mjs",
+    "pack": "npm run build:packages && node scripts/pack.mjs",
+    "pack:python": "python3 -m build --wheel --outdir artifacts packages/fastapi-auth-sdk",
+    "test:packed": "node scripts/test-packed.mjs",
+    "registry:fixture": "node tools/registry-fixture/server.mjs",
+    "create:frame-app": "node tools/create-frame-app/src/index.mjs",
+    "contract:example": "node packages/contract-cli/dist/cli.js check apps/example-app --require-build",
+    "test:wheel": "python3 scripts/test-wheel.py",
+    "verify": "npm run build:packages && npm run test:node && npm run test:python && node scripts/typecheck.mjs && npm run build:examples && npm run contract:example && node scripts/pack.mjs && npm run test:packed"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "typescript": "5.9.3"
+  }
+}

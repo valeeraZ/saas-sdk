@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "appName": "launchpad",
+  "name": "Launchpad",
+  "description": "Release readiness for FRAME applications",
+  "logo": "CircleGauge",
+  "basePath": "/launchpad",
+  "healthPath": "/api/frame/health",
+  "shellVersion": "^0.1.0",
+  "roles": [
+    {
+      "name": "developer",
+      "description": "Can inspect release readiness"
+    },
+    {
+      "name": "release-manager",
+      "description": "Can run and approve release checks"
+    }
+  ],
+  "standaloneRoles": ["developer"],
+  "publicAssets": ["frame-path.svg"]
+}
