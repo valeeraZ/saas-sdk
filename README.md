@@ -10,9 +10,10 @@ Node >=24.10.0、npm 11.6.1；Python >=3.9。
 
 ```sh
 npm ci
-npm run verify
 python3 -m venv .venv
-.venv/bin/python -m pip install build==1.3.0
+source .venv/bin/activate
+python -m pip install ./packages/fastapi-auth-sdk build==1.3.0
+npm run verify
 .venv/bin/python -m build --wheel --outdir artifacts packages/fastapi-auth-sdk
 npm run test:wheel
 ```

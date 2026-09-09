@@ -37,3 +37,7 @@
 - Portal 验收仅安装/构建/类型检查与源码一致性，不启动真实 Registry、PostgreSQL 或外部认证服务。
 - 未进行浏览器交互/视觉 QA、生产数据库迁移、负载、集群或真实租户隔离验收。HTTP HTML/资源断言不等同于浏览器 hydration 验证。
 - 不将冻结 Portal fixture 作为新的产品实现维护；新的上游基线需独立兼容评审。私有包 registry 的最终地址与凭据仍待后续决策，当前 CI artifact 是短期候选交付。
+
+## 干净 CI 修正
+
+首次 Ubuntu 运行在 Python 源码测试处暴露缺失 httpx（本地已安装该依赖）。workflow 已在 verify 前从 Python 包元数据安装运行时依赖，并同步补充 README 的 venv 初始化步骤。隔离 wheel 消费依然建立第二个全新 venv。官方 Actions 更新到 Node 24 运行时并保持完整 commit 固定。
