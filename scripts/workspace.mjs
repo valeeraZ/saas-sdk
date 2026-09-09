@@ -4,7 +4,10 @@ export const packages = readdirSync("packages").filter(p => {
   try { readFileSync(`packages/${p}/package.json`); return true; } catch { return false; }
 }).map(p => ({ directory: `packages/${p}`, ...JSON.parse(readFileSync(`packages/${p}/package.json`)) }));
 export function run(command, args, options = {}) {
-  return execFileSync(command, args, { stdio: "inherit", ...options });
+  const environment = {...process.env, NEXT_TELEMETRY_DISABLED: "1", ...options.env};
+  delete environment.NODE_PATH;
+  delete environment.NODE_OPTIONS;
+  return execFileSync(command, args, { stdio: "inherit", ...options, env: environment });
 }
 export function orderedPackages() {
   const result = [], visiting = new Set(), visited = new Set();

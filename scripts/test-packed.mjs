@@ -1,3 +1,4 @@
+import { checkConsumerHttp } from './consumer-http.mjs';
 import assert from 'node:assert/strict';
 import { mkdtempSync, readFileSync, writeFileSync, readdirSync, realpathSync, existsSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -62,7 +63,12 @@ run('node', ['runtime-check.mjs'], {cwd: generated});
 run('npm', ['run', 'build'], {cwd: generated, env: {...process.env, FRAME_RUNTIME_MODE: 'standalone', NEXT_TELEMETRY_DISABLED: '1'}});
 // Include the Next-only spike entry and its Server Action in the real consumer graph.
 mkdirSync(join(generated, 'app/probe'));
-writeFileSync(join(generated, 'app/probe/page.tsx'), 'import { SpikePage } from "@frame/spike-app";\nexport default function Page() { return <SpikePage appName="Packed Demo" basePath="/packed-demo" topology="isolated packages" />; }\n');
+mkdirSync(join(generated, 'public'));
+writeFileSync(join(generated, 'public/sdk-probe.svg'), '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><title>sdk-static-probe</title><rect width="20" height="20" fill="green"/></svg>');
+const frameManifest = JSON.parse(readFileSync(join(generated, 'frame.manifest.json')));
+frameManifest.publicAssets.push('sdk-probe.svg');
+json(join(generated, 'frame.manifest.json'), frameManifest);
+writeFileSync(join(generated, 'app/probe/page.tsx'), 'import { SpikePage } from "@frame/spike-app";\nimport { framePublicAsset } from "@frame/sdk";\nimport { parseFrameManifest } from "@frame/manifest-schema";\nimport manifest from "../../frame.manifest.json";\nexport default function Page() { return <><img alt="SDK asset" src={framePublicAsset(parseFrameManifest(manifest), "sdk-probe.svg")} /><SpikePage appName="Packed Demo" basePath="/packed-demo" topology="isolated packages" /></>; }\n');
 run('npm', ['run', 'build'], {cwd: generated, env: {...process.env, FRAME_RUNTIME_MODE: 'standalone', NEXT_TELEMETRY_DISABLED: '1'}});
 run('npm', ['run', 'typecheck'], {cwd: generated});
 run(join(generated, 'node_modules/.bin/frame-contract'), ['check', generated, '--require-build'], {cwd: generated});
@@ -73,6 +79,8 @@ assert.ok(styles.includes('.gap-10'), 'spike-app utilities missing from consumer
 assert.ok(styles.includes('Manrope'), 'packaged font styles missing');
 assert.ok(readFileSync(join(generated, 'node_modules/@frame/sdk/dist/react.js'), 'utf8').startsWith('"use client";'));
 assert.ok(readFileSync(join(generated, 'node_modules/@frame/spike-app/dist/actions.js'), 'utf8').startsWith('"use server";'));
-const result = {consumer: generated, exportsChecked: count, packages: metadata.map(p => p.name), status: 'passed'};
+const http = await checkConsumerHttp(generated);
+json(join(root, 'artifacts/consumer-http.json'), http);
+const result = {http, consumer: generated, exportsChecked: count, packages: metadata.map(p => p.name), status: 'passed'};
 json(join(root, 'artifacts/packed-consumer.json'), result);
 console.log(JSON.stringify(result, null, 2));

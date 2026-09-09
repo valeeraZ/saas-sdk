@@ -26,13 +26,15 @@
 
 ## 验收标准
 
-- [ ] 隔离临时目录安装打包后的全部内部依赖，确保不从源仓库 node_modules 解析
-- [ ] 脚手架生成应用可安装、类型检查和构建，basePath 静态资源正确
-- [ ] 在隔离副本中验证原 Portal 使用打包后的 SDK 构建通过，不修改基线 checkout
-- [ ] CI 覆盖测试、类型检查、打包、示例与消费者构建；记录 Node/Python 版本
-- [ ] 给出私有包发布策略、版本兼容规则和下一阶段 tenant-aware SDK 差异清单
+- [x] 隔离临时目录安装打包后的全部内部依赖，确保不从源仓库 node_modules 解析
+- [x] 脚手架生成应用可安装、类型检查和构建，basePath 静态资源正确
+- [x] 在隔离副本中验证原 Portal 使用打包后的 SDK 构建通过，不修改基线 checkout
+- [x] CI 覆盖测试、类型检查、打包、示例与消费者构建；记录 Node/Python 版本
+- [x] 给出私有包发布策略、版本兼容规则和下一阶段 tenant-aware SDK 差异清单
 
 完成时提交实现、执行过的验证及剩余限制；不得把模拟服务验收写成真实服务验收。
+
+验收记录：[SDK-02-VALIDATION.md](SDK-02-VALIDATION.md)。
 
 ## GitHub Issues
 

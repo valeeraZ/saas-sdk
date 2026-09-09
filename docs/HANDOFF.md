@@ -17,3 +17,9 @@
 本地工作分支 `codex/sdk-01-extraction`。SDK 已抽取；逐文件来源见 MIGRATION.json，构建/消费验证见 SDK-01-VALIDATION.md。可从根目录 `npm ci && npm run verify` 重现 JS 验证。Python wheel 构建与隔离消费命令见 README。
 
 下一项是 Issue #2：CI、原 Portal 隔离副本消费构建、静态资源 HTTP/basePath 验证、私有发布策略及 tenant-aware 差异。SDK-01 的基础 tarball 消费测试可复用，但不得据此将 SDK-02 或真实服务联调标记完成。未发布公共包，未部署，未修改源仓库；包名及生产身份协议保持基线兼容。
+
+## SDK-02 交接（2026-09-09）
+
+分支 `codex/sdk-02-consumers-ci` 包含 SDK-01 和 SDK-02。本地完整验证通过，详见 SDK-02-VALIDATION.md；远程运行结果见该分支 GitHub Actions。新增冻结 Portal 兼容夹具、HTTP/basePath 验证、CI、私有交付/版本规则与 tenant-aware 差异清单。
+
+后续实现需要 Auth/Admin 服务契约及 Portal 租户路由 ADR。保持当前兼容协议，未经后续发布任务不移除 private=true 或发布公共软件包。匿名缺失路径的身份错误及真实服务/浏览器验收限制见 SDK-02 验收记录。
