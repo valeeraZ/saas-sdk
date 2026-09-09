@@ -1,7 +1,7 @@
-import { FramePageHeader } from "@frame/shell/page-header";
-import { Badge } from "@frame/ui/components/badge";
-import { Button } from "@frame/ui/components/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@frame/ui/components/card";
+import { SaasPageHeader } from "@saas-platform/shell/page-header";
+import { Badge } from "@saas-platform/ui/components/badge";
+import { Button } from "@saas-platform/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@saas-platform/ui/components/card";
 import { ArrowLeftIcon, ArrowRightIcon, CheckCircle2Icon, FlaskConicalIcon } from "lucide-react";
 
 type SpikePageProps = Readonly<{
@@ -13,9 +13,9 @@ type SpikePageProps = Readonly<{
 export function SpikePage({ appName, basePath, topology }: SpikePageProps) {
   return (
     <div className="flex flex-col gap-10">
-      <FramePageHeader
+      <SaasPageHeader
         actions={<Badge variant="secondary">{topology}</Badge>}
-        breadcrumbs={[{ href: "/", label: "FRAME" }, { label: appName }]}
+        breadcrumbs={[{ href: "/", label: "SAAS" }, { label: appName }]}
         description={`Rendered by an independent Next.js zone at ${basePath}. The public URL and query string are preserved through the Portal rewrite.`}
         eyebrow="Independent application"
         status="Connected"
@@ -29,7 +29,7 @@ export function SpikePage({ appName, basePath, topology }: SpikePageProps) {
           </CardHeader>
           <CardContent className="flex flex-wrap gap-2">
             <Button asChild>
-              <a href={`${basePath}/deep?source=frame-shell`}>
+              <a href={`${basePath}/deep?source=saas-shell`}>
                 Test deep link <ArrowRightIcon data-icon="inline-end" />
               </a>
             </Button>

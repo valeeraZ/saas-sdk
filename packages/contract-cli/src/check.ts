@@ -2,11 +2,11 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import {
-  parseFrameManifest,
-  type FrameAppManifest,
-} from "@frame/manifest-schema";
+  parseSaasManifest,
+  type SaasAppManifest,
+} from "@saas-platform/manifest-schema";
 
-export type FrameContractReport = Readonly<{
+export type SaasContractReport = Readonly<{
   appName: string;
   basePath: string;
   checks: readonly string[];
@@ -29,8 +29,8 @@ function walk(directory: string): string[] {
   return output;
 }
 
-export function readFrameManifestFile(path: string): FrameAppManifest {
-  return parseFrameManifest(JSON.parse(readFileSync(path, "utf8")) as unknown);
+export function readSaasManifestFile(path: string): SaasAppManifest {
+  return parseSaasManifest(JSON.parse(readFileSync(path, "utf8")) as unknown);
 }
 
 function extension(path: string): string {
@@ -38,7 +38,7 @@ function extension(path: string): string {
   return index < 0 ? "" : path.slice(index);
 }
 
-function checkSourceAssets(appDirectory: string, manifest: FrameAppManifest): string[] {
+function checkSourceAssets(appDirectory: string, manifest: SaasAppManifest): string[] {
   const errors: string[] = [];
   const basePathName = manifest.basePath.slice(1).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const jsxAsset = new RegExp(
@@ -60,7 +60,7 @@ function checkSourceAssets(appDirectory: string, manifest: FrameAppManifest): st
   return errors;
 }
 
-function checkBuild(appDirectory: string, manifest: FrameAppManifest): string[] {
+function checkBuild(appDirectory: string, manifest: SaasAppManifest): string[] {
   const errors: string[] = [];
   const nextDirectory = join(appDirectory, ".next");
   const routesManifest = join(nextDirectory, "routes-manifest.json");
@@ -76,21 +76,21 @@ function checkBuild(appDirectory: string, manifest: FrameAppManifest): string[] 
     config?: { basePath?: unknown };
   };
   if (routes.basePath !== manifest.basePath) {
-    errors.push("routes-manifest basePath does not match the FRAME manifest");
+    errors.push("routes-manifest basePath does not match the SAAS manifest");
   }
   if (required.config?.basePath !== manifest.basePath) {
-    errors.push("required-server-files basePath does not match the FRAME manifest");
+    errors.push("required-server-files basePath does not match the SAAS manifest");
   }
   return errors;
 }
 
-export function checkFrameApp(
+export function checkSaasApp(
   appDirectoryInput: string,
   options: Readonly<{ requireBuild?: boolean }> = {},
-): FrameContractReport {
+): SaasContractReport {
   const appDirectory = resolve(appDirectoryInput);
-  const manifestPath = join(appDirectory, "frame.manifest.json");
-  const manifest = readFrameManifestFile(manifestPath);
+  const manifestPath = join(appDirectory, "saas.manifest.json");
+  const manifest = readSaasManifestFile(manifestPath);
   const errors: string[] = [];
   const checks: string[] = ["manifest"];
 
@@ -101,14 +101,14 @@ export function checkFrameApp(
     errors.push("Next.js configuration is missing");
   } else {
     const nextConfig = readFileSync(nextConfigPath, "utf8");
-    if (!nextConfig.includes("withFrameNextConfig")) {
-      errors.push("Next.js configuration must use withFrameNextConfig");
+    if (!nextConfig.includes("withSaasNextConfig")) {
+      errors.push("Next.js configuration must use withSaasNextConfig");
     } else {
       checks.push("next-config");
     }
   }
 
-  const healthRoute = join(appDirectory, "app/api/frame/health/route.ts");
+  const healthRoute = join(appDirectory, "app/api/saas/health/route.ts");
   if (!existsSync(healthRoute)) errors.push(`health route ${manifest.healthPath} is missing`);
   else checks.push("health");
 

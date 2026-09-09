@@ -1,35 +1,35 @@
-export type FrameCurrentUser = Readonly<{
+export type SaasCurrentUser = Readonly<{
   id: string;
   displayName: string;
   secondaryLabel: string;
 }>;
 
-export type FrameDspConfig = Readonly<{
+export type SaasDspConfig = Readonly<{
   baseUrl: string;
   clientId: string;
   authenticateUrl: string;
 }>;
 
-export type FramePermissionGrant = Readonly<{
+export type SaasPermissionGrant = Readonly<{
   appName: string;
   roles: readonly string[];
 }>;
 
-export type FramePermissions = Readonly<{
-  apps: readonly FramePermissionGrant[];
+export type SaasPermissions = Readonly<{
+  apps: readonly SaasPermissionGrant[];
 }>;
 
-export type FrameServerSession = Readonly<{
-  mode: FrameRuntimeMode;
+export type SaasServerSession = Readonly<{
+  mode: SaasRuntimeMode;
   user: Readonly<{
     displayName: string;
     secondaryLabel: string;
   }>;
-  grants: readonly FramePermissionGrant[];
+  grants: readonly SaasPermissionGrant[];
   canAccessAdmin: boolean;
 }>;
 
-export type FrameAuthConfig = Readonly<{
+export type SaasAuthConfig = Readonly<{
   dspConfigUrl: string;
   currentUserUrl: string;
   permissionsUrl: string;
@@ -39,9 +39,9 @@ export type FrameAuthConfig = Readonly<{
   responseLimitBytes: number;
 }>;
 
-export type FrameAuthEnvironment = Readonly<Record<string, string | undefined>>;
-export type FrameRuntimeMode = "integrated" | "standalone";
-export type FrameAuthRequest = Readonly<{
+export type SaasAuthEnvironment = Readonly<Record<string, string | undefined>>;
+export type SaasRuntimeMode = "integrated" | "standalone";
+export type SaasAuthRequest = Readonly<{
   headers: Pick<Headers, "get">;
 }>;
 
@@ -51,31 +51,31 @@ export type PermissionsErrorCategory =
   | "unavailable"
   | "invalid_response";
 
-export class FramePermissionsError extends Error {
+export class SaasPermissionsError extends Error {
   readonly category: PermissionsErrorCategory;
 
   constructor(category: PermissionsErrorCategory, message: string) {
     super(message);
-    this.name = "FramePermissionsError";
+    this.name = "SaasPermissionsError";
     this.category = category;
   }
 }
 
 const USER_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._:@-]{0,199}$/;
 const COOKIE_NAME_PATTERN = /^[!#$%&'*+\-.^_`|~0-9A-Za-z]+$/;
-const DEFAULT_ADMIN_ROLES = ["frame-admin", "frame-devops"] as const;
+const DEFAULT_ADMIN_ROLES = ["saas-admin", "saas-devops"] as const;
 const DEFAULT_TIMEOUT_MS = 2_000;
 const DEFAULT_RESPONSE_LIMIT_BYTES = 262_144;
 const MAX_TOKEN_LENGTH = 8_192;
 const APP_NAME_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const ROLE_NAME_PATTERN = /^[a-z0-9]+(?:[-_:][a-z0-9]+)*$/;
 
-export function loadFrameRuntimeMode(
-  environment: FrameAuthEnvironment = process.env,
-): FrameRuntimeMode {
-  const mode = environment.FRAME_RUNTIME_MODE ?? "integrated";
+export function loadSaasRuntimeMode(
+  environment: SaasAuthEnvironment = process.env,
+): SaasRuntimeMode {
+  const mode = environment.SAAS_RUNTIME_MODE ?? "integrated";
   if (mode !== "integrated" && mode !== "standalone") {
-    throw new Error("FRAME_RUNTIME_MODE must be integrated or standalone");
+    throw new Error("SAAS_RUNTIME_MODE must be integrated or standalone");
   }
   return mode;
 }
@@ -96,13 +96,13 @@ function parsePositiveInteger(
 function parseAuthServiceUrl(value: string | undefined): URL {
   const baseUrl = new URL(value ?? "http://localhost:3200");
   if (!["http:", "https:"].includes(baseUrl.protocol)) {
-    throw new Error("FRAME_AUTH_SERVICE_URL must use HTTP or HTTPS");
+    throw new Error("SAAS_AUTH_SERVICE_URL must use HTTP or HTTPS");
   }
   if (baseUrl.username || baseUrl.password || baseUrl.search || baseUrl.hash) {
-    throw new Error("FRAME_AUTH_SERVICE_URL cannot contain credentials, query, or fragment");
+    throw new Error("SAAS_AUTH_SERVICE_URL cannot contain credentials, query, or fragment");
   }
   if (baseUrl.pathname !== "/" && baseUrl.pathname !== "") {
-    throw new Error("FRAME_AUTH_SERVICE_URL must be an origin without a path");
+    throw new Error("SAAS_AUTH_SERVICE_URL must be an origin without a path");
   }
   return baseUrl;
 }
@@ -127,44 +127,44 @@ function parseAdminRoles(value: string | undefined): ReadonlySet<string> {
   return new Set(roles);
 }
 
-export function loadFrameAuthConfig(
-  environment: FrameAuthEnvironment = process.env,
-): FrameAuthConfig {
-  const authServiceUrl = parseAuthServiceUrl(environment.FRAME_AUTH_SERVICE_URL);
-  const tokenCookieName = environment.FRAME_DSP_TOKEN_COOKIE ?? "dsp-token";
+export function loadSaasAuthConfig(
+  environment: SaasAuthEnvironment = process.env,
+): SaasAuthConfig {
+  const authServiceUrl = parseAuthServiceUrl(environment.SAAS_AUTH_SERVICE_URL);
+  const tokenCookieName = environment.SAAS_DSP_TOKEN_COOKIE ?? "dsp-token";
   if (!COOKIE_NAME_PATTERN.test(tokenCookieName)) {
-    throw new Error("FRAME_DSP_TOKEN_COOKIE must be a valid Cookie name");
+    throw new Error("SAAS_DSP_TOKEN_COOKIE must be a valid Cookie name");
   }
   return Object.freeze({
     dspConfigUrl: parseEndpointPath(
       authServiceUrl,
-      environment.FRAME_AUTH_DSP_CONFIG_PATH,
+      environment.SAAS_AUTH_DSP_CONFIG_PATH,
       "/config",
-      "FRAME_AUTH_DSP_CONFIG_PATH",
+      "SAAS_AUTH_DSP_CONFIG_PATH",
     ),
     currentUserUrl: parseEndpointPath(
       authServiceUrl,
-      environment.FRAME_AUTH_CURRENT_USER_PATH,
+      environment.SAAS_AUTH_CURRENT_USER_PATH,
       "/v1/authorization/current_user",
-      "FRAME_AUTH_CURRENT_USER_PATH",
+      "SAAS_AUTH_CURRENT_USER_PATH",
     ),
     permissionsUrl: parseEndpointPath(
       authServiceUrl,
-      environment.FRAME_AUTH_PERMISSIONS_PATH,
+      environment.SAAS_AUTH_PERMISSIONS_PATH,
       "/permissions",
-      "FRAME_AUTH_PERMISSIONS_PATH",
+      "SAAS_AUTH_PERMISSIONS_PATH",
     ),
     tokenCookieName,
-    adminRoles: parseAdminRoles(environment.FRAME_ADMIN_ROLES),
+    adminRoles: parseAdminRoles(environment.SAAS_ADMIN_ROLES),
     timeoutMs: parsePositiveInteger(
-      environment.FRAME_AUTH_TIMEOUT_MS,
+      environment.SAAS_AUTH_TIMEOUT_MS,
       DEFAULT_TIMEOUT_MS,
-      "FRAME_AUTH_TIMEOUT_MS",
+      "SAAS_AUTH_TIMEOUT_MS",
     ),
     responseLimitBytes: parsePositiveInteger(
-      environment.FRAME_AUTH_RESPONSE_LIMIT_BYTES,
+      environment.SAAS_AUTH_RESPONSE_LIMIT_BYTES,
       DEFAULT_RESPONSE_LIMIT_BYTES,
-      "FRAME_AUTH_RESPONSE_LIMIT_BYTES",
+      "SAAS_AUTH_RESPONSE_LIMIT_BYTES",
     ),
   });
 }
@@ -185,12 +185,12 @@ function readCookie(cookieHeader: string | null, name: string): string | null {
 }
 
 export function readDspToken(
-  request: FrameAuthRequest,
+  request: SaasAuthRequest,
   tokenCookieName: string,
 ): string {
   const token = readCookie(request.headers.get("cookie"), tokenCookieName);
   if (!token || token.length > MAX_TOKEN_LENGTH || /[\u0000-\u001f\u007f]/.test(token)) {
-    throw new FramePermissionsError("missing_token", "A valid DSP session token is required");
+    throw new SaasPermissionsError("missing_token", "A valid DSP session token is required");
   }
   return token;
 }
@@ -206,7 +206,7 @@ function readRequiredString(
 ): string {
   const candidate = value[field];
   if (typeof candidate !== "string" || (!allowEmpty && candidate.length === 0)) {
-    throw new FramePermissionsError(
+    throw new SaasPermissionsError(
       "invalid_response",
       `Auth Service response has an invalid ${field}`,
     );
@@ -214,22 +214,22 @@ function readRequiredString(
   return candidate;
 }
 
-export function parseFramePermissions(value: unknown): FramePermissions {
+export function parseSaasPermissions(value: unknown): SaasPermissions {
   if (
     !isRecord(value) ||
     Object.keys(value).some((key) => key !== "apps") ||
     !Array.isArray(value.apps)
   ) {
-    throw new FramePermissionsError(
+    throw new SaasPermissionsError(
       "invalid_response",
       "Auth Service response does not match the permissions contract",
     );
   }
 
   const appNames = new Set<string>();
-  const apps = value.apps.map((candidate, index): FramePermissionGrant => {
+  const apps = value.apps.map((candidate, index): SaasPermissionGrant => {
     if (!isRecord(candidate)) {
-      throw new FramePermissionsError(
+      throw new SaasPermissionsError(
         "invalid_response",
         `Auth Service response has an invalid App at index ${index}`,
       );
@@ -240,7 +240,7 @@ export function parseFramePermissions(value: unknown): FramePermissions {
       !APP_NAME_PATTERN.test(appName) ||
       appNames.has(appName)
     ) {
-      throw new FramePermissionsError(
+      throw new SaasPermissionsError(
         "invalid_response",
         `Auth Service response has an invalid or duplicate App at index ${index}`,
       );
@@ -253,7 +253,7 @@ export function parseFramePermissions(value: unknown): FramePermissions {
       ) ||
       new Set(candidate.roles).size !== candidate.roles.length
     ) {
-      throw new FramePermissionsError(
+      throw new SaasPermissionsError(
         "invalid_response",
         `Auth Service response has invalid roles at index ${index}`,
       );
@@ -272,14 +272,14 @@ export function parseFramePermissions(value: unknown): FramePermissions {
  * Temporary Phase 4 migration adapter. Runtime callers must opt into this
  * parser explicitly; the target parser above rejects Registry-owned fields.
  */
-export function parseLegacyFramePermissions(value: unknown): FramePermissions {
+export function parseLegacySaasPermissions(value: unknown): SaasPermissions {
   if (!isRecord(value) || !Array.isArray(value.apps)) {
-    throw new FramePermissionsError(
+    throw new SaasPermissionsError(
       "invalid_response",
       "Auth Service legacy response does not match the permissions contract",
     );
   }
-  return parseFramePermissions({
+  return parseSaasPermissions({
     apps: value.apps.map((candidate) => {
       if (!isRecord(candidate)) return candidate;
       return { appName: candidate.appName, roles: candidate.roles };
@@ -287,9 +287,9 @@ export function parseLegacyFramePermissions(value: unknown): FramePermissions {
   });
 }
 
-export function parseFrameCurrentUser(value: unknown): FrameCurrentUser {
+export function parseSaasCurrentUser(value: unknown): SaasCurrentUser {
   if (!isRecord(value)) {
-    throw new FramePermissionsError(
+    throw new SaasPermissionsError(
       "invalid_response",
       "Auth Service current-user response is invalid",
     );
@@ -309,7 +309,7 @@ export function parseFrameCurrentUser(value: unknown): FrameCurrentUser {
   const secondaryLabel =
     typeof value.email === "string" && value.email.length > 0 ? value.email : id;
   if (!USER_ID_PATTERN.test(id) || displayName.length === 0) {
-    throw new FramePermissionsError(
+    throw new SaasPermissionsError(
       "invalid_response",
       "Auth Service current-user response is invalid",
     );
@@ -317,9 +317,9 @@ export function parseFrameCurrentUser(value: unknown): FrameCurrentUser {
   return Object.freeze({ id, displayName, secondaryLabel });
 }
 
-export function parseFrameDspConfig(value: unknown): FrameDspConfig {
+export function parseSaasDspConfig(value: unknown): SaasDspConfig {
   if (!isRecord(value) || !isRecord(value.dsp) || !isRecord(value.dsp.url)) {
-    throw new FramePermissionsError(
+    throw new SaasPermissionsError(
       "invalid_response",
       "Auth Service DSP config response is invalid",
     );
@@ -332,7 +332,7 @@ export function parseFrameDspConfig(value: unknown): FrameDspConfig {
     baseUrl.search ||
     baseUrl.hash
   ) {
-    throw new FramePermissionsError(
+    throw new SaasPermissionsError(
       "invalid_response",
       "Auth Service DSP base URL is invalid",
     );
@@ -345,7 +345,7 @@ export function parseFrameDspConfig(value: unknown): FrameDspConfig {
     authenticateUrl.username ||
     authenticateUrl.password
   ) {
-    throw new FramePermissionsError(
+    throw new SaasPermissionsError(
       "invalid_response",
       "Auth Service DSP authenticate URL is invalid",
     );
@@ -368,7 +368,7 @@ async function readBoundedResponse(response: Response, limitBytes: number): Prom
     totalBytes += value.byteLength;
     if (totalBytes > limitBytes) {
       await reader.cancel();
-      throw new FramePermissionsError(
+      throw new SaasPermissionsError(
         "invalid_response",
         "Auth Service response is too large",
       );
@@ -384,12 +384,12 @@ async function readBoundedResponse(response: Response, limitBytes: number): Prom
   return new TextDecoder().decode(body);
 }
 
-export class FramePermissionsClient {
-  readonly config: FrameAuthConfig;
+export class SaasPermissionsClient {
+  readonly config: SaasAuthConfig;
   readonly fetchImplementation: typeof fetch;
 
   constructor(
-    config: FrameAuthConfig = loadFrameAuthConfig(),
+    config: SaasAuthConfig = loadSaasAuthConfig(),
     fetchImplementation: typeof fetch = fetch,
   ) {
     this.config = config;
@@ -412,17 +412,17 @@ export class FramePermissionsClient {
       });
 
       if (response.status === 401 || response.status === 403) {
-        throw new FramePermissionsError("unauthorized", "DSP session is not authorized");
+        throw new SaasPermissionsError("unauthorized", "DSP session is not authorized");
       }
       if (!response.ok) {
-        throw new FramePermissionsError(
+        throw new SaasPermissionsError(
           "unavailable",
           "Auth Service is unavailable",
         );
       }
       const contentType = response.headers.get("content-type")?.toLowerCase() ?? "";
       if (!contentType.startsWith("application/json")) {
-        throw new FramePermissionsError(
+        throw new SaasPermissionsError(
           "invalid_response",
           "Auth Service response is not JSON",
         );
@@ -431,15 +431,15 @@ export class FramePermissionsClient {
       try {
         return JSON.parse(body);
       } catch (error) {
-        if (error instanceof FramePermissionsError) throw error;
-        throw new FramePermissionsError(
+        if (error instanceof SaasPermissionsError) throw error;
+        throw new SaasPermissionsError(
           "invalid_response",
           "Auth Service response is malformed",
         );
       }
     } catch (error) {
-      if (error instanceof FramePermissionsError) throw error;
-      throw new FramePermissionsError(
+      if (error instanceof SaasPermissionsError) throw error;
+      throw new SaasPermissionsError(
         "unavailable",
         "Auth Service is unavailable",
       );
@@ -448,23 +448,23 @@ export class FramePermissionsClient {
     }
   }
 
-  async get(request: FrameAuthRequest): Promise<FramePermissions> {
+  async get(request: SaasAuthRequest): Promise<SaasPermissions> {
     const token = readDspToken(request, this.config.tokenCookieName);
-    return parseFramePermissions(await this.fetchJson(this.config.permissionsUrl, token));
+    return parseSaasPermissions(await this.fetchJson(this.config.permissionsUrl, token));
   }
 
-  async getCurrentUser(request: FrameAuthRequest): Promise<FrameCurrentUser> {
+  async getCurrentUser(request: SaasAuthRequest): Promise<SaasCurrentUser> {
     const token = readDspToken(request, this.config.tokenCookieName);
-    return parseFrameCurrentUser(await this.fetchJson(this.config.currentUserUrl, token));
+    return parseSaasCurrentUser(await this.fetchJson(this.config.currentUserUrl, token));
   }
 
-  async getDspConfig(): Promise<FrameDspConfig> {
-    return parseFrameDspConfig(await this.fetchJson(this.config.dspConfigUrl));
+  async getDspConfig(): Promise<SaasDspConfig> {
+    return parseSaasDspConfig(await this.fetchJson(this.config.dspConfigUrl));
   }
 }
 
-export function hasFrameAdminRole(
-  permissions: FramePermissions,
+export function hasSaasAdminRole(
+  permissions: SaasPermissions,
   adminRoles: ReadonlySet<string>,
 ): boolean {
   if (adminRoles.size === 0) return false;
@@ -473,11 +473,11 @@ export function hasFrameAdminRole(
   );
 }
 
-export async function resolveFrameServerSession(
-  request: FrameAuthRequest,
-  mode: FrameRuntimeMode = "integrated",
-  client = new FramePermissionsClient(),
-): Promise<FrameServerSession> {
+export async function resolveSaasServerSession(
+  request: SaasAuthRequest,
+  mode: SaasRuntimeMode = "integrated",
+  client = new SaasPermissionsClient(),
+): Promise<SaasServerSession> {
   if (mode === "standalone") {
     const currentUser = await client.getCurrentUser(request);
     return Object.freeze({
@@ -502,6 +502,6 @@ export async function resolveFrameServerSession(
       secondaryLabel: currentUser.secondaryLabel,
     }),
     grants: permissions.apps,
-    canAccessAdmin: hasFrameAdminRole(permissions, client.config.adminRoles),
+    canAccessAdmin: hasSaasAdminRole(permissions, client.config.adminRoles),
   });
 }

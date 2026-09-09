@@ -1,5 +1,7 @@
 # SDK-02 验收记录
 
+> 此记录描述抽取阶段。当前名称、接口变化和重新验证见 NAMING.md。
+
 本地验证：2026-09-07；提交整理：2026-09-09。Issue：https://github.com/valeeraZ/saas-sdk/issues/2 。
 工作分支：`codex/sdk-02-consumers-ci`，包含 SDK-01 提交 `774905e`。
 固定基线：`8cdc9ae56381dcbde8b8d3c965a75a918897896c`。

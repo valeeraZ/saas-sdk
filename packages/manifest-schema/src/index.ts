@@ -1,30 +1,30 @@
-export const FRAME_MANIFEST_SCHEMA_VERSION = 1 as const;
+export const SAAS_MANIFEST_SCHEMA_VERSION = 1 as const;
 
-export type FrameRoleDeclaration = Readonly<{
+export type SaasRoleDeclaration = Readonly<{
   name: string;
   description: string;
 }>;
 
-export type FrameAppManifest = Readonly<{
-  schemaVersion: typeof FRAME_MANIFEST_SCHEMA_VERSION;
+export type SaasAppManifest = Readonly<{
+  schemaVersion: typeof SAAS_MANIFEST_SCHEMA_VERSION;
   appName: string;
   name: string;
   description: string;
   logo: "Boxes" | "ChartBar" | "CircleGauge" | "Orbit";
   basePath: string;
-  healthPath: "/api/frame/health";
+  healthPath: "/api/saas/health";
   shellVersion: string;
-  roles: readonly FrameRoleDeclaration[];
+  roles: readonly SaasRoleDeclaration[];
   standaloneRoles: readonly string[];
   publicAssets: readonly string[];
 }>;
 
-export class FrameManifestError extends Error {
+export class SaasManifestError extends Error {
   readonly issues: readonly string[];
 
   constructor(issues: readonly string[]) {
-    super(`Invalid FRAME manifest: ${issues.join("; ")}`);
-    this.name = "FrameManifestError";
+    super(`Invalid SAAS manifest: ${issues.join("; ")}`);
+    this.name = "SaasManifestError";
     this.issues = Object.freeze([...issues]);
   }
 }
@@ -74,14 +74,14 @@ function validatePublicAsset(asset: unknown): asset is string {
   );
 }
 
-export function parseFrameManifest(value: unknown): FrameAppManifest {
+export function parseSaasManifest(value: unknown): SaasAppManifest {
   const issues: string[] = [];
-  if (!isRecord(value)) throw new FrameManifestError(["manifest must be an object"]);
+  if (!isRecord(value)) throw new SaasManifestError(["manifest must be an object"]);
 
   const unknownFields = Object.keys(value).filter((key) => !MANIFEST_FIELDS.has(key));
   if (unknownFields.length > 0) issues.push(`unknown fields: ${unknownFields.join(", ")}`);
-  if (value.schemaVersion !== FRAME_MANIFEST_SCHEMA_VERSION) {
-    issues.push(`schemaVersion must be ${FRAME_MANIFEST_SCHEMA_VERSION}`);
+  if (value.schemaVersion !== SAAS_MANIFEST_SCHEMA_VERSION) {
+    issues.push(`schemaVersion must be ${SAAS_MANIFEST_SCHEMA_VERSION}`);
   }
   if (!isNonEmptyString(value.appName, 80) || !APP_NAME_PATTERN.test(value.appName)) {
     issues.push("appName must be lowercase kebab-case");
@@ -91,7 +91,7 @@ export function parseFrameManifest(value: unknown): FrameAppManifest {
     issues.push("description must be 1-500 characters");
   }
   if (typeof value.logo !== "string" || !LOGOS.has(value.logo)) {
-    issues.push("logo must be an approved FRAME icon");
+    issues.push("logo must be an approved SAAS icon");
   }
   if (
     !isNonEmptyString(value.basePath, 100) ||
@@ -100,8 +100,8 @@ export function parseFrameManifest(value: unknown): FrameAppManifest {
   ) {
     issues.push("basePath must be a non-reserved lowercase kebab-case path");
   }
-  if (value.healthPath !== "/api/frame/health") {
-    issues.push("healthPath must be /api/frame/health");
+  if (value.healthPath !== "/api/saas/health") {
+    issues.push("healthPath must be /api/saas/health");
   }
   if (!isNonEmptyString(value.shellVersion, 40) || !SHELL_RANGE_PATTERN.test(value.shellVersion)) {
     issues.push("shellVersion must be a simple semantic version or range");
@@ -144,19 +144,19 @@ export function parseFrameManifest(value: unknown): FrameAppManifest {
     issues.push("publicAssets must be unique relative public paths");
   }
 
-  if (issues.length > 0) throw new FrameManifestError(issues);
+  if (issues.length > 0) throw new SaasManifestError(issues);
 
   const roles = (value.roles as Record<string, unknown>[]).map((role) =>
     Object.freeze({ name: role.name as string, description: role.description as string }),
   );
   return Object.freeze({
-    schemaVersion: FRAME_MANIFEST_SCHEMA_VERSION,
+    schemaVersion: SAAS_MANIFEST_SCHEMA_VERSION,
     appName: value.appName as string,
     name: value.name as string,
     description: value.description as string,
-    logo: value.logo as FrameAppManifest["logo"],
+    logo: value.logo as SaasAppManifest["logo"],
     basePath: value.basePath as string,
-    healthPath: "/api/frame/health",
+    healthPath: "/api/saas/health",
     shellVersion: value.shellVersion as string,
     roles: Object.freeze(roles),
     standaloneRoles: Object.freeze([...(value.standaloneRoles as string[])]),
@@ -164,6 +164,6 @@ export function parseFrameManifest(value: unknown): FrameAppManifest {
   });
 }
 
-export function defineFrameManifest(value: FrameAppManifest): FrameAppManifest {
-  return parseFrameManifest(value);
+export function defineSaasManifest(value: SaasAppManifest): SaasAppManifest {
+  return parseSaasManifest(value);
 }

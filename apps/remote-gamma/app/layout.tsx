@@ -1,32 +1,32 @@
-import { loadFrameRuntimeMode, resolveFrameServerSession } from "@frame/auth";
-import { FrameShell } from "@frame/shell";
-import { FramePortalSessionClient } from "@frame/shell/integrated-session";
+import { loadSaasRuntimeMode, resolveSaasServerSession } from "@saas-platform/auth";
+import { SaasShell } from "@saas-platform/shell";
+import { SaasPortalSessionClient } from "@saas-platform/shell/integrated-session";
 import {
   buildStandaloneNavigation,
-} from "@frame/shell/navigation";
+} from "@saas-platform/shell/navigation";
 import {
-  createInitialFramePreferences,
-  FRAME_SIDEBAR_COOKIE,
-  FRAME_THEME_COOKIE,
-} from "@frame/theme";
-import "@frame/ui/globals.css";
+  createInitialSaasPreferences,
+  SAAS_SIDEBAR_COOKIE,
+  SAAS_THEME_COOKIE,
+} from "@saas-platform/theme";
+import "@saas-platform/ui/globals.css";
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import type { ReactNode } from "react";
 
-export const metadata: Metadata = { title: "Remote Gamma · FRAME" };
+export const metadata: Metadata = { title: "Remote Gamma · SAAS" };
 
 export default async function Layout({ children }: Readonly<{ children: ReactNode }>) {
-  const mode = loadFrameRuntimeMode();
+  const mode = loadSaasRuntimeMode();
   const [cookieStore, requestHeaders] = await Promise.all([cookies(), headers()]);
-  const initialPreferences = createInitialFramePreferences(
-    cookieStore.get(FRAME_THEME_COOKIE)?.value,
-    cookieStore.get(FRAME_SIDEBAR_COOKIE)?.value,
+  const initialPreferences = createInitialSaasPreferences(
+    cookieStore.get(SAAS_THEME_COOKIE)?.value,
+    cookieStore.get(SAAS_SIDEBAR_COOKIE)?.value,
   );
   const session =
     mode === "standalone"
-      ? await resolveFrameServerSession({ headers: requestHeaders }, mode)
-      : await new FramePortalSessionClient().get({ headers: requestHeaders });
+      ? await resolveSaasServerSession({ headers: requestHeaders }, mode)
+      : await new SaasPortalSessionClient().get({ headers: requestHeaders });
   const navigation = "navigation" in session
     ? session.navigation
     : buildStandaloneNavigation({
@@ -45,7 +45,7 @@ export default async function Layout({ children }: Readonly<{ children: ReactNod
       suppressHydrationWarning
     >
       <body>
-        <FrameShell
+        <SaasShell
           canAccessAdmin={session.canAccessAdmin}
           currentAppLabel="Remote Gamma"
           currentAppName="remote-gamma"
@@ -56,7 +56,7 @@ export default async function Layout({ children }: Readonly<{ children: ReactNod
           user={session.user}
         >
           {children}
-        </FrameShell>
+        </SaasShell>
       </body>
     </html>
   );

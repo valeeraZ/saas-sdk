@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { FrameManifestError, parseFrameManifest } from "./index.ts";
+import { SaasManifestError, parseSaasManifest } from "./index.ts";
 
 const validManifest = {
   schemaVersion: 1,
@@ -10,15 +10,15 @@ const validManifest = {
   description: "Release readiness",
   logo: "CircleGauge",
   basePath: "/launchpad",
-  healthPath: "/api/frame/health",
+  healthPath: "/api/saas/health",
   shellVersion: "^0.1.0",
   roles: [{ name: "developer", description: "Can use Launchpad" }],
   standaloneRoles: ["developer"],
-  publicAssets: ["frame-path.svg"],
+  publicAssets: ["saas-path.svg"],
 };
 
 test("parses and freezes a valid manifest", () => {
-  const manifest = parseFrameManifest(validManifest);
+  const manifest = parseSaasManifest(validManifest);
   assert.equal(manifest.basePath, "/launchpad");
   assert.ok(Object.isFrozen(manifest));
   assert.ok(Object.isFrozen(manifest.roles));
@@ -27,14 +27,14 @@ test("parses and freezes a valid manifest", () => {
 test("rejects reserved paths, undeclared standalone roles, and root-relative assets", () => {
   assert.throws(
     () =>
-      parseFrameManifest({
+      parseSaasManifest({
         ...validManifest,
         basePath: "/admin",
         standaloneRoles: ["admin"],
         publicAssets: ["/logo.svg"],
       }),
     (error: unknown) => {
-      assert.ok(error instanceof FrameManifestError);
+      assert.ok(error instanceof SaasManifestError);
       assert.equal(error.issues.length, 3);
       return true;
     },
@@ -43,7 +43,7 @@ test("rejects reserved paths, undeclared standalone roles, and root-relative ass
 
 test("rejects server-only and unknown fields", () => {
   assert.throws(
-    () => parseFrameManifest({ ...validManifest, frontendTarget: "http://internal" }),
+    () => parseSaasManifest({ ...validManifest, frontendTarget: "http://internal" }),
     /unknown fields: frontendTarget/,
   );
 });

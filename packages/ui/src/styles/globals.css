@@ -3,7 +3,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "./shadcn.css";
-@import "@frame/theme/styles.css";
+@import "@saas-platform/theme/styles.css";
 
 @source "../components/**/*.{js,ts,tsx}";
 @source "../../../shell/dist/**/*.js";
@@ -59,7 +59,7 @@
 
   html {
     min-width: 20rem;
-    background: var(--frame-canvas);
+    background: var(--saas-canvas);
   }
 
   body {

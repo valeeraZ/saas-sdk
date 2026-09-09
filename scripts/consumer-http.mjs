@@ -23,7 +23,7 @@ export async function checkConsumerHttp(app) {
   try {
     // Next accepts port zero; read the actual bound port from its ready output.
     child = spawn(process.execPath, [join(app, 'node_modules/next/dist/bin/next'), 'start', '--hostname', '127.0.0.1', '--port', '0'], {
-      cwd: app, env: {...process.env, FRAME_RUNTIME_MODE: 'standalone', FRAME_AUTH_SERVICE_URL: `http://127.0.0.1:${auth.address().port}`, FRAME_DSP_TOKEN_COOKIE: 'dsp-token', NEXT_TELEMETRY_DISABLED: '1'}, stdio: ['ignore', 'pipe', 'pipe'],
+      cwd: app, env: {...process.env, SAAS_RUNTIME_MODE: 'standalone', SAAS_AUTH_SERVICE_URL: `http://127.0.0.1:${auth.address().port}`, SAAS_DSP_TOKEN_COOKIE: 'dsp-token', NEXT_TELEMETRY_DISABLED: '1'}, stdio: ['ignore', 'pipe', 'pipe'],
     });
     child.stdout.on('data', chunk => { output += chunk; });
     child.stderr.on('data', chunk => { output += chunk; });
@@ -44,7 +44,7 @@ export async function checkConsumerHttp(app) {
       assert.equal(response.status, expected, `${path}: ${response.status}`);
       return response;
     }
-    const health = await get('/packed-demo/api/frame/health', 200);
+    const health = await get('/packed-demo/api/saas/health', 200);
     assert.equal((await health.json()).appName, 'packed-demo');
     const asset = await get('/packed-demo/sdk-probe.svg', 200);
     assert.match(asset.headers.get('content-type'), /image\/svg\+xml/);
@@ -67,7 +67,7 @@ export async function checkConsumerHttp(app) {
       assert.match(type, resource.endsWith('.css') ? /text\/css/ : /javascript|font|octet-stream/);
     }
     await get('/sdk-probe.svg', 404, {headers});
-    await get('/api/frame/health', 404, {headers});
+    await get('/api/saas/health', 404, {headers});
     await get('/packed-demo/missing-probe.svg', 404, {headers});
     assert.ok(requests.length > 0 && requests.every(r => r.path === '/v1/authorization/current_user' && r.authorization === 'Bearer sdk-test-token'));
     return {status: 'passed', origin, resourcesChecked: resources.length, publicAsset: '/packed-demo/sdk-probe.svg', auth: 'local mock, standalone current-user only'};

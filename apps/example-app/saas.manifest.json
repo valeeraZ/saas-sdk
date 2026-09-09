@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "appName": "launchpad",
   "name": "Launchpad",
-  "description": "Release readiness for FRAME applications",
+  "description": "Release readiness for SAAS applications",
   "logo": "CircleGauge",
   "basePath": "/launchpad",
-  "healthPath": "/api/frame/health",
+  "healthPath": "/api/saas/health",
   "shellVersion": "^0.1.0",
   "roles": [
     {
@@ -18,5 +18,5 @@
     }
   ],
   "standaloneRoles": ["developer"],
-  "publicAssets": ["frame-path.svg"]
+  "publicAssets": ["saas-path.svg"]
 }

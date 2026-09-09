@@ -17,7 +17,7 @@ export function orderedPackages() {
     if (visiting.has(p.name)) throw new Error(`Dependency cycle: ${p.name}`);
     visiting.add(p.name);
     for (const name of Object.keys(p.dependencies ?? {})) {
-      if (name.startsWith("@frame/") && !byName.has(name)) throw new Error(`Missing internal dependency: ${name}`);
+      if (name.startsWith("@saas-platform/") && !byName.has(name)) throw new Error(`Missing internal dependency: ${name}`);
       if (byName.has(name)) visit(byName.get(name));
     }
     visiting.delete(p.name); visited.add(p.name); result.push(p);

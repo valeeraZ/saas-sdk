@@ -5,31 +5,31 @@ import { join } from "node:path";
 import { tmpdir } from "node:os";
 import test from "node:test";
 
-import { createFrameApp } from "./index.mjs";
+import { createSaasApp } from "./index.mjs";
 
 test("creates a manifest-driven standalone/integrated App without installing dependencies", async () => {
-  const parent = await mkdtemp(join(tmpdir(), "create-frame-app-"));
+  const parent = await mkdtemp(join(tmpdir(), "create-saas-app-"));
   const target = join(parent, "risk-console");
-  createFrameApp([
+  createSaasApp([
     "--directory", target,
     "--name", "risk-console",
     "--title", "Risk Console",
   ]);
-  assert.ok(existsSync(join(target, "app/api/frame/health/route.ts")));
-  const manifest = JSON.parse(readFileSync(join(target, "frame.manifest.json"), "utf8"));
+  assert.ok(existsSync(join(target, "app/api/saas/health/route.ts")));
+  const manifest = JSON.parse(readFileSync(join(target, "saas.manifest.json"), "utf8"));
   assert.equal(manifest.appName, "risk-console");
   assert.equal(manifest.basePath, "/risk-console");
-  assert.match(readFileSync(join(target, "next.config.ts"), "utf8"), /withFrameNextConfig/);
+  assert.match(readFileSync(join(target, "next.config.ts"), "utf8"), /withSaasNextConfig/);
 });
 
 test("refuses to overwrite a target or create a reserved App", async () => {
-  const parent = await mkdtemp(join(tmpdir(), "create-frame-app-"));
+  const parent = await mkdtemp(join(tmpdir(), "create-saas-app-"));
   assert.throws(
-    () => createFrameApp(["--directory", parent, "--name", "risk", "--title", "Risk"]),
+    () => createSaasApp(["--directory", parent, "--name", "risk", "--title", "Risk"]),
     /already exists/,
   );
   assert.throws(
-    () => createFrameApp(["--directory", join(parent, "admin"), "--name", "admin", "--title", "Admin"]),
+    () => createSaasApp(["--directory", join(parent, "admin"), "--name", "admin", "--title", "Admin"]),
     /non-reserved/,
   );
 });

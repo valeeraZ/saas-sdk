@@ -2,24 +2,24 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
-  FramePermissionsClient,
-  FramePermissionsError,
-  hasFrameAdminRole,
-  loadFrameAuthConfig,
-  loadFrameRuntimeMode,
-  parseFrameCurrentUser,
-  parseFrameDspConfig,
-  parseFramePermissions,
-  parseLegacyFramePermissions,
+  SaasPermissionsClient,
+  SaasPermissionsError,
+  hasSaasAdminRole,
+  loadSaasAuthConfig,
+  loadSaasRuntimeMode,
+  parseSaasCurrentUser,
+  parseSaasDspConfig,
+  parseSaasPermissions,
+  parseLegacySaasPermissions,
   readDspToken,
-  resolveFrameServerSession,
+  resolveSaasServerSession,
 } from "./index.ts";
 
 const permissionPayload = {
   apps: [
     {
       appName: "risk-dashboard",
-      roles: ["risk-user", "frame-admin"],
+      roles: ["risk-user", "saas-admin"],
     },
   ],
 };
@@ -38,12 +38,12 @@ const legacyPermissionPayload = {
 };
 
 const currentUserPayload = {
-  display_name: "Ada Frame",
+  display_name: "Ada Saas",
   employee_id: "auth-user-42",
 };
 
 test("reads only the configured DSP Cookie as the credential", () => {
-  const request = new Request("http://frame.test", {
+  const request = new Request("http://saas.test", {
     headers: {
       authorization: "Bearer attacker",
       cookie: "other=value; dsp-session=trusted%3Dtoken",
@@ -55,51 +55,51 @@ test("reads only the configured DSP Cookie as the credential", () => {
 
 test("rejects a request without the configured DSP Cookie", () => {
   assert.throws(
-    () => readDspToken(new Request("http://frame.test"), "dsp-session"),
+    () => readDspToken(new Request("http://saas.test"), "dsp-session"),
     (error: unknown) =>
-      error instanceof FramePermissionsError && error.category === "missing_token",
+      error instanceof SaasPermissionsError && error.category === "missing_token",
   );
 });
 
 test("validates and freezes the Auth Service permissions contract", () => {
-  const permissions = parseFramePermissions(permissionPayload);
+  const permissions = parseSaasPermissions(permissionPayload);
   assert.equal(permissions.apps[0]?.appName, "risk-dashboard");
   assert.equal(Object.isFrozen(permissions.apps), true);
   assert.throws(() =>
-    parseFramePermissions({
+    parseSaasPermissions({
       ...permissionPayload,
       apps: [...permissionPayload.apps, permissionPayload.apps[0]],
     }),
   );
-  assert.throws(() => parseFramePermissions(legacyPermissionPayload));
+  assert.throws(() => parseSaasPermissions(legacyPermissionPayload));
   assert.deepEqual(
-    parseLegacyFramePermissions(legacyPermissionPayload),
+    parseLegacySaasPermissions(legacyPermissionPayload),
     permissionPayload,
   );
 });
 
 test("validates current-user as the stable identity source", () => {
-  const currentUser = parseFrameCurrentUser(currentUserPayload);
+  const currentUser = parseSaasCurrentUser(currentUserPayload);
   assert.deepEqual(currentUser, {
     id: "auth-user-42",
-    displayName: "Ada Frame",
+    displayName: "Ada Saas",
     secondaryLabel: "auth-user-42",
   });
-  assert.throws(() => parseFrameCurrentUser({ display_name: "Missing ID" }));
+  assert.throws(() => parseSaasCurrentUser({ display_name: "Missing ID" }));
 });
 
 test("projects only public DSP configuration fields", () => {
-  const dspConfig = parseFrameDspConfig({
+  const dspConfig = parseSaasDspConfig({
     dsp: {
       base_url: "https://dsp.example.com",
-      client_id: "frame-web",
+      client_id: "saas-web",
       client_secret: "must-not-reach-the-browser",
       url: { authenticate: "/authenticate" },
     },
   });
   assert.deepEqual(dspConfig, {
     baseUrl: "https://dsp.example.com/",
-    clientId: "frame-web",
+    clientId: "saas-web",
     authenticateUrl: "https://dsp.example.com/authenticate",
   });
   assert.equal("clientSecret" in dspConfig, false);
@@ -111,12 +111,12 @@ test("forwards the DSP token to current-user and permissions in parallel", async
     authorization: string | null;
     credentials: RequestCredentials | undefined;
   }> = [];
-  const config = loadFrameAuthConfig({
-    FRAME_AUTH_SERVICE_URL: "https://auth.internal.example",
-    FRAME_DSP_TOKEN_COOKIE: "dsp-session",
-    FRAME_ADMIN_ROLES: "frame-admin",
+  const config = loadSaasAuthConfig({
+    SAAS_AUTH_SERVICE_URL: "https://auth.internal.example",
+    SAAS_DSP_TOKEN_COOKIE: "dsp-session",
+    SAAS_ADMIN_ROLES: "saas-admin",
   });
-  const client = new FramePermissionsClient(config, async (input, init) => {
+  const client = new SaasPermissionsClient(config, async (input, init) => {
     const url = String(input);
     observedRequests.push({
       url,
@@ -129,11 +129,11 @@ test("forwards the DSP token to current-user and permissions in parallel", async
         : permissionPayload,
     );
   });
-  const request = new Request("https://frame.example/settings", {
+  const request = new Request("https://saas.example/settings", {
     headers: { cookie: "dsp-session=opaque-token" },
   });
 
-  const session = await resolveFrameServerSession(request, "integrated", client);
+  const session = await resolveSaasServerSession(request, "integrated", client);
 
   assert.equal(config.permissionsUrl, "https://auth.internal.example/permissions");
   assert.deepEqual(
@@ -152,7 +152,7 @@ test("forwards the DSP token to current-user and permissions in parallel", async
     true,
   );
   assert.deepEqual(session.user, {
-    displayName: "Ada Frame",
+    displayName: "Ada Saas",
     secondaryLabel: "auth-user-42",
   });
   assert.equal(session.canAccessAdmin, true);
@@ -161,10 +161,10 @@ test("forwards the DSP token to current-user and permissions in parallel", async
 
 test("standalone mode resolves identity without requesting permissions", async () => {
   const observedUrls: string[] = [];
-  const client = new FramePermissionsClient(
-    loadFrameAuthConfig({
-      FRAME_AUTH_SERVICE_URL: "https://auth.internal.example",
-      FRAME_DSP_TOKEN_COOKIE: "dsp-session",
+  const client = new SaasPermissionsClient(
+    loadSaasAuthConfig({
+      SAAS_AUTH_SERVICE_URL: "https://auth.internal.example",
+      SAAS_DSP_TOKEN_COOKIE: "dsp-session",
     }),
     async (input) => {
       const url = String(input);
@@ -179,7 +179,7 @@ test("standalone mode resolves identity without requesting permissions", async (
     headers: { cookie: "dsp-session=opaque-token" },
   });
 
-  const session = await resolveFrameServerSession(request, "standalone", client);
+  const session = await resolveSaasServerSession(request, "standalone", client);
 
   assert.deepEqual(observedUrls, [
     "https://auth.internal.example/v1/authorization/current_user",
@@ -187,21 +187,21 @@ test("standalone mode resolves identity without requesting permissions", async (
   assert.equal(session.mode, "standalone");
   assert.deepEqual(session.grants, []);
   assert.equal(session.canAccessAdmin, false);
-  assert.equal(session.user.displayName, "Ada Frame");
+  assert.equal(session.user.displayName, "Ada Saas");
 });
 
 test("runtime mode defaults safely to integrated and rejects unknown values", () => {
-  assert.equal(loadFrameRuntimeMode({}), "integrated");
-  assert.equal(loadFrameRuntimeMode({ FRAME_RUNTIME_MODE: "standalone" }), "standalone");
-  assert.throws(() => loadFrameRuntimeMode({ FRAME_RUNTIME_MODE: "local" }));
+  assert.equal(loadSaasRuntimeMode({}), "integrated");
+  assert.equal(loadSaasRuntimeMode({ SAAS_RUNTIME_MODE: "standalone" }), "standalone");
+  assert.throws(() => loadSaasRuntimeMode({ SAAS_RUNTIME_MODE: "local" }));
 });
 
 test("loads DSP config without forwarding browser credentials", async () => {
   let observedAuthorization: string | null = "not-called";
   let observedCredentials: RequestCredentials | undefined;
-  const client = new FramePermissionsClient(
-    loadFrameAuthConfig({
-      FRAME_AUTH_SERVICE_URL: "https://auth.internal.example",
+  const client = new SaasPermissionsClient(
+    loadSaasAuthConfig({
+      SAAS_AUTH_SERVICE_URL: "https://auth.internal.example",
     }),
     async (_input, init) => {
       observedAuthorization = new Headers(init?.headers).get("authorization");
@@ -209,7 +209,7 @@ test("loads DSP config without forwarding browser credentials", async () => {
       return Response.json({
         dsp: {
           base_url: "https://dsp.example.com",
-          client_id: "frame-web",
+          client_id: "saas-web",
           client_secret: "server-only",
           url: { authenticate: "/authenticate" },
         },
@@ -217,60 +217,60 @@ test("loads DSP config without forwarding browser credentials", async () => {
     },
   );
 
-  assert.equal((await client.getDspConfig()).clientId, "frame-web");
+  assert.equal((await client.getDspConfig()).clientId, "saas-web");
   assert.equal(observedAuthorization, null);
   assert.equal(observedCredentials, "omit");
 });
 
 test("Admin access is denied when no configured role is returned", () => {
-  const permissions = parseFramePermissions(permissionPayload);
-  assert.equal(hasFrameAdminRole(permissions, new Set(["platform-owner"])), false);
-  assert.equal(hasFrameAdminRole(permissions, new Set()), false);
+  const permissions = parseSaasPermissions(permissionPayload);
+  assert.equal(hasSaasAdminRole(permissions, new Set(["platform-owner"])), false);
+  assert.equal(hasSaasAdminRole(permissions, new Set()), false);
 });
 
 test("fails closed when Auth Service rejects the DSP token", async () => {
-  const client = new FramePermissionsClient(
-    loadFrameAuthConfig({ FRAME_DSP_TOKEN_COOKIE: "dsp-session" }),
+  const client = new SaasPermissionsClient(
+    loadSaasAuthConfig({ SAAS_DSP_TOKEN_COOKIE: "dsp-session" }),
     async () => new Response(null, { status: 401 }),
   );
   await assert.rejects(
     () =>
       client.get(
-        new Request("http://frame.test", {
+        new Request("http://saas.test", {
           headers: { cookie: "dsp-session=expired-token" },
         }),
       ),
     (error: unknown) =>
-      error instanceof FramePermissionsError && error.category === "unauthorized",
+      error instanceof SaasPermissionsError && error.category === "unauthorized",
   );
 });
 
 test("rejects oversized permissions responses", async () => {
-  const client = new FramePermissionsClient(
-    loadFrameAuthConfig({
-      FRAME_DSP_TOKEN_COOKIE: "dsp-session",
-      FRAME_AUTH_RESPONSE_LIMIT_BYTES: "32",
+  const client = new SaasPermissionsClient(
+    loadSaasAuthConfig({
+      SAAS_DSP_TOKEN_COOKIE: "dsp-session",
+      SAAS_AUTH_RESPONSE_LIMIT_BYTES: "32",
     }),
     async () => Response.json(permissionPayload),
   );
   await assert.rejects(
     () =>
       client.get(
-        new Request("http://frame.test", {
+        new Request("http://saas.test", {
           headers: { cookie: "dsp-session=opaque-token" },
         }),
       ),
     (error: unknown) =>
-      error instanceof FramePermissionsError && error.category === "invalid_response",
+      error instanceof SaasPermissionsError && error.category === "invalid_response",
   );
 });
 
 test("applies the deadline through the permissions body read", async () => {
-  const config = loadFrameAuthConfig({
-    FRAME_DSP_TOKEN_COOKIE: "dsp-session",
-    FRAME_AUTH_TIMEOUT_MS: "5",
+  const config = loadSaasAuthConfig({
+    SAAS_DSP_TOKEN_COOKIE: "dsp-session",
+    SAAS_AUTH_TIMEOUT_MS: "5",
   });
-  const client = new FramePermissionsClient(config, async (_input, init) => {
+  const client = new SaasPermissionsClient(config, async (_input, init) => {
     const signal = init?.signal;
     const body = new ReadableStream<Uint8Array>({
       start(controller) {
@@ -285,11 +285,11 @@ test("applies the deadline through the permissions body read", async () => {
   await assert.rejects(
     () =>
       client.get(
-        new Request("http://frame.test", {
+        new Request("http://saas.test", {
           headers: { cookie: "dsp-session=opaque-token" },
         }),
       ),
     (error: unknown) =>
-      error instanceof FramePermissionsError && error.category === "unavailable",
+      error instanceof SaasPermissionsError && error.category === "unavailable",
   );
 });

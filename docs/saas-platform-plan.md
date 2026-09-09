@@ -1,4 +1,4 @@
-# FRAME SaaS 平台转型计划
+# SAAS SaaS 平台转型计划
 
 日期：2026-09-07。状态：规划草案，尚未开始实现。
 
@@ -20,7 +20,7 @@
 | Phase 3：Shell、主题、偏好 | 已有实现 | `packages/shell`、`packages/theme`、Portal PostgreSQL 迁移；偏好模型仍以 user_id 为范围 |
 | Phase 4：身份、权限导航 | 已有客户端集成 | `packages/auth`；真实身份服务不是本仓库交付物，默认连接 localhost:3200 fixture |
 | Phase 5：Admin 应用接入 | 第一条闭环已实现，未完成生产化 | 创建 inactive App → 配置角色 → 检查 → READY → 手动激活；`apps/portal/lib/admin/service.ts` 使用进程内 Map |
-| Phase 6：开发者工具 | 部分已实现 | SDK、FastAPI middleware、manifest、contract CLI、create-frame-app 和 example-app 已存在；不代表外部团队接入已验收 |
+| Phase 6：开发者工具 | 部分已实现 | SDK、FastAPI middleware、manifest、contract CLI、create-saas-app 和 example-app 已存在；不代表外部团队接入已验收 |
 | Phase 7–8：接入验收与生产门槛 | 未确认完成 | 有测试和演练脚本，仍需真实依赖、两副本、故障恢复和容量验证 |
 
 本次 `npm test`：Node 73 项通过、1 项 PostgreSQL 集成测试因未配置数据库跳过；Python 4 项通过；全部 workspace 的 `npm run typecheck` 通过。本次没有生产部署、浏览器验收或容量测试。
@@ -85,13 +85,13 @@ Auth 管理身份组件及验证/邀请邮件任务；Admin 管理应用检查�
 | apps/portal/app/admin、app/api/admin、lib/admin | saas-admin | 移出管理 UI/API 和编排；用持久 workflow 替换 Map |
 | packages/auth | saas-sdk | 现有代码是 Auth 客户端，不是 Auth 服务；改造成支持新身份协议的 SDK |
 | packages/sdk、shell、ui、theme、next-config、manifest-schema、contract-cli、fastapi-auth-sdk | saas-sdk | 可采用仓库内多包结构，分别发布；保持包间无循环依赖 |
-| tools/create-frame-app、apps/example-app、演示 App 与 packages/spike-app | saas-sdk | 脚手架、示例和协议测试夹具；Portal CI 消费固定版本的示例镜像 |
+| tools/create-saas-app、apps/example-app、演示 App 与 packages/spike-app | saas-sdk | 脚手架、示例和协议测试夹具；Portal CI 消费固定版本的示例镜像 |
 | tools/registry-fixture | saas-sdk 测试工具 | 仅保留契约模拟与故障注入，不迁为生产 Auth/Registry |
 | 新身份/组织/权限服务 | saas-auth | 需要新实现，现有 auth 包不能直接替代 |
 | 新 Registry/开通/订阅服务 | saas-admin | 按现有契约与新租户模型实现 |
 | infra 与 tools/k8s-demo | 按所属服务拆分 | 服务配置归属服务仓库；全链路演练入口归 Admin integration |
 
-现有包名暂时保留 @frame/*，避免把仓库拆分与包改名混成一次破坏性迁移；对外品牌和包 scope 在 S0 决定。
+现有包名暂时保留 @saas-platform/*，避免把仓库拆分与包改名混成一次破坏性迁移；对外品牌和包 scope 在 S0 决定。
 
 ## 5. 数据模型与隔离规则
 

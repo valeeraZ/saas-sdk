@@ -1,7 +1,7 @@
 "use client";
 
-import type { FramePreferences } from "@frame/theme";
-import { Avatar, AvatarFallback } from "@frame/ui/components/avatar";
+import type { SaasPreferences } from "@saas-platform/theme";
+import { Avatar, AvatarFallback } from "@saas-platform/ui/components/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +10,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@frame/ui/components/dropdown-menu";
+} from "@saas-platform/ui/components/dropdown-menu";
 import {
   Sidebar,
   SidebarContent,
@@ -26,8 +26,8 @@ import {
   SidebarProvider,
   SidebarRail,
   SidebarTrigger,
-} from "@frame/ui/components/sidebar";
-import { TooltipProvider } from "@frame/ui/components/tooltip";
+} from "@saas-platform/ui/components/sidebar";
+import { TooltipProvider } from "@saas-platform/ui/components/tooltip";
 import {
   BoxesIcon,
   ChartBarIcon,
@@ -43,20 +43,20 @@ import {
 import { useMemo, useSyncExternalStore, type CSSProperties, type ReactNode } from "react";
 
 import {
-  filterFrameNavigation,
-  type FrameNavigationItem,
-  type FrameNavigationKind,
+  filterSaasNavigation,
+  type SaasNavigationItem,
+  type SaasNavigationKind,
 } from "./navigation.ts";
 import {
-  FrameNavigationProvider,
-  useFrameNavigation,
+  SaasNavigationProvider,
+  useSaasNavigation,
 } from "./navigation-context.tsx";
 import {
-  FramePreferencesProvider,
-  useFramePreferences,
-  type FramePreferencesMode,
+  SaasPreferencesProvider,
+  useSaasPreferences,
+  type SaasPreferencesMode,
 } from "./preferences-context.tsx";
-import { FRAME_SHELL_VERSION } from "./version.ts";
+import { SAAS_SHELL_VERSION } from "./version.ts";
 
 const ICONS = {
   home: HomeIcon,
@@ -67,7 +67,7 @@ const ICONS = {
   alpha: CircleGaugeIcon,
   beta: BoxesIcon,
   remote: OrbitIcon,
-} satisfies Record<FrameNavigationKind, typeof HomeIcon>;
+} satisfies Record<SaasNavigationKind, typeof HomeIcon>;
 
 function subscribeToLocation(): () => void {
   return () => undefined;
@@ -81,7 +81,7 @@ function getServerPath(): string {
   return "/";
 }
 
-function FrameMark() {
+function SaasMark() {
   return (
     <span className="grid size-9 shrink-0 place-items-center rounded-[0.65rem] bg-primary text-sm font-black tracking-[-0.08em] text-primary-foreground shadow-[inset_0_0_0_1px_color-mix(in_oklch,var(--primary-foreground)_18%,transparent)]">
       F/
@@ -96,7 +96,7 @@ function NavigationGroup({
   path,
 }: Readonly<{
   currentAppName: string;
-  items: readonly FrameNavigationItem[];
+  items: readonly SaasNavigationItem[];
   label: string;
   path: string;
 }>) {
@@ -144,7 +144,7 @@ function ShellScaffold({
   homeHref: string;
   user: Readonly<{ displayName: string; secondaryLabel: string }>;
 }>) {
-  const navigation = useFrameNavigation();
+  const navigation = useSaasNavigation();
   const {
     error,
     isLoading,
@@ -152,10 +152,10 @@ function ShellScaffold({
     mode,
     preferences,
     updatePreferences,
-  } = useFramePreferences();
+  } = useSaasPreferences();
   const path = useSyncExternalStore(subscribeToLocation, getBrowserPath, getServerPath);
   const visibleNavigation = useMemo(
-    () => filterFrameNavigation(navigation, preferences.hiddenApps, canAccessAdmin),
+    () => filterSaasNavigation(navigation, preferences.hiddenApps, canAccessAdmin),
     [canAccessAdmin, navigation, preferences.hiddenApps],
   );
   const platformItems = visibleNavigation.filter((item) => item.section === "platform");
@@ -171,8 +171,8 @@ function ShellScaffold({
         }}
         style={
           {
-            "--sidebar-width": "var(--frame-sidebar-width)",
-            "--sidebar-width-icon": "var(--frame-sidebar-width-collapsed)",
+            "--sidebar-width": "var(--saas-sidebar-width)",
+            "--sidebar-width-icon": "var(--saas-sidebar-width-collapsed)",
           } as CSSProperties
         }
       >
@@ -181,10 +181,10 @@ function ShellScaffold({
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild className="h-12 data-[slot=sidebar-menu-button]:p-2">
-                  <a href={homeHref} aria-label="FRAME home">
-                    <FrameMark />
+                  <a href={homeHref} aria-label="SAAS home">
+                    <SaasMark />
                     <span className="grid min-w-0 flex-1 text-left leading-tight">
-                      <span className="truncate text-sm font-semibold tracking-[-0.02em]">FRAME</span>
+                      <span className="truncate text-sm font-semibold tracking-[-0.02em]">SAAS</span>
                       <span className="truncate font-mono text-[0.62rem] uppercase tracking-[0.12em] text-sidebar-foreground/55">
                         Unified workspace
                       </span>
@@ -267,7 +267,7 @@ function ShellScaffold({
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
                     <DropdownMenuLabel className="font-mono text-[0.62rem] font-normal uppercase tracking-[0.12em] text-muted-foreground">
-                      Shell {FRAME_SHELL_VERSION}
+                      Shell {SAAS_SHELL_VERSION}
                     </DropdownMenuLabel>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -284,7 +284,7 @@ function ShellScaffold({
             <span className="truncate text-sm font-medium">{currentAppLabel}</span>
             <span className="ml-auto flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-muted-foreground">
               <span
-                className={`size-1.5 rounded-full ${error ? "bg-destructive" : isLoading || isSaving ? "bg-[var(--frame-warning)]" : "bg-[var(--frame-positive)]"}`}
+                className={`size-1.5 rounded-full ${error ? "bg-destructive" : isLoading || isSaving ? "bg-[var(--saas-warning)]" : "bg-[var(--saas-positive)]"}`}
                 aria-hidden="true"
               />
               {error
@@ -300,7 +300,7 @@ function ShellScaffold({
           </header>
           <main className="relative min-h-[calc(100dvh-3.5rem)] overflow-hidden">
             <div
-              className="pointer-events-none absolute inset-0 opacity-70 [background-image:linear-gradient(var(--frame-grid)_1px,transparent_1px),linear-gradient(90deg,var(--frame-grid)_1px,transparent_1px)] [background-size:32px_32px] [mask-image:linear-gradient(to_bottom,black,transparent_68%)]"
+              className="pointer-events-none absolute inset-0 opacity-70 [background-image:linear-gradient(var(--saas-grid)_1px,transparent_1px),linear-gradient(90deg,var(--saas-grid)_1px,transparent_1px)] [background-size:32px_32px] [mask-image:linear-gradient(to_bottom,black,transparent_68%)]"
               aria-hidden="true"
             />
             <div className="relative mx-auto w-full max-w-[92rem] px-5 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
@@ -313,7 +313,7 @@ function ShellScaffold({
   );
 }
 
-export function FrameShell({
+export function SaasShell({
   canAccessAdmin = false,
   children,
   currentAppLabel,
@@ -330,15 +330,15 @@ export function FrameShell({
   currentAppLabel: string;
   currentAppName: string;
   homeHref?: string;
-  initialPreferences: FramePreferences;
-  navigation: readonly FrameNavigationItem[];
+  initialPreferences: SaasPreferences;
+  navigation: readonly SaasNavigationItem[];
   preferencesEndpoint?: string;
-  preferencesMode?: FramePreferencesMode;
+  preferencesMode?: SaasPreferencesMode;
   user: Readonly<{ displayName: string; secondaryLabel: string }>;
 }>) {
   return (
-    <FrameNavigationProvider navigation={navigation}>
-      <FramePreferencesProvider
+    <SaasNavigationProvider navigation={navigation}>
+      <SaasPreferencesProvider
         endpoint={preferencesEndpoint}
         initialPreferences={initialPreferences}
         mode={preferencesMode}
@@ -352,7 +352,7 @@ export function FrameShell({
         >
           {children}
         </ShellScaffold>
-      </FramePreferencesProvider>
-    </FrameNavigationProvider>
+      </SaasPreferencesProvider>
+    </SaasNavigationProvider>
   );
 }

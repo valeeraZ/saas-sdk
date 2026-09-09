@@ -8,7 +8,7 @@ const root = resolve('.');
 const fixture = JSON.parse(readFileSync('tests/fixtures/portal-baseline.json'));
 const archive = resolve('tests/fixtures/portal-baseline.tar');
 assert.equal(createHash('sha256').update(readFileSync(archive)).digest('hex'), fixture.sha256);
-const consumer = realpathSync(mkdtempSync(join(tmpdir(), 'frame-portal-')));
+const consumer = realpathSync(mkdtempSync(join(tmpdir(), 'saas-portal-')));
 run('tar', ['-xf', archive, '-C', consumer]);
 for (const file of fixture.files) assert.equal(createHash('sha256').update(readFileSync(join(consumer, file.path))).digest('hex'), file.sha256, file.path);
 const baselineLock = JSON.parse(readFileSync(join(consumer, 'package-lock.json')));
@@ -24,7 +24,7 @@ const [cachePack] = JSON.parse(run('npm', ['pack', '--json', '--pack-destination
 rmSync(join(consumer, 'packages'), {recursive: true});
 const metadata = JSON.parse(readFileSync('artifacts/npm-pack.json'));
 const internal = Object.fromEntries(metadata.map(p => [p.name, `file:${join(root, 'artifacts', p.filename)}`]));
-internal['@frame/registry-cache'] = `file:${join(consumer, 'artifacts', cachePack.filename)}`;
+internal['@saas-platform/registry-cache'] = `file:${join(consumer, 'artifacts', cachePack.filename)}`;
 const app = join(consumer, 'apps/portal');
 writeFileSync(join(app, 'tsconfig.base.json'), readFileSync(join(consumer, 'tsconfig.json')));
 const tsconfig = JSON.parse(readFileSync(join(app, 'tsconfig.json')));

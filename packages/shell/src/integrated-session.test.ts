@@ -2,15 +2,15 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
-  FramePortalSessionClient,
-  FramePortalSessionError,
-  loadFramePortalSessionConfig,
-  parseIntegratedFrameSession,
+  SaasPortalSessionClient,
+  SaasPortalSessionError,
+  loadSaasPortalSessionConfig,
+  parseIntegratedSaasSession,
 } from "./integrated-session.ts";
 
 const sessionPayload = {
   mode: "integrated",
-  user: { displayName: "Ada Frame", secondaryLabel: "ada" },
+  user: { displayName: "Ada Saas", secondaryLabel: "ada" },
   navigation: [
     {
       appName: "risk-dashboard",
@@ -25,9 +25,9 @@ const sessionPayload = {
 };
 
 test("validates the Portal-provided browser-safe session", () => {
-  assert.equal(parseIntegratedFrameSession(sessionPayload).navigation[0]?.href, "/risk");
+  assert.equal(parseIntegratedSaasSession(sessionPayload).navigation[0]?.href, "/risk");
   assert.throws(() =>
-    parseIntegratedFrameSession({
+    parseIntegratedSaasSession({
       ...sessionPayload,
       navigation: [
         {
@@ -41,9 +41,9 @@ test("validates the Portal-provided browser-safe session", () => {
 
 test("forwards only the Cookie to the configured Portal session endpoint", async () => {
   let observedHeaders = new Headers();
-  const client = new FramePortalSessionClient(
-    loadFramePortalSessionConfig({
-      FRAME_PORTAL_ORIGIN: "https://portal.internal.example",
+  const client = new SaasPortalSessionClient(
+    loadSaasPortalSessionConfig({
+      SAAS_PORTAL_ORIGIN: "https://portal.internal.example",
     }),
     async (_input, init) => {
       observedHeaders = new Headers(init?.headers);
@@ -63,13 +63,13 @@ test("forwards only the Cookie to the configured Portal session endpoint", async
 });
 
 test("fails closed when Portal denies the integrated session", async () => {
-  const client = new FramePortalSessionClient(
-    loadFramePortalSessionConfig({}),
+  const client = new SaasPortalSessionClient(
+    loadSaasPortalSessionConfig({}),
     async () => new Response(null, { status: 403 }),
   );
   await assert.rejects(
     () => client.get({ headers: new Headers({ cookie: "dsp-session=expired" }) }),
     (error: unknown) =>
-      error instanceof FramePortalSessionError && error.category === "unauthorized",
+      error instanceof SaasPortalSessionError && error.category === "unauthorized",
   );
 });

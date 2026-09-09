@@ -1,20 +1,20 @@
 {
-  "name": "@frame/__APP_NAME__",
+  "name": "@saas-platform/__APP_NAME__",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "FRAME_RUNTIME_MODE=standalone next dev",
-    "dev:integrated": "FRAME_RUNTIME_MODE=integrated next dev",
+    "dev": "SAAS_RUNTIME_MODE=standalone next dev",
+    "dev:integrated": "SAAS_RUNTIME_MODE=integrated next dev",
     "build": "next build",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@frame/manifest-schema": "0.1.0",
-    "@frame/next-config": "0.1.0",
-    "@frame/sdk": "0.1.0",
-    "@frame/shell": "0.1.0",
-    "@frame/theme": "0.1.0",
-    "@frame/ui": "0.1.0",
+    "@saas-platform/manifest-schema": "0.1.0",
+    "@saas-platform/next-config": "0.1.0",
+    "@saas-platform/sdk": "0.1.0",
+    "@saas-platform/shell": "0.1.0",
+    "@saas-platform/theme": "0.1.0",
+    "@saas-platform/ui": "0.1.0",
     "next": "16.2.10",
     "react": "19.2.0",
     "react-dom": "19.2.0"

@@ -1,10 +1,10 @@
 {
-  "name": "create-frame-app",
+  "name": "create-saas-app",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "bin": {
-    "create-frame-app": "./src/index.mjs"
+    "create-saas-app": "./src/index.mjs"
   },
   "scripts": {
     "test": "node --test src/*.test.mjs"

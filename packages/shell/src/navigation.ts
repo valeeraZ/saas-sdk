@@ -1,4 +1,4 @@
-export type FrameNavigationKind =
+export type SaasNavigationKind =
   | "home"
   | "admin"
   | "settings"
@@ -8,11 +8,11 @@ export type FrameNavigationKind =
   | "beta"
   | "remote";
 
-export type FrameNavigationItem = Readonly<{
+export type SaasNavigationItem = Readonly<{
   appName: string | null;
   description: string;
   href: string;
-  kind: FrameNavigationKind;
+  kind: SaasNavigationKind;
   label: string;
   requiresAdmin?: boolean;
   section: "platform" | "apps";
@@ -40,10 +40,10 @@ export type StandaloneNavigationApp = Readonly<{
   basePath: string;
 }>;
 
-export const FRAME_PLATFORM_NAVIGATION: readonly FrameNavigationItem[] = Object.freeze([
+export const SAAS_PLATFORM_NAVIGATION: readonly SaasNavigationItem[] = Object.freeze([
   {
     appName: null,
-    description: "Your FRAME workspace",
+    description: "Your SAAS workspace",
     href: "/",
     kind: "home",
     label: "Home",
@@ -68,7 +68,7 @@ export const FRAME_PLATFORM_NAVIGATION: readonly FrameNavigationItem[] = Object.
   },
 ]);
 
-const FIXTURE_APP_NAVIGATION: readonly FrameNavigationItem[] = Object.freeze([
+const FIXTURE_APP_NAVIGATION: readonly SaasNavigationItem[] = Object.freeze([
   {
     appName: "local-alpha",
     description: "Same-cluster service",
@@ -95,26 +95,26 @@ const FIXTURE_APP_NAVIGATION: readonly FrameNavigationItem[] = Object.freeze([
   },
 ]);
 
-export const FRAME_NAVIGATION_FIXTURE: readonly FrameNavigationItem[] = Object.freeze([
-  ...FRAME_PLATFORM_NAVIGATION,
+export const SAAS_NAVIGATION_FIXTURE: readonly SaasNavigationItem[] = Object.freeze([
+  ...SAAS_PLATFORM_NAVIGATION,
   ...FIXTURE_APP_NAVIGATION,
 ]);
 
-const LOGO_KIND: Readonly<Record<string, FrameNavigationKind>> = Object.freeze({
+const LOGO_KIND: Readonly<Record<string, SaasNavigationKind>> = Object.freeze({
   Boxes: "beta",
   ChartBar: "chart",
   CircleGauge: "alpha",
   Orbit: "remote",
 });
 
-export function buildFrameNavigation(
+export function buildSaasNavigation(
   catalog: readonly RegistryNavigationApp[],
   grants: readonly PermissionGrant[],
-): readonly FrameNavigationItem[] {
+): readonly SaasNavigationItem[] {
   const rolesByAppName = new Map(
     grants.map((grant) => [grant.appName, grant.roles] as const),
   );
-  const authorizedApps = catalog.flatMap((app): FrameNavigationItem[] => {
+  const authorizedApps = catalog.flatMap((app): SaasNavigationItem[] => {
     const roles = rolesByAppName.get(app.appName);
     if (!app.active || !roles || roles.length === 0) return [];
     return [
@@ -128,12 +128,12 @@ export function buildFrameNavigation(
       },
     ];
   });
-  return Object.freeze([...FRAME_PLATFORM_NAVIGATION, ...authorizedApps]);
+  return Object.freeze([...SAAS_PLATFORM_NAVIGATION, ...authorizedApps]);
 }
 
 export function buildStandaloneNavigation(
   app: StandaloneNavigationApp,
-): readonly FrameNavigationItem[] {
+): readonly SaasNavigationItem[] {
   return Object.freeze([
     Object.freeze({
       appName: app.appName,
@@ -146,11 +146,11 @@ export function buildStandaloneNavigation(
   ]);
 }
 
-export function filterFrameNavigation(
-  items: readonly FrameNavigationItem[],
+export function filterSaasNavigation(
+  items: readonly SaasNavigationItem[],
   hiddenApps: readonly string[],
   canAccessAdmin: boolean,
-): readonly FrameNavigationItem[] {
+): readonly SaasNavigationItem[] {
   const hidden = new Set(hiddenApps);
   return items.filter((item) => {
     if (item.requiresAdmin && !canAccessAdmin) return false;

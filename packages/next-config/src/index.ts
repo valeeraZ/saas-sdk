@@ -1,41 +1,41 @@
 import {
-  parseFrameManifest,
-  type FrameAppManifest,
-} from "@frame/manifest-schema";
+  parseSaasManifest,
+  type SaasAppManifest,
+} from "@saas-platform/manifest-schema";
 
-export type FrameNextConfig = Readonly<Record<string, unknown>> & {
+export type SaasNextConfig = Readonly<Record<string, unknown>> & {
   readonly basePath?: string;
   readonly output?: string;
   readonly transpilePackages?: readonly string[];
 };
 
-const FRAME_TRANSPILE_PACKAGES = [
-  "@frame/sdk",
-  "@frame/shell",
-  "@frame/theme",
-  "@frame/ui",
+const SAAS_TRANSPILE_PACKAGES = [
+  "@saas-platform/sdk",
+  "@saas-platform/shell",
+  "@saas-platform/theme",
+  "@saas-platform/ui",
 ] as const;
 
-export function withFrameNextConfig<T extends FrameNextConfig>(
-  manifestInput: FrameAppManifest,
+export function withSaasNextConfig<T extends SaasNextConfig>(
+  manifestInput: SaasAppManifest,
   nextConfig: T = {} as T,
 ): T & {
   readonly basePath: string;
   readonly output: string;
   readonly transpilePackages: readonly string[];
 } {
-  const manifest = parseFrameManifest(manifestInput);
+  const manifest = parseSaasManifest(manifestInput);
   if (nextConfig.basePath !== undefined && nextConfig.basePath !== manifest.basePath) {
     throw new Error(
       `Next.js basePath ${nextConfig.basePath} does not match manifest ${manifest.basePath}`,
     );
   }
   if ("assetPrefix" in nextConfig && nextConfig.assetPrefix === manifest.basePath) {
-    throw new Error("Do not use assetPrefix as a substitute for the FRAME basePath");
+    throw new Error("Do not use assetPrefix as a substitute for the SAAS basePath");
   }
   const transpilePackages = [
     ...new Set([
-      ...FRAME_TRANSPILE_PACKAGES,
+      ...SAAS_TRANSPILE_PACKAGES,
       ...(nextConfig.transpilePackages ?? []),
     ]),
   ];

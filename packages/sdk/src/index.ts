@@ -1,21 +1,21 @@
 export {
-  FrameHttpError,
-  FrameAuthBrowserClient,
-  FramePortalBrowserClient,
+  SaasHttpError,
+  SaasAuthBrowserClient,
+  SaasPortalBrowserClient,
   buildDspAuthenticateUrl,
-  frameFetch,
-  readFrameBrowserToken,
-  type FrameAuthBrowserConfig,
-  type FramePortalBrowserConfig,
+  saasFetch,
+  readSaasBrowserToken,
+  type SaasAuthBrowserConfig,
+  type SaasPortalBrowserConfig,
 } from "./browser.ts";
 export {
-  FrameAppConfigurationError,
-  framePublicAsset,
-  loadFrameAppRuntimeConfig,
-  type FrameAppRuntimeConfig,
+  SaasAppConfigurationError,
+  saasPublicAsset,
+  loadSaasAppRuntimeConfig,
+  type SaasAppRuntimeConfig,
 } from "./runtime.ts";
 export {
-  resolveFrameAppSession,
-  type FrameAppSession,
-  type ResolveFrameAppSessionOptions,
+  resolveSaasAppSession,
+  type SaasAppSession,
+  type ResolveSaasAppSessionOptions,
 } from "./server.ts";

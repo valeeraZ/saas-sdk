@@ -1,33 +1,33 @@
-import { parseFrameManifest } from "@frame/manifest-schema";
-import { FrameAppSessionProvider } from "@frame/sdk/react";
-import { resolveFrameAppSession } from "@frame/sdk/server";
-import { FrameShell } from "@frame/shell";
+import { parseSaasManifest } from "@saas-platform/manifest-schema";
+import { SaasAppSessionProvider } from "@saas-platform/sdk/react";
+import { resolveSaasAppSession } from "@saas-platform/sdk/server";
+import { SaasShell } from "@saas-platform/shell";
 import {
-  createInitialFramePreferences,
-  FRAME_SIDEBAR_COOKIE,
-  FRAME_THEME_COOKIE,
-} from "@frame/theme";
-import "@frame/ui/globals.css";
+  createInitialSaasPreferences,
+  SAAS_SIDEBAR_COOKIE,
+  SAAS_THEME_COOKIE,
+} from "@saas-platform/theme";
+import "@saas-platform/ui/globals.css";
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import type { ReactNode } from "react";
 
-import manifestJson from "../frame.manifest.json";
+import manifestJson from "../saas.manifest.json";
 
-const manifest = parseFrameManifest(manifestJson);
+const manifest = parseSaasManifest(manifestJson);
 
 export const metadata: Metadata = {
-  title: "Launchpad · FRAME",
+  title: "Launchpad · SAAS",
   description: manifest.description,
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   const [cookieStore, requestHeaders] = await Promise.all([cookies(), headers()]);
-  const initialPreferences = createInitialFramePreferences(
-    cookieStore.get(FRAME_THEME_COOKIE)?.value,
-    cookieStore.get(FRAME_SIDEBAR_COOKIE)?.value,
+  const initialPreferences = createInitialSaasPreferences(
+    cookieStore.get(SAAS_THEME_COOKIE)?.value,
+    cookieStore.get(SAAS_SIDEBAR_COOKIE)?.value,
   );
-  const session = await resolveFrameAppSession({ headers: requestHeaders }, manifest);
+  const session = await resolveSaasAppSession({ headers: requestHeaders }, manifest);
 
   return (
     <html
@@ -37,8 +37,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       suppressHydrationWarning
     >
       <body>
-        <FrameAppSessionProvider session={session}>
-          <FrameShell
+        <SaasAppSessionProvider session={session}>
+          <SaasShell
             canAccessAdmin={session.canAccessAdmin}
             currentAppLabel={manifest.name}
             currentAppName={manifest.appName}
@@ -49,8 +49,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             user={session.user}
           >
             {children}
-          </FrameShell>
-        </FrameAppSessionProvider>
+          </SaasShell>
+        </SaasAppSessionProvider>
       </body>
     </html>
   );

@@ -30,7 +30,7 @@ function parseArgs(args) {
   const basePath = values.get("base-path") ?? (appName ? `/${appName}` : undefined);
   if (!directory || !appName || !title || !basePath) {
     throw new Error(
-      "Usage: create-frame-app --directory <path> --name <kebab-name> --title <title> [--base-path /path]",
+      "Usage: create-saas-app --directory <path> --name <kebab-name> --title <title> [--base-path /path]",
     );
   }
   if (!APP_NAME_PATTERN.test(appName) || RESERVED.has(appName)) {
@@ -63,7 +63,7 @@ function renderDirectory(source, target, replacements) {
   }
 }
 
-export function createFrameApp(args = process.argv.slice(2)) {
+export function createSaasApp(args = process.argv.slice(2)) {
   const options = parseArgs(args);
   if (existsSync(options.directory)) {
     throw new Error(`Target already exists: ${options.directory}`);
@@ -84,11 +84,11 @@ export function createFrameApp(args = process.argv.slice(2)) {
 
 if (process.argv[1] && realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
-    const directory = createFrameApp();
-    console.log(`Created FRAME App at ${directory}`);
-    console.log("Next: install the @frame packages from your private package channel, then run npm run dev.");
+    const directory = createSaasApp();
+    console.log(`Created SAAS App at ${directory}`);
+    console.log("Next: install the @saas packages from your private package channel, then run npm run dev.");
   } catch (error) {
-    console.error(error instanceof Error ? error.message : "Unable to create FRAME App");
+    console.error(error instanceof Error ? error.message : "Unable to create SAAS App");
     process.exitCode = 1;
   }
 }

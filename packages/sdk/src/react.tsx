@@ -2,25 +2,25 @@
 
 import { createContext, use, type ReactNode } from "react";
 
-import type { FrameAppSession } from "./server.ts";
+import type { SaasAppSession } from "./server.ts";
 
-const FrameAppSessionContext = createContext<FrameAppSession | null>(null);
+const SaasAppSessionContext = createContext<SaasAppSession | null>(null);
 
-export function FrameAppSessionProvider({
+export function SaasAppSessionProvider({
   children,
   session,
-}: Readonly<{ children: ReactNode; session: FrameAppSession }>) {
+}: Readonly<{ children: ReactNode; session: SaasAppSession }>) {
   return (
-    <FrameAppSessionContext value={session}>
+    <SaasAppSessionContext value={session}>
       {children}
-    </FrameAppSessionContext>
+    </SaasAppSessionContext>
   );
 }
 
-export function useFrameAppSession(): FrameAppSession {
-  const session = use(FrameAppSessionContext);
+export function useSaasAppSession(): SaasAppSession {
+  const session = use(SaasAppSessionContext);
   if (!session) {
-    throw new Error("useFrameAppSession must be used inside FrameAppSessionProvider");
+    throw new Error("useSaasAppSession must be used inside SaasAppSessionProvider");
   }
   return session;
 }

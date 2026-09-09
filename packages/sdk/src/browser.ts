@@ -1,14 +1,14 @@
 import {
-  parseFrameCurrentUser,
-  parseFrameDspConfig,
-  parseFramePermissions,
-  type FrameCurrentUser,
-  type FrameDspConfig,
-  type FramePermissions,
-} from "@frame/auth";
-import type { FramePreferences } from "@frame/theme";
+  parseSaasCurrentUser,
+  parseSaasDspConfig,
+  parseSaasPermissions,
+  type SaasCurrentUser,
+  type SaasDspConfig,
+  type SaasPermissions,
+} from "@saas-platform/auth";
+import type { SaasPreferences } from "@saas-platform/theme";
 
-export type FrameAuthBrowserConfig = Readonly<{
+export type SaasAuthBrowserConfig = Readonly<{
   authServiceOrigin: string;
   tokenCookieName: string;
   dspConfigPath?: string;
@@ -16,18 +16,18 @@ export type FrameAuthBrowserConfig = Readonly<{
   permissionsPath?: string;
 }>;
 
-export type FramePortalBrowserConfig = Readonly<{
+export type SaasPortalBrowserConfig = Readonly<{
   portalOrigin: string;
   sessionPath?: string;
   preferencesPath?: string;
 }>;
 
-export class FrameHttpError extends Error {
+export class SaasHttpError extends Error {
   readonly status: number;
 
   constructor(status: number, message: string) {
     super(message);
-    this.name = "FrameHttpError";
+    this.name = "SaasHttpError";
     this.status = status;
   }
 }
@@ -46,12 +46,12 @@ function endpoint(originValue: string, path: string): string {
     path.startsWith("//") ||
     /[?#]/.test(path)
   ) {
-    throw new Error("FRAME browser endpoint configuration is invalid");
+    throw new Error("SAAS browser endpoint configuration is invalid");
   }
   return new URL(path, origin).toString();
 }
 
-export function readFrameBrowserToken(
+export function readSaasBrowserToken(
   cookieName: string,
   cookieValue: string = document.cookie,
 ): string | null {
@@ -71,14 +71,14 @@ export function readFrameBrowserToken(
   return null;
 }
 
-export async function frameFetch(
+export async function saasFetch(
   input: string | URL,
   init: RequestInit & Readonly<{ token?: string | null }> = {},
 ): Promise<Response> {
   const { token, ...requestInit } = init;
   const headers = new Headers(requestInit.headers);
   if (headers.has("authorization")) {
-    throw new Error("frameFetch owns the Authorization header");
+    throw new Error("saasFetch owns the Authorization header");
   }
   if (token) headers.set("authorization", `Bearer ${token}`);
   const response = await fetch(input, {
@@ -87,7 +87,7 @@ export async function frameFetch(
     credentials: requestInit.credentials ?? "omit",
   });
   if (!response.ok) {
-    throw new FrameHttpError(response.status, `FRAME request failed with ${response.status}`);
+    throw new SaasHttpError(response.status, `SAAS request failed with ${response.status}`);
   }
   return response;
 }
@@ -95,12 +95,12 @@ export async function frameFetch(
 async function readJson(response: Response): Promise<unknown> {
   const contentType = response.headers.get("content-type")?.toLowerCase() ?? "";
   if (!contentType.startsWith("application/json")) {
-    throw new FrameHttpError(response.status, "FRAME response is not JSON");
+    throw new SaasHttpError(response.status, "SAAS response is not JSON");
   }
   return response.json() as Promise<unknown>;
 }
 
-export function buildDspAuthenticateUrl(config: FrameDspConfig, returnTo: string): string {
+export function buildDspAuthenticateUrl(config: SaasDspConfig, returnTo: string): string {
   const returnUrl = new URL(returnTo);
   if (!["http:", "https:"].includes(returnUrl.protocol)) {
     throw new Error("DSP return URL must use HTTP or HTTPS");
@@ -110,10 +110,10 @@ export function buildDspAuthenticateUrl(config: FrameDspConfig, returnTo: string
   return authenticateUrl.toString();
 }
 
-export class FrameAuthBrowserClient {
-  readonly #config: Required<FrameAuthBrowserConfig>;
+export class SaasAuthBrowserClient {
+  readonly #config: Required<SaasAuthBrowserConfig>;
 
-  constructor(config: FrameAuthBrowserConfig) {
+  constructor(config: SaasAuthBrowserConfig) {
     this.#config = {
       ...config,
       dspConfigPath: config.dspConfigPath ?? "/config",
@@ -123,30 +123,30 @@ export class FrameAuthBrowserClient {
   }
 
   token(cookieValue?: string): string | null {
-    return readFrameBrowserToken(this.#config.tokenCookieName, cookieValue);
+    return readSaasBrowserToken(this.#config.tokenCookieName, cookieValue);
   }
 
-  async dspConfig(): Promise<FrameDspConfig> {
-    const response = await frameFetch(
+  async dspConfig(): Promise<SaasDspConfig> {
+    const response = await saasFetch(
       endpoint(this.#config.authServiceOrigin, this.#config.dspConfigPath),
     );
-    return parseFrameDspConfig(await readJson(response));
+    return parseSaasDspConfig(await readJson(response));
   }
 
-  async currentUser(): Promise<FrameCurrentUser> {
-    const response = await frameFetch(
+  async currentUser(): Promise<SaasCurrentUser> {
+    const response = await saasFetch(
       endpoint(this.#config.authServiceOrigin, this.#config.currentUserPath),
       { token: this.token() },
     );
-    return parseFrameCurrentUser(await readJson(response));
+    return parseSaasCurrentUser(await readJson(response));
   }
 
-  async permissions(): Promise<FramePermissions> {
-    const response = await frameFetch(
+  async permissions(): Promise<SaasPermissions> {
+    const response = await saasFetch(
       endpoint(this.#config.authServiceOrigin, this.#config.permissionsPath),
       { token: this.token() },
     );
-    return parseFramePermissions(await readJson(response));
+    return parseSaasPermissions(await readJson(response));
   }
 
   async authenticate(returnTo: string = window.location.href): Promise<never> {
@@ -156,37 +156,37 @@ export class FrameAuthBrowserClient {
   }
 }
 
-export class FramePortalBrowserClient {
-  readonly #config: Required<FramePortalBrowserConfig>;
+export class SaasPortalBrowserClient {
+  readonly #config: Required<SaasPortalBrowserConfig>;
 
-  constructor(config: FramePortalBrowserConfig) {
+  constructor(config: SaasPortalBrowserConfig) {
     this.#config = {
       ...config,
-      sessionPath: config.sessionPath ?? "/api/frame/session",
-      preferencesPath: config.preferencesPath ?? "/api/frame/me/preferences",
+      sessionPath: config.sessionPath ?? "/api/saas/session",
+      preferencesPath: config.preferencesPath ?? "/api/saas/me/preferences",
     };
   }
 
   async session(): Promise<unknown> {
-    const response = await frameFetch(
+    const response = await saasFetch(
       endpoint(this.#config.portalOrigin, this.#config.sessionPath),
       { credentials: "include" },
     );
     return readJson(response);
   }
 
-  async preferences(): Promise<FramePreferences> {
-    const response = await frameFetch(
+  async preferences(): Promise<SaasPreferences> {
+    const response = await saasFetch(
       endpoint(this.#config.portalOrigin, this.#config.preferencesPath),
       { credentials: "include" },
     );
-    return readJson(response) as Promise<FramePreferences>;
+    return readJson(response) as Promise<SaasPreferences>;
   }
 
   async updatePreferences(
-    patch: Partial<Pick<FramePreferences, "theme" | "sidebarCollapsed" | "hiddenApps">>,
-  ): Promise<FramePreferences> {
-    const response = await frameFetch(
+    patch: Partial<Pick<SaasPreferences, "theme" | "sidebarCollapsed" | "hiddenApps">>,
+  ): Promise<SaasPreferences> {
+    const response = await saasFetch(
       endpoint(this.#config.portalOrigin, this.#config.preferencesPath),
       {
         method: "PATCH",
@@ -195,6 +195,6 @@ export class FramePortalBrowserClient {
         body: JSON.stringify(patch),
       },
     );
-    return readJson(response) as Promise<FramePreferences>;
+    return readJson(response) as Promise<SaasPreferences>;
   }
 }

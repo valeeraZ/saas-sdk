@@ -1,27 +1,27 @@
 import {
-  FramePermissionsClient,
-  loadFrameAuthConfig,
-  type FrameAuthRequest,
-  type FrameCurrentUser,
-  type FramePermissions,
-} from "@frame/auth";
-import type { FrameAppManifest } from "@frame/manifest-schema";
+  SaasPermissionsClient,
+  loadSaasAuthConfig,
+  type SaasAuthRequest,
+  type SaasCurrentUser,
+  type SaasPermissions,
+} from "@saas-platform/auth";
+import type { SaasAppManifest } from "@saas-platform/manifest-schema";
 import {
-  FramePortalSessionClient,
-  loadFramePortalSessionConfig,
-  type IntegratedFrameSession,
-} from "@frame/shell/integrated-session";
+  SaasPortalSessionClient,
+  loadSaasPortalSessionConfig,
+  type IntegratedSaasSession,
+} from "@saas-platform/shell/integrated-session";
 import {
   buildStandaloneNavigation,
-  type FrameNavigationItem,
-} from "@frame/shell/navigation";
+  type SaasNavigationItem,
+} from "@saas-platform/shell/navigation";
 
-import { loadFrameAppRuntimeConfig } from "./runtime.ts";
+import { loadSaasAppRuntimeConfig } from "./runtime.ts";
 
-export type FrameAppSession = Readonly<{
+export type SaasAppSession = Readonly<{
   mode: "standalone" | "integrated";
   user: Readonly<{ displayName: string; secondaryLabel: string }>;
-  navigation: readonly FrameNavigationItem[];
+  navigation: readonly SaasNavigationItem[];
   currentAppRoles: readonly string[];
   canAccessAdmin: boolean;
   homeHref: string;
@@ -29,29 +29,29 @@ export type FrameAppSession = Readonly<{
 }>;
 
 type AuthClient = Readonly<{
-  getCurrentUser(request: FrameAuthRequest): Promise<FrameCurrentUser>;
-  get(request: FrameAuthRequest): Promise<FramePermissions>;
+  getCurrentUser(request: SaasAuthRequest): Promise<SaasCurrentUser>;
+  get(request: SaasAuthRequest): Promise<SaasPermissions>;
 }>;
 
 type PortalClient = Readonly<{
-  get(request: FrameAuthRequest): Promise<IntegratedFrameSession>;
+  get(request: SaasAuthRequest): Promise<IntegratedSaasSession>;
 }>;
 
-export type ResolveFrameAppSessionOptions = Readonly<{
+export type ResolveSaasAppSessionOptions = Readonly<{
   environment?: Readonly<Record<string, string | undefined>>;
   authClient?: AuthClient;
   portalClient?: PortalClient;
 }>;
 
-export async function resolveFrameAppSession(
-  request: FrameAuthRequest,
-  manifestInput: FrameAppManifest,
-  options: ResolveFrameAppSessionOptions = {},
-): Promise<FrameAppSession> {
+export async function resolveSaasAppSession(
+  request: SaasAuthRequest,
+  manifestInput: SaasAppManifest,
+  options: ResolveSaasAppSessionOptions = {},
+): Promise<SaasAppSession> {
   const environment = options.environment ?? process.env;
-  const runtime = loadFrameAppRuntimeConfig(manifestInput, environment);
+  const runtime = loadSaasAppRuntimeConfig(manifestInput, environment);
   const authClient =
-    options.authClient ?? new FramePermissionsClient(loadFrameAuthConfig(environment));
+    options.authClient ?? new SaasPermissionsClient(loadSaasAuthConfig(environment));
 
   if (runtime.mode === "standalone") {
     const currentUser = await authClient.getCurrentUser(request);
@@ -71,7 +71,7 @@ export async function resolveFrameAppSession(
 
   const portalClient =
     options.portalClient ??
-    new FramePortalSessionClient(loadFramePortalSessionConfig(environment));
+    new SaasPortalSessionClient(loadSaasPortalSessionConfig(environment));
   const [portalSession, permissions] = await Promise.all([
     portalClient.get(request),
     authClient.get(request),

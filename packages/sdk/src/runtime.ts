@@ -1,19 +1,19 @@
-import { loadFrameRuntimeMode, type FrameRuntimeMode } from "@frame/auth";
+import { loadSaasRuntimeMode, type SaasRuntimeMode } from "@saas-platform/auth";
 import {
-  parseFrameManifest,
-  type FrameAppManifest,
-} from "@frame/manifest-schema";
+  parseSaasManifest,
+  type SaasAppManifest,
+} from "@saas-platform/manifest-schema";
 
-export type FrameAppRuntimeConfig = Readonly<{
-  manifest: FrameAppManifest;
-  mode: FrameRuntimeMode;
+export type SaasAppRuntimeConfig = Readonly<{
+  manifest: SaasAppManifest;
+  mode: SaasRuntimeMode;
   portalOrigin: string | null;
 }>;
 
-export class FrameAppConfigurationError extends Error {
+export class SaasAppConfigurationError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = "FrameAppConfigurationError";
+    this.name = "SaasAppConfigurationError";
   }
 }
 
@@ -22,7 +22,7 @@ function parseOrigin(value: string, name: string): string {
   try {
     origin = new URL(value);
   } catch {
-    throw new FrameAppConfigurationError(`${name} must be a valid URL origin`);
+    throw new SaasAppConfigurationError(`${name} must be a valid URL origin`);
   }
   if (
     !["http:", "https:"].includes(origin.protocol) ||
@@ -32,39 +32,39 @@ function parseOrigin(value: string, name: string): string {
     origin.hash ||
     (origin.pathname !== "/" && origin.pathname !== "")
   ) {
-    throw new FrameAppConfigurationError(`${name} must be an HTTP(S) origin`);
+    throw new SaasAppConfigurationError(`${name} must be an HTTP(S) origin`);
   }
   return origin.origin;
 }
 
-export function loadFrameAppRuntimeConfig(
-  manifestInput: FrameAppManifest,
+export function loadSaasAppRuntimeConfig(
+  manifestInput: SaasAppManifest,
   environment: Readonly<Record<string, string | undefined>> = process.env,
-): FrameAppRuntimeConfig {
-  const manifest = parseFrameManifest(manifestInput);
-  const mode = loadFrameRuntimeMode(environment);
-  const configuredOrigin = environment.FRAME_PORTAL_ORIGIN;
+): SaasAppRuntimeConfig {
+  const manifest = parseSaasManifest(manifestInput);
+  const mode = loadSaasRuntimeMode(environment);
+  const configuredOrigin = environment.SAAS_PORTAL_ORIGIN;
   if (mode === "integrated" && !configuredOrigin) {
-    throw new FrameAppConfigurationError(
-      "FRAME_PORTAL_ORIGIN is required in integrated mode",
+    throw new SaasAppConfigurationError(
+      "SAAS_PORTAL_ORIGIN is required in integrated mode",
     );
   }
   return Object.freeze({
     manifest,
     mode,
-    portalOrigin: configuredOrigin ? parseOrigin(configuredOrigin, "FRAME_PORTAL_ORIGIN") : null,
+    portalOrigin: configuredOrigin ? parseOrigin(configuredOrigin, "SAAS_PORTAL_ORIGIN") : null,
   });
 }
 
-export function framePublicAsset(
-  manifestInput: FrameAppManifest,
+export function saasPublicAsset(
+  manifestInput: SaasAppManifest,
   asset: string,
 ): string {
-  const manifest = parseFrameManifest(manifestInput);
+  const manifest = parseSaasManifest(manifestInput);
   const normalized = asset.startsWith("/") ? asset.slice(1) : asset;
   if (!manifest.publicAssets.includes(normalized)) {
-    throw new FrameAppConfigurationError(
-      `Public asset ${asset} is not declared in the FRAME manifest`,
+    throw new SaasAppConfigurationError(
+      `Public asset ${asset} is not declared in the SAAS manifest`,
     );
   }
   return `${manifest.basePath}/${normalized}`;

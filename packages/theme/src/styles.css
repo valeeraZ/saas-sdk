@@ -32,12 +32,12 @@
   --sidebar-accent-foreground: oklch(0.272 0.048 181);
   --sidebar-border: oklch(0.86 0.018 91);
   --sidebar-ring: oklch(0.55 0.104 178);
-  --frame-canvas: oklch(0.965 0.01 91);
-  --frame-grid: oklch(0.74 0.018 91 / 0.18);
-  --frame-positive: oklch(0.52 0.11 155);
-  --frame-warning: oklch(0.65 0.13 75);
-  --frame-sidebar-width: 17.5rem;
-  --frame-sidebar-width-collapsed: 4.75rem;
+  --saas-canvas: oklch(0.965 0.01 91);
+  --saas-grid: oklch(0.74 0.018 91 / 0.18);
+  --saas-positive: oklch(0.52 0.11 155);
+  --saas-warning: oklch(0.65 0.13 75);
+  --saas-sidebar-width: 17.5rem;
+  --saas-sidebar-width-collapsed: 4.75rem;
   --radius: 0.7rem;
 }
 
@@ -70,8 +70,8 @@
   --sidebar-accent-foreground: oklch(0.92 0.012 91);
   --sidebar-border: oklch(0.275 0.024 190);
   --sidebar-ring: oklch(0.71 0.105 176);
-  --frame-canvas: oklch(0.14 0.017 190);
-  --frame-grid: oklch(0.76 0.018 91 / 0.07);
-  --frame-positive: oklch(0.7 0.12 155);
-  --frame-warning: oklch(0.76 0.13 78);
+  --saas-canvas: oklch(0.14 0.017 190);
+  --saas-grid: oklch(0.76 0.018 91 / 0.07);
+  --saas-positive: oklch(0.7 0.12 155);
+  --saas-warning: oklch(0.76 0.13 78);
 }

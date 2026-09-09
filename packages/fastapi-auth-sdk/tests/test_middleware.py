@@ -8,7 +8,7 @@ import unittest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
-from frame_fastapi_auth import FrameAuthConfig, FrameAuthMiddleware, FrameAuthServiceError, FrameUser
+from saas_fastapi_auth import SaasAuthConfig, SaasAuthMiddleware, SaasAuthServiceError, SaasUser
 
 
 class FakeAuthorizer:
@@ -21,7 +21,7 @@ class FakeAuthorizer:
         self.tokens.append(token)
         if self.error:
             raise self.error
-        return FrameUser("demo", "Demo User", "demo"), self.roles
+        return SaasUser("demo", "Demo User", "demo"), self.roles
 
 
 async def call_app(middleware, headers=(), path="/data", scope_type="http"):
@@ -48,20 +48,20 @@ async def call_app(middleware, headers=(), path="/data", scope_type="http"):
 
 class MiddlewareTests(unittest.IsolatedAsyncioTestCase):
     def config(self, **kwargs):
-        return FrameAuthConfig("https://auth.example", "launchpad", **kwargs)
+        return SaasAuthConfig("https://auth.example", "launchpad", **kwargs)
 
     async def test_header_auth_populates_request_state(self):
         authorizer = FakeAuthorizer()
-        middleware = FrameAuthMiddleware(lambda *_: None, self.config(), authorizer)
+        middleware = SaasAuthMiddleware(lambda *_: None, self.config(), authorizer)
         messages, state = await call_app(middleware, [(b"authorization", b"Bearer opaque")])
         self.assertEqual(messages[0]["status"], 204)
         self.assertEqual(authorizer.tokens, ["opaque"])
-        self.assertEqual(state["frame_user"].id, "demo")
-        self.assertEqual(state["frame_roles"], ("developer",))
+        self.assertEqual(state["saas_user"].id, "demo")
+        self.assertEqual(state["saas_roles"], ("developer",))
 
     async def test_cookie_source_and_required_role(self):
         authorizer = FakeAuthorizer(("viewer",))
-        middleware = FrameAuthMiddleware(
+        middleware = SaasAuthMiddleware(
             lambda *_: None,
             self.config(required_roles=frozenset({"admin"})),
             authorizer,
@@ -70,16 +70,16 @@ class MiddlewareTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(messages[0]["status"], 403)
 
     async def test_auth_service_outage_fails_closed(self):
-        authorizer = FakeAuthorizer(error=FrameAuthServiceError("unavailable", "down"))
-        middleware = FrameAuthMiddleware(lambda *_: None, self.config(), authorizer)
+        authorizer = FakeAuthorizer(error=SaasAuthServiceError("unavailable", "down"))
+        middleware = SaasAuthMiddleware(lambda *_: None, self.config(), authorizer)
         messages, _ = await call_app(middleware, [(b"authorization", b"Bearer opaque")])
         self.assertEqual(messages[0]["status"], 503)
-        self.assertEqual(json.loads(messages[1]["body"]), {"error": "frame_auth_unavailable"})
+        self.assertEqual(json.loads(messages[1]["body"]), {"error": "saas_auth_unavailable"})
 
     async def test_health_and_websocket_bypass_http_middleware(self):
         authorizer = FakeAuthorizer(error=AssertionError("must not authorize"))
-        middleware = FrameAuthMiddleware(lambda *_: None, self.config(), authorizer)
-        health, _ = await call_app(middleware, path="/api/frame/health")
+        middleware = SaasAuthMiddleware(lambda *_: None, self.config(), authorizer)
+        health, _ = await call_app(middleware, path="/api/saas/health")
         websocket, _ = await call_app(middleware, scope_type="websocket")
         self.assertEqual(health[0]["status"], 204)
         self.assertEqual(websocket[0]["status"], 204)

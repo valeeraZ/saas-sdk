@@ -1,30 +1,30 @@
-import type { FrameNavigationItem } from "./navigation.ts";
+import type { SaasNavigationItem } from "./navigation.ts";
 
-export type IntegratedFrameSession = Readonly<{
+export type IntegratedSaasSession = Readonly<{
   mode: "integrated";
   user: Readonly<{
     displayName: string;
     secondaryLabel: string;
   }>;
-  navigation: readonly FrameNavigationItem[];
+  navigation: readonly SaasNavigationItem[];
   canAccessAdmin: boolean;
 }>;
 
-export type FramePortalSessionConfig = Readonly<{
+export type SaasPortalSessionConfig = Readonly<{
   endpoint: string;
   timeoutMs: number;
   responseLimitBytes: number;
 }>;
 
-export class FramePortalSessionError extends Error {
+export class SaasPortalSessionError extends Error {
   readonly category: "configuration" | "unauthorized" | "unavailable" | "invalid_response";
 
   constructor(
-    category: FramePortalSessionError["category"],
+    category: SaasPortalSessionError["category"],
     message: string,
   ) {
     super(message);
-    this.name = "FramePortalSessionError";
+    this.name = "SaasPortalSessionError";
     this.category = category;
   }
 }
@@ -33,15 +33,15 @@ function positiveInteger(value: string | undefined, fallback: number, name: stri
   if (value === undefined) return fallback;
   const parsed = Number(value);
   if (!Number.isSafeInteger(parsed) || parsed < 1) {
-    throw new FramePortalSessionError("configuration", `${name} must be a positive integer`);
+    throw new SaasPortalSessionError("configuration", `${name} must be a positive integer`);
   }
   return parsed;
 }
 
-export function loadFramePortalSessionConfig(
+export function loadSaasPortalSessionConfig(
   environment: Readonly<Record<string, string | undefined>> = process.env,
-): FramePortalSessionConfig {
-  const origin = new URL(environment.FRAME_PORTAL_ORIGIN ?? "http://localhost:3000");
+): SaasPortalSessionConfig {
+  const origin = new URL(environment.SAAS_PORTAL_ORIGIN ?? "http://localhost:3000");
   if (
     !["http:", "https:"].includes(origin.protocol) ||
     origin.username ||
@@ -50,29 +50,29 @@ export function loadFramePortalSessionConfig(
     origin.hash ||
     (origin.pathname !== "/" && origin.pathname !== "")
   ) {
-    throw new FramePortalSessionError(
+    throw new SaasPortalSessionError(
       "configuration",
-      "FRAME_PORTAL_ORIGIN must be an HTTP(S) origin",
+      "SAAS_PORTAL_ORIGIN must be an HTTP(S) origin",
     );
   }
-  const path = environment.FRAME_PORTAL_SESSION_PATH ?? "/api/frame/session";
+  const path = environment.SAAS_PORTAL_SESSION_PATH ?? "/api/saas/session";
   if (!path.startsWith("/") || path.startsWith("//") || /[?#]/.test(path)) {
-    throw new FramePortalSessionError(
+    throw new SaasPortalSessionError(
       "configuration",
-      "FRAME_PORTAL_SESSION_PATH must be an absolute path",
+      "SAAS_PORTAL_SESSION_PATH must be an absolute path",
     );
   }
   return Object.freeze({
     endpoint: new URL(path, origin).toString(),
     timeoutMs: positiveInteger(
-      environment.FRAME_PORTAL_SESSION_TIMEOUT_MS,
+      environment.SAAS_PORTAL_SESSION_TIMEOUT_MS,
       2_000,
-      "FRAME_PORTAL_SESSION_TIMEOUT_MS",
+      "SAAS_PORTAL_SESSION_TIMEOUT_MS",
     ),
     responseLimitBytes: positiveInteger(
-      environment.FRAME_PORTAL_SESSION_RESPONSE_LIMIT_BYTES,
+      environment.SAAS_PORTAL_SESSION_RESPONSE_LIMIT_BYTES,
       262_144,
-      "FRAME_PORTAL_SESSION_RESPONSE_LIMIT_BYTES",
+      "SAAS_PORTAL_SESSION_RESPONSE_LIMIT_BYTES",
     ),
   });
 }
@@ -101,7 +101,7 @@ const NAVIGATION_KINDS = new Set([
   "remote",
 ]);
 
-export function parseIntegratedFrameSession(value: unknown): IntegratedFrameSession {
+export function parseIntegratedSaasSession(value: unknown): IntegratedSaasSession {
   if (
     !isRecord(value) ||
     Object.keys(value).some(
@@ -122,13 +122,13 @@ export function parseIntegratedFrameSession(value: unknown): IntegratedFrameSess
     typeof value.canAccessAdmin !== "boolean" ||
     !Array.isArray(value.navigation)
   ) {
-    throw new FramePortalSessionError(
+    throw new SaasPortalSessionError(
       "invalid_response",
       "Portal session response is invalid",
     );
   }
 
-  const navigation = value.navigation.map((item, index): FrameNavigationItem => {
+  const navigation = value.navigation.map((item, index): SaasNavigationItem => {
     if (
       !isRecord(item) ||
       Object.keys(item).some((key) => !NAVIGATION_FIELDS.has(key)) ||
@@ -142,7 +142,7 @@ export function parseIntegratedFrameSession(value: unknown): IntegratedFrameSess
       (item.requiresAdmin !== undefined && typeof item.requiresAdmin !== "boolean") ||
       (item.section !== "platform" && item.section !== "apps")
     ) {
-      throw new FramePortalSessionError(
+      throw new SaasPortalSessionError(
         "invalid_response",
         `Portal session has invalid Navigation at index ${index}`,
       );
@@ -151,7 +151,7 @@ export function parseIntegratedFrameSession(value: unknown): IntegratedFrameSess
       appName: item.appName,
       description: item.description,
       href: item.href,
-      kind: item.kind as FrameNavigationItem["kind"],
+      kind: item.kind as SaasNavigationItem["kind"],
       label: item.label,
       ...(item.requiresAdmin === undefined
         ? {}
@@ -173,7 +173,7 @@ export function parseIntegratedFrameSession(value: unknown): IntegratedFrameSess
 
 async function readBoundedJson(response: Response, limitBytes: number): Promise<unknown> {
   if (!response.body) {
-    throw new FramePortalSessionError("invalid_response", "Portal session response is empty");
+    throw new SaasPortalSessionError("invalid_response", "Portal session response is empty");
   }
   const reader = response.body.getReader();
   const chunks: Uint8Array[] = [];
@@ -184,7 +184,7 @@ async function readBoundedJson(response: Response, limitBytes: number): Promise<
     length += value.byteLength;
     if (length > limitBytes) {
       await reader.cancel();
-      throw new FramePortalSessionError(
+      throw new SaasPortalSessionError(
         "invalid_response",
         "Portal session response is too large",
       );
@@ -200,26 +200,26 @@ async function readBoundedJson(response: Response, limitBytes: number): Promise<
   try {
     return JSON.parse(new TextDecoder().decode(body)) as unknown;
   } catch {
-    throw new FramePortalSessionError(
+    throw new SaasPortalSessionError(
       "invalid_response",
       "Portal session response is malformed",
     );
   }
 }
 
-export class FramePortalSessionClient {
-  readonly #config: FramePortalSessionConfig;
+export class SaasPortalSessionClient {
+  readonly #config: SaasPortalSessionConfig;
   readonly #fetch: typeof fetch;
 
   constructor(
-    config = loadFramePortalSessionConfig(),
+    config = loadSaasPortalSessionConfig(),
     fetchImplementation: typeof fetch = fetch,
   ) {
     this.#config = config;
     this.#fetch = fetchImplementation;
   }
 
-  async get(request: Readonly<{ headers: Pick<Headers, "get"> }>): Promise<IntegratedFrameSession> {
+  async get(request: Readonly<{ headers: Pick<Headers, "get"> }>): Promise<IntegratedSaasSession> {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), this.#config.timeoutMs);
     timeout.unref?.();
@@ -235,20 +235,20 @@ export class FramePortalSessionClient {
         signal: controller.signal,
       });
       if (response.status === 401 || response.status === 403) {
-        throw new FramePortalSessionError(
+        throw new SaasPortalSessionError(
           "unauthorized",
           "Portal session is not authorized",
         );
       }
       if (!response.ok) {
-        throw new FramePortalSessionError("unavailable", "Portal session is unavailable");
+        throw new SaasPortalSessionError("unavailable", "Portal session is unavailable");
       }
-      return parseIntegratedFrameSession(
+      return parseIntegratedSaasSession(
         await readBoundedJson(response, this.#config.responseLimitBytes),
       );
     } catch (error) {
-      if (error instanceof FramePortalSessionError) throw error;
-      throw new FramePortalSessionError("unavailable", "Portal session is unavailable");
+      if (error instanceof SaasPortalSessionError) throw error;
+      throw new SaasPortalSessionError("unavailable", "Portal session is unavailable");
     } finally {
       clearTimeout(timeout);
     }

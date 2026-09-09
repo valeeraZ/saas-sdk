@@ -1,16 +1,16 @@
 "use client";
 
 import {
-  DEFAULT_FRAME_PREFERENCES,
-  FRAME_PREFERENCES_EVENT,
-  FRAME_PREFERENCES_STORAGE_KEY,
-  FRAME_SIDEBAR_COOKIE,
-  FRAME_SIDEBAR_STORAGE_KEY,
-  FRAME_THEME_COOKIE,
-  FRAME_THEME_STORAGE_KEY,
-  isFrameTheme,
-  type FramePreferences,
-} from "@frame/theme";
+  DEFAULT_SAAS_PREFERENCES,
+  SAAS_PREFERENCES_EVENT,
+  SAAS_PREFERENCES_STORAGE_KEY,
+  SAAS_SIDEBAR_COOKIE,
+  SAAS_SIDEBAR_STORAGE_KEY,
+  SAAS_THEME_COOKIE,
+  SAAS_THEME_STORAGE_KEY,
+  isSaasTheme,
+  type SaasPreferences,
+} from "@saas-platform/theme";
 import {
   createContext,
   startTransition,
@@ -24,28 +24,28 @@ import {
 } from "react";
 
 type PreferencePatch = Readonly<{
-  theme?: FramePreferences["theme"];
+  theme?: SaasPreferences["theme"];
   sidebarCollapsed?: boolean;
   hiddenApps?: readonly string[];
 }>;
 
-export type FramePreferencesMode = "local" | "portal";
+export type SaasPreferencesMode = "local" | "portal";
 
-type FramePreferencesContextValue = Readonly<{
+type SaasPreferencesContextValue = Readonly<{
   error: string | null;
   isLoading: boolean;
   isSaving: boolean;
-  mode: FramePreferencesMode;
-  preferences: FramePreferences;
+  mode: SaasPreferencesMode;
+  preferences: SaasPreferences;
   updatePreferences: (patch: PreferencePatch) => Promise<void>;
 }>;
 
-const FramePreferencesContext = createContext<FramePreferencesContextValue | null>(null);
+const SaasPreferencesContext = createContext<SaasPreferencesContextValue | null>(null);
 
-function normalizePreferences(value: unknown): FramePreferences | null {
+function normalizePreferences(value: unknown): SaasPreferences | null {
   if (!value || typeof value !== "object") return null;
   const candidate = value as Record<string, unknown>;
-  if (!isFrameTheme(candidate.theme) || typeof candidate.sidebarCollapsed !== "boolean") {
+  if (!isSaasTheme(candidate.theme) || typeof candidate.sidebarCollapsed !== "boolean") {
     return null;
   }
   if (
@@ -62,20 +62,20 @@ function normalizePreferences(value: unknown): FramePreferences | null {
   };
 }
 
-function applyBrowserPreferences(preferences: FramePreferences): void {
+function applyBrowserPreferences(preferences: SaasPreferences): void {
   document.documentElement.classList.toggle("dark", preferences.theme === "dark");
   document.documentElement.dataset.theme = preferences.theme;
-  document.cookie = `${FRAME_THEME_COOKIE}=${preferences.theme}; Path=/; Max-Age=31536000; SameSite=Lax`;
-  document.cookie = `${FRAME_SIDEBAR_COOKIE}=${String(preferences.sidebarCollapsed)}; Path=/; Max-Age=31536000; SameSite=Lax`;
-  localStorage.setItem(FRAME_THEME_STORAGE_KEY, preferences.theme);
-  localStorage.setItem(FRAME_SIDEBAR_STORAGE_KEY, String(preferences.sidebarCollapsed));
-  localStorage.setItem(FRAME_PREFERENCES_STORAGE_KEY, JSON.stringify(preferences));
+  document.cookie = `${SAAS_THEME_COOKIE}=${preferences.theme}; Path=/; Max-Age=31536000; SameSite=Lax`;
+  document.cookie = `${SAAS_SIDEBAR_COOKIE}=${String(preferences.sidebarCollapsed)}; Path=/; Max-Age=31536000; SameSite=Lax`;
+  localStorage.setItem(SAAS_THEME_STORAGE_KEY, preferences.theme);
+  localStorage.setItem(SAAS_SIDEBAR_STORAGE_KEY, String(preferences.sidebarCollapsed));
+  localStorage.setItem(SAAS_PREFERENCES_STORAGE_KEY, JSON.stringify(preferences));
 }
 
 function mergePreferences(
-  current: FramePreferences,
+  current: SaasPreferences,
   patch: PreferencePatch,
-): FramePreferences {
+): SaasPreferences {
   return {
     theme: patch.theme ?? current.theme,
     sidebarCollapsed: patch.sidebarCollapsed ?? current.sidebarCollapsed,
@@ -84,16 +84,16 @@ function mergePreferences(
   };
 }
 
-export function FramePreferencesProvider({
+export function SaasPreferencesProvider({
   children,
-  endpoint = "/api/frame/me/preferences",
-  initialPreferences = DEFAULT_FRAME_PREFERENCES,
+  endpoint = "/api/saas/me/preferences",
+  initialPreferences = DEFAULT_SAAS_PREFERENCES,
   mode = "portal",
 }: Readonly<{
   children: ReactNode;
   endpoint?: string;
-  initialPreferences?: FramePreferences;
-  mode?: FramePreferencesMode;
+  initialPreferences?: SaasPreferences;
+  mode?: SaasPreferencesMode;
 }>) {
   const [preferences, setPreferences] = useState(initialPreferences);
   const [isLoading, setIsLoading] = useState(mode === "portal");
@@ -112,7 +112,7 @@ export function FramePreferencesProvider({
   useEffect(() => {
     if (mode === "local") {
       try {
-        const stored = localStorage.getItem(FRAME_PREFERENCES_STORAGE_KEY);
+        const stored = localStorage.getItem(SAAS_PREFERENCES_STORAGE_KEY);
         const localPreferences = stored
           ? normalizePreferences(JSON.parse(stored))
           : null;
@@ -158,7 +158,7 @@ export function FramePreferencesProvider({
 
   useEffect(() => {
     function synchronize(event: StorageEvent) {
-      if (event.key !== FRAME_PREFERENCES_STORAGE_KEY || !event.newValue) return;
+      if (event.key !== SAAS_PREFERENCES_STORAGE_KEY || !event.newValue) return;
       try {
         const synchronized = normalizePreferences(JSON.parse(event.newValue));
         if (synchronized) setPreferences(synchronized);
@@ -183,7 +183,7 @@ export function FramePreferencesProvider({
         latestPreferences.current = saved;
         setPreferences(saved);
         setError(null);
-        window.dispatchEvent(new CustomEvent(FRAME_PREFERENCES_EVENT, { detail: saved }));
+        window.dispatchEvent(new CustomEvent(SAAS_PREFERENCES_EVENT, { detail: saved }));
         return;
       }
 
@@ -205,7 +205,7 @@ export function FramePreferencesProvider({
           if (!saved) throw new Error("Preference update response is invalid");
           latestPreferences.current = saved;
           setPreferences(saved);
-          window.dispatchEvent(new CustomEvent(FRAME_PREFERENCES_EVENT, { detail: saved }));
+          window.dispatchEvent(new CustomEvent(SAAS_PREFERENCES_EVENT, { detail: saved }));
         } catch (saveError) {
           latestPreferences.current = previous;
           setPreferences(previous);
@@ -223,16 +223,16 @@ export function FramePreferencesProvider({
     [endpoint, mode],
   );
 
-  const value = useMemo<FramePreferencesContextValue>(
+  const value = useMemo<SaasPreferencesContextValue>(
     () => ({ error, isLoading, isSaving, mode, preferences, updatePreferences }),
     [error, isLoading, isSaving, mode, preferences, updatePreferences],
   );
 
-  return <FramePreferencesContext.Provider value={value}>{children}</FramePreferencesContext.Provider>;
+  return <SaasPreferencesContext.Provider value={value}>{children}</SaasPreferencesContext.Provider>;
 }
 
-export function useFramePreferences(): FramePreferencesContextValue {
-  const value = useContext(FramePreferencesContext);
-  if (!value) throw new Error("useFramePreferences must be used inside FramePreferencesProvider");
+export function useSaasPreferences(): SaasPreferencesContextValue {
+  const value = useContext(SaasPreferencesContext);
+  if (!value) throw new Error("useSaasPreferences must be used inside SaasPreferencesProvider");
   return value;
 }

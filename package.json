@@ -9,13 +9,13 @@
   "workspaces": [
     "packages/*",
     "apps/*",
-    "tools/create-frame-app"
+    "tools/create-saas-app"
   ],
   "scripts": {
     "build:packages": "node scripts/build-packages.mjs",
-    "build:examples": "npm run build --workspace @frame/example-app --workspace @frame/local-alpha --workspace @frame/local-beta --workspace @frame/remote-gamma",
+    "build:examples": "npm run build --workspace @saas-platform/example-app --workspace @saas-platform/local-alpha --workspace @saas-platform/local-beta --workspace @saas-platform/remote-gamma",
     "build": "npm run build:packages && npm run build:examples",
-    "test:node": "node --test packages/*/src/*.test.ts tools/create-frame-app/src/*.test.mjs",
+    "test:node": "node --test packages/*/src/*.test.ts tools/create-saas-app/src/*.test.mjs",
     "test:python": "python3 -m unittest discover -s packages/fastapi-auth-sdk/tests -p 'test_*.py'",
     "test": "npm run build:packages && npm run test:node && npm run test:python",
     "typecheck": "npm run build:packages && node scripts/typecheck.mjs",
@@ -23,7 +23,7 @@
     "pack:python": "python3 -m build --wheel --outdir artifacts packages/fastapi-auth-sdk",
     "test:packed": "node scripts/test-packed.mjs",
     "registry:fixture": "node tools/registry-fixture/server.mjs",
-    "create:frame-app": "node tools/create-frame-app/src/index.mjs",
+    "create:saas-app": "node tools/create-saas-app/src/index.mjs",
     "contract:example": "node packages/contract-cli/dist/cli.js check apps/example-app --require-build",
     "test:wheel": "python3 scripts/test-wheel.py",
     "verify": "npm run build:packages && npm run test:node && npm run test:python && node scripts/typecheck.mjs && npm run build:examples && npm run contract:example && node scripts/pack.mjs && npm run test:packed && npm run test:portal",

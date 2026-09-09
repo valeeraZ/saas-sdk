@@ -1,27 +1,27 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { buildDspAuthenticateUrl, frameFetch, readFrameBrowserToken } from "./browser.ts";
+import { buildDspAuthenticateUrl, saasFetch, readSaasBrowserToken } from "./browser.ts";
 
 test("reads an encoded browser token without accepting control characters", () => {
-  assert.equal(readFrameBrowserToken("dsp-token", "x=1; dsp-token=abc%3A123"), "abc:123");
-  assert.equal(readFrameBrowserToken("dsp-token", "dsp-token=abc%0A123"), null);
+  assert.equal(readSaasBrowserToken("dsp-token", "x=1; dsp-token=abc%3A123"), "abc:123");
+  assert.equal(readSaasBrowserToken("dsp-token", "dsp-token=abc%0A123"), null);
 });
 
 test("builds the DSP renewal URL without putting the token in the URL", () => {
   const url = buildDspAuthenticateUrl(
     {
       baseUrl: "https://dsp.example/",
-      clientId: "frame",
+      clientId: "saas",
       authenticateUrl: "https://dsp.example/authenticate",
     },
-    "https://frame.example/launchpad",
+    "https://saas.example/launchpad",
   );
-  assert.equal(new URL(url).searchParams.get("returnTo"), "https://frame.example/launchpad");
+  assert.equal(new URL(url).searchParams.get("returnTo"), "https://saas.example/launchpad");
   assert.equal(url.includes("token"), false);
 });
 
-test("frameFetch owns and sets the bearer header", async () => {
+test("saasFetch owns and sets the bearer header", async () => {
   const originalFetch = globalThis.fetch;
   globalThis.fetch = (async (_input: string | URL | Request, init?: RequestInit) => {
     assert.equal(new Headers(init?.headers).get("authorization"), "Bearer secret");
@@ -29,9 +29,9 @@ test("frameFetch owns and sets the bearer header", async () => {
     return new Response(null, { status: 204 });
   }) as typeof fetch;
   try {
-    await frameFetch("https://api.example/data", { token: "secret" });
+    await saasFetch("https://api.example/data", { token: "secret" });
     await assert.rejects(
-      frameFetch("https://api.example/data", {
+      saasFetch("https://api.example/data", {
         token: "secret",
         headers: { authorization: "Bearer other" },
       }),

@@ -1,5 +1,5 @@
 {
-  "name": "@frame/theme",
+  "name": "@saas-platform/theme",
   "version": "0.1.0",
   "private": true,
   "type": "module",

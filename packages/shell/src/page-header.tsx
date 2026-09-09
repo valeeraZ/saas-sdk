@@ -5,13 +5,13 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@frame/ui/components/breadcrumb";
-import { Badge } from "@frame/ui/components/badge";
+} from "@saas-platform/ui/components/breadcrumb";
+import { Badge } from "@saas-platform/ui/components/badge";
 import { Fragment, type ReactNode } from "react";
 
-export type FrameBreadcrumb = Readonly<{ href?: string; label: string }>;
+export type SaasBreadcrumb = Readonly<{ href?: string; label: string }>;
 
-export function FramePageHeader({
+export function SaasPageHeader({
   actions,
   breadcrumbs = [],
   description,
@@ -20,7 +20,7 @@ export function FramePageHeader({
   title,
 }: Readonly<{
   actions?: ReactNode;
-  breadcrumbs?: readonly FrameBreadcrumb[];
+  breadcrumbs?: readonly SaasBreadcrumb[];
   description?: string;
   eyebrow?: string;
   status?: string;

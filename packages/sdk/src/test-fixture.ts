@@ -5,9 +5,9 @@ export const manifest = {
   description: "Release readiness",
   logo: "CircleGauge" as const,
   basePath: "/launchpad",
-  healthPath: "/api/frame/health" as const,
+  healthPath: "/api/saas/health" as const,
   shellVersion: "^0.1.0",
   roles: [{ name: "developer", description: "Can use Launchpad" }],
   standaloneRoles: ["developer"],
-  publicAssets: ["frame-path.svg"],
+  publicAssets: ["saas-path.svg"],
 };

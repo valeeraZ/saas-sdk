@@ -1,5 +1,5 @@
 {
-  "name": "@frame/spike-app",
+  "name": "@saas-platform/spike-app",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -21,8 +21,8 @@
     "react": "19.2.0"
   },
   "dependencies": {
-    "@frame/shell": "0.1.0",
-    "@frame/ui": "0.1.0",
+    "@saas-platform/shell": "0.1.0",
+    "@saas-platform/ui": "0.1.0",
     "lucide-react": "^1.25.0"
   },
   "devDependencies": {

@@ -1,13 +1,13 @@
 {
-  "name": "@frame/shell",
+  "name": "@saas-platform/shell",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/frame-shell.d.ts",
-      "import": "./dist/frame-shell.js",
-      "default": "./dist/frame-shell.js"
+      "types": "./dist/saas-shell.d.ts",
+      "import": "./dist/saas-shell.js",
+      "default": "./dist/saas-shell.js"
     },
     "./integrated-session": {
       "types": "./dist/integrated-session.d.ts",
@@ -45,8 +45,8 @@
     "build": "tsc -p tsconfig.build.json && node ../../scripts/copy-assets.mjs"
   },
   "dependencies": {
-    "@frame/theme": "0.1.0",
-    "@frame/ui": "0.1.0",
+    "@saas-platform/theme": "0.1.0",
+    "@saas-platform/ui": "0.1.0",
     "lucide-react": "^1.25.0"
   },
   "devDependencies": {

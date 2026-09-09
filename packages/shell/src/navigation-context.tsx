@@ -6,29 +6,29 @@ import {
   type ReactNode,
 } from "react";
 
-import type { FrameNavigationItem } from "./navigation.ts";
+import type { SaasNavigationItem } from "./navigation.ts";
 
-const FrameNavigationContext =
-  createContext<readonly FrameNavigationItem[] | null>(null);
+const SaasNavigationContext =
+  createContext<readonly SaasNavigationItem[] | null>(null);
 
-export function FrameNavigationProvider({
+export function SaasNavigationProvider({
   children,
   navigation,
 }: Readonly<{
   children: ReactNode;
-  navigation: readonly FrameNavigationItem[];
+  navigation: readonly SaasNavigationItem[];
 }>) {
   return (
-    <FrameNavigationContext.Provider value={navigation}>
+    <SaasNavigationContext.Provider value={navigation}>
       {children}
-    </FrameNavigationContext.Provider>
+    </SaasNavigationContext.Provider>
   );
 }
 
-export function useFrameNavigation(): readonly FrameNavigationItem[] {
-  const navigation = useContext(FrameNavigationContext);
+export function useSaasNavigation(): readonly SaasNavigationItem[] {
+  const navigation = useContext(SaasNavigationContext);
   if (!navigation) {
-    throw new Error("useFrameNavigation must be used inside FrameNavigationProvider");
+    throw new Error("useSaasNavigation must be used inside SaasNavigationProvider");
   }
   return navigation;
 }

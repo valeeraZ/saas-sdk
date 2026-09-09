@@ -1,5 +1,5 @@
 {
-  "name": "@frame/sdk",
+  "name": "@saas-platform/sdk",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -30,10 +30,10 @@
     "build": "tsc -p tsconfig.build.json && node ../../scripts/copy-assets.mjs"
   },
   "dependencies": {
-    "@frame/auth": "0.1.0",
-    "@frame/manifest-schema": "0.1.0",
-    "@frame/shell": "0.1.0",
-    "@frame/theme": "0.1.0"
+    "@saas-platform/auth": "0.1.0",
+    "@saas-platform/manifest-schema": "0.1.0",
+    "@saas-platform/shell": "0.1.0",
+    "@saas-platform/theme": "0.1.0"
   },
   "devDependencies": {
     "@types/node": "24.10.1",

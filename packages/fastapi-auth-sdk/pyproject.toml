@@ -3,11 +3,11 @@ requires = ["hatchling>=1.26"]
 build-backend = "hatchling.build"
 
 [project]
-name = "frame-fastapi-auth"
+name = "saas-fastapi-auth"
 version = "0.1.0"
-description = "FRAME DSP/Auth Service middleware for FastAPI and ASGI applications"
+description = "SAAS DSP/Auth Service middleware for FastAPI and ASGI applications"
 requires-python = ">=3.9"
 dependencies = ["httpx>=0.27,<1"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/frame_fastapi_auth"]
+packages = ["src/saas_fastapi_auth"]

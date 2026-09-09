@@ -1,8 +1,8 @@
 {
-  "name": "@frame/local-alpha",
+  "name": "@saas-platform/local-alpha",
   "version": "0.1.0",
   "private": true,
-  "scripts": { "dev": "FRAME_RUNTIME_MODE=standalone next dev --port 3101", "dev:integrated": "FRAME_RUNTIME_MODE=integrated next dev --port 3101", "build": "next build", "start": "next start --port 3101", "start:standalone": "FRAME_RUNTIME_MODE=standalone next start --port 3101", "typecheck": "tsc --noEmit" },
-  "dependencies": { "@frame/auth": "0.1.0", "@frame/shell": "0.1.0", "@frame/spike-app": "0.1.0", "@frame/theme": "0.1.0", "@frame/ui": "0.1.0", "next": "16.2.10", "react": "19.2.0", "react-dom": "19.2.0" },
+  "scripts": { "dev": "SAAS_RUNTIME_MODE=standalone next dev --port 3101", "dev:integrated": "SAAS_RUNTIME_MODE=integrated next dev --port 3101", "build": "next build", "start": "next start --port 3101", "start:standalone": "SAAS_RUNTIME_MODE=standalone next start --port 3101", "typecheck": "tsc --noEmit" },
+  "dependencies": { "@saas-platform/auth": "0.1.0", "@saas-platform/shell": "0.1.0", "@saas-platform/spike-app": "0.1.0", "@saas-platform/theme": "0.1.0", "@saas-platform/ui": "0.1.0", "next": "16.2.10", "react": "19.2.0", "react-dom": "19.2.0" },
   "devDependencies": { "@tailwindcss/postcss": "^4.3.3", "@types/node": "24.10.1", "@types/react": "19.2.2", "@types/react-dom": "19.2.2", "typescript": "5.9.3" }
 }

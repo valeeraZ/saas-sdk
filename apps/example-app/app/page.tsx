@@ -1,15 +1,15 @@
-import { parseFrameManifest } from "@frame/manifest-schema";
-import { framePublicAsset } from "@frame/sdk";
+import { parseSaasManifest } from "@saas-platform/manifest-schema";
+import { saasPublicAsset } from "@saas-platform/sdk";
 
-import manifestJson from "../frame.manifest.json";
+import manifestJson from "../saas.manifest.json";
 import { ReleaseReadiness } from "./release-readiness.tsx";
 
-const manifest = parseFrameManifest(manifestJson);
+const manifest = parseSaasManifest(manifestJson);
 
 export default function Page() {
   return (
     <ReleaseReadiness
-      assetUrl={framePublicAsset(manifest, "frame-path.svg")}
+      assetUrl={saasPublicAsset(manifest, "saas-path.svg")}
       basePath={manifest.basePath}
       shellVersion={manifest.shellVersion}
     />

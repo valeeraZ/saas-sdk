@@ -2,10 +2,10 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
-  buildFrameNavigation,
+  buildSaasNavigation,
   buildStandaloneNavigation,
-  filterFrameNavigation,
-  FRAME_NAVIGATION_FIXTURE,
+  filterSaasNavigation,
+  SAAS_NAVIGATION_FIXTURE,
 } from "./navigation.ts";
 
 test("standalone navigation contains only the current App without roles", () => {
@@ -24,7 +24,7 @@ test("standalone navigation contains only the current App without roles", () => 
 });
 
 test("filters hidden Apps without affecting platform entries", () => {
-  const visible = filterFrameNavigation(FRAME_NAVIGATION_FIXTURE, ["local-beta"], false);
+  const visible = filterSaasNavigation(SAAS_NAVIGATION_FIXTURE, ["local-beta"], false);
   assert.equal(visible.some((item) => item.appName === "local-beta"), false);
   assert.equal(visible.some((item) => item.kind === "home"), true);
   assert.equal(visible.some((item) => item.kind === "settings"), true);
@@ -32,13 +32,13 @@ test("filters hidden Apps without affecting platform entries", () => {
 
 test("keeps Admin conditional behind the provider seam", () => {
   assert.equal(
-    filterFrameNavigation(FRAME_NAVIGATION_FIXTURE, [], false).some(
+    filterSaasNavigation(SAAS_NAVIGATION_FIXTURE, [], false).some(
       (item) => item.kind === "admin",
     ),
     false,
   );
   assert.equal(
-    filterFrameNavigation(FRAME_NAVIGATION_FIXTURE, [], true).some(
+    filterSaasNavigation(SAAS_NAVIGATION_FIXTURE, [], true).some(
       (item) => item.kind === "admin",
     ),
     true,
@@ -46,7 +46,7 @@ test("keeps Admin conditional behind the provider seam", () => {
 });
 
 test("builds navigation only from active Apps with a returned role", () => {
-  const navigation = buildFrameNavigation(
+  const navigation = buildSaasNavigation(
     [
       {
         appName: "risk-dashboard",
@@ -88,7 +88,7 @@ test("builds navigation only from active Apps with a returned role", () => {
 });
 
 test("hidden preferences are applied after role and active filtering", () => {
-  const navigation = buildFrameNavigation(
+  const navigation = buildSaasNavigation(
     [
       {
         appName: "risk-dashboard",
@@ -102,7 +102,7 @@ test("hidden preferences are applied after role and active filtering", () => {
     [{ appName: "risk-dashboard", roles: ["risk-user"] }],
   );
   assert.equal(
-    filterFrameNavigation(navigation, ["risk-dashboard"], false).some(
+    filterSaasNavigation(navigation, ["risk-dashboard"], false).some(
       (item) => item.appName === "risk-dashboard",
     ),
     false,

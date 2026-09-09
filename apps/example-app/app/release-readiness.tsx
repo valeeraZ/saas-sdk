@@ -1,7 +1,7 @@
 "use client";
 
-import { useFrameAppSession } from "@frame/sdk/react";
-import { Button } from "@frame/ui/components/button";
+import { useSaasAppSession } from "@saas-platform/sdk/react";
+import { Button } from "@saas-platform/ui/components/button";
 import {
   CheckCircle2Icon,
   ChevronRightIcon,
@@ -24,7 +24,7 @@ export function ReleaseReadiness({
   basePath,
   shellVersion,
 }: Readonly<{ assetUrl: string; basePath: string; shellVersion: string }>) {
-  const session = useFrameAppSession();
+  const session = useSaasAppSession();
   const [isRunning, setIsRunning] = useState(false);
   const [checkedAt, setCheckedAt] = useState<string | null>(null);
 
@@ -48,7 +48,7 @@ export function ReleaseReadiness({
           </nav>
           <h1 className="text-4xl font-semibold tracking-[-0.045em] sm:text-5xl">Release readiness</h1>
           <p className="mt-3 flex items-center gap-2 text-sm font-medium text-muted-foreground">
-            <span className="size-2 rounded-full bg-[var(--frame-positive)]" aria-hidden="true" />
+            <span className="size-2 rounded-full bg-[var(--saas-positive)]" aria-hidden="true" />
             {session.mode === "integrated" ? "Integrated" : "Standalone"}
           </p>
         </div>
@@ -64,12 +64,12 @@ export function ReleaseReadiness({
       <div className="grid xl:grid-cols-[minmax(0,1fr)_18rem]">
         <section className="min-w-0 py-9 xl:pr-12">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
-            <span className="grid size-20 shrink-0 place-items-center rounded-full border-[3px] border-[var(--frame-positive)] text-[var(--frame-positive)]">
+            <span className="grid size-20 shrink-0 place-items-center rounded-full border-[3px] border-[var(--saas-positive)] text-[var(--saas-positive)]">
               <CheckCircle2Icon className="size-10" strokeWidth={1.8} />
             </span>
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h2 className="text-2xl font-semibold tracking-[-0.025em] text-[var(--frame-positive)]">
+                <h2 className="text-2xl font-semibold tracking-[-0.025em] text-[var(--saas-positive)]">
                   4 of 4 checks passing
                 </h2>
                 <span className="text-xs text-muted-foreground">
@@ -78,7 +78,7 @@ export function ReleaseReadiness({
               </div>
               <div className="mt-5 grid grid-cols-4 gap-2" aria-label="Four checks passing">
                 {CHECKS.map((check) => (
-                  <span className="h-1.5 rounded-full bg-[var(--frame-positive)]" key={check.label} />
+                  <span className="h-1.5 rounded-full bg-[var(--saas-positive)]" key={check.label} />
                 ))}
               </div>
             </div>
@@ -100,7 +100,7 @@ export function ReleaseReadiness({
                   <span className="block font-medium">{label}</span>
                   <span className="mt-0.5 hidden truncate text-xs text-muted-foreground md:block">{detail}</span>
                 </span>
-                <span className="flex items-center gap-2 text-sm font-semibold text-[var(--frame-positive)]">
+                <span className="flex items-center gap-2 text-sm font-semibold text-[var(--saas-positive)]">
                   <CheckCircle2Icon className="size-4" /> Passing
                 </span>
                 <ChevronRightIcon className="size-4 text-muted-foreground" />
@@ -112,9 +112,9 @@ export function ReleaseReadiness({
             <h2 className="text-base font-semibold" id="asset-heading">Base-path safe asset</h2>
             <div className="mt-4 grid overflow-hidden rounded-lg border border-border bg-slate-950 text-slate-100 md:grid-cols-[13rem_1fr]">
               <div className="grid min-h-40 place-items-center border-b border-white/10 p-7 md:border-b-0 md:border-r">
-                <img alt="FRAME base-path routing illustration" className="size-28" src={assetUrl} />
+                <img alt="SAAS base-path routing illustration" className="size-28" src={assetUrl} />
               </div>
-              <pre className="overflow-x-auto p-6 font-mono text-xs leading-6 text-slate-300 sm:text-sm"><code>{`framePublicAsset(manifest,\n  \"frame-path.svg\"\n)\n\n→ ${assetUrl}`}</code></pre>
+              <pre className="overflow-x-auto p-6 font-mono text-xs leading-6 text-slate-300 sm:text-sm"><code>{`saasPublicAsset(manifest,\n  \"saas-path.svg\"\n)\n\n→ ${assetUrl}`}</code></pre>
             </div>
           </section>
         </section>

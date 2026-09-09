@@ -8,7 +8,7 @@ const routeFile =
   process.env.REGISTRY_FIXTURE_ROUTES_FILE ??
   new URL("./routes.local.json", import.meta.url);
 const maxControlBodyBytes = 262_144;
-const authFixtureToken = process.env.AUTH_FIXTURE_TOKEN ?? "frame-dev-token";
+const authFixtureToken = process.env.AUTH_FIXTURE_TOKEN ?? "saas-dev-token";
 const fixtureReturnHosts = new Set(
   (process.env.FIXTURE_RETURN_HOSTS ?? "localhost,127.0.0.1")
     .split(",")
@@ -32,22 +32,22 @@ const fixtureMetadata = {
     name: "Local Alpha",
     description: "Same-cluster service",
     logo: "CircleGauge",
-    owner: "FRAME",
-    healthcheck: "/api/frame/health",
+    owner: "SAAS",
+    healthcheck: "/api/saas/health",
   },
   "local-beta": {
     name: "Local Beta",
     description: "Independent Next.js zone",
     logo: "Boxes",
-    owner: "FRAME",
-    healthcheck: "/api/frame/health",
+    owner: "SAAS",
+    healthcheck: "/api/saas/health",
   },
   "remote-gamma": {
     name: "Remote Gamma",
     description: "Remote-cluster ingress",
     logo: "Orbit",
-    owner: "FRAME",
-    healthcheck: "/api/frame/health",
+    owner: "SAAS",
+    healthcheck: "/api/saas/health",
   },
 };
 
@@ -57,7 +57,7 @@ const appMetadata = new Map(
     structuredClone(
       fixtureMetadata[appName] ?? {
         name: appName,
-        description: "FRAME application",
+        description: "SAAS application",
         logo: "Boxes",
       },
     ),
@@ -68,7 +68,7 @@ const roleDefinitions = new Map([
     "local-alpha",
     [
       { name: "alpha-user", description: "Can use Local Alpha" },
-      { name: "frame-admin", description: "Can administer FRAME" },
+      { name: "saas-admin", description: "Can administer SAAS" },
     ],
   ],
   ["local-beta", [{ name: "beta-user", description: "Can use Local Beta" }]],
@@ -125,7 +125,7 @@ function isAuthorized(request) {
 function hasAdminRole() {
   return [...roleDefinitions.values()]
     .flat()
-    .some(({ name }) => name === "frame-admin");
+    .some(({ name }) => name === "saas-admin");
 }
 
 function requireAdmin(request, response) {
@@ -180,7 +180,7 @@ function navigationCatalog() {
     apps: snapshot.routes.map(({ appName, basePath, active }) => {
       const metadata = appMetadata.get(appName) ?? {
         name: appName,
-        description: "FRAME application",
+        description: "SAAS application",
         logo: "Boxes",
       };
       return {
@@ -257,7 +257,7 @@ const server = createServer(async (request, response) => {
     sendJson(response, 200, {
       dsp: {
         base_url: `http://localhost:${port}`,
-        client_id: "frame-local-development",
+        client_id: "saas-local-development",
         url: { authenticate: "/__fixture/session" },
       },
     });
@@ -270,8 +270,8 @@ const server = createServer(async (request, response) => {
       return;
     }
     sendJson(response, 200, {
-      display_name: "Frame Demo User",
-      employee_id: "frame-demo-user",
+      display_name: "Saas Demo User",
+      employee_id: "saas-demo-user",
     });
     return;
   }
@@ -290,7 +290,7 @@ const server = createServer(async (request, response) => {
     return;
   }
 
-  if (request.method === "GET" && url.pathname === "/internal/frame/registry/apps") {
+  if (request.method === "GET" && url.pathname === "/internal/saas/registry/apps") {
     if (failureSystems.has("registry")) {
       sendJson(response, 503, { error: "fixture Registry outage enabled" });
       return;
@@ -307,7 +307,7 @@ const server = createServer(async (request, response) => {
     return;
   }
 
-  if (request.method === "GET" && url.pathname === "/internal/frame/registry/routes") {
+  if (request.method === "GET" && url.pathname === "/internal/saas/registry/routes") {
     if (failureSystems.has("registry")) {
       sendJson(response, 503, { error: "fixture Registry outage enabled" });
       return;
@@ -324,7 +324,7 @@ const server = createServer(async (request, response) => {
     return;
   }
 
-  if (url.pathname === "/admin/frame/apps" && request.method === "GET") {
+  if (url.pathname === "/admin/saas/apps" && request.method === "GET") {
     if (!requireAdmin(request, response)) return;
     if (failureSystems.has("registry")) {
       sendJson(response, 503, { error: "fixture Registry outage enabled" });
@@ -336,7 +336,7 @@ const server = createServer(async (request, response) => {
     return;
   }
 
-  if (url.pathname === "/admin/frame/apps" && request.method === "POST") {
+  if (url.pathname === "/admin/saas/apps" && request.method === "POST") {
     if (!requireAdmin(request, response)) return;
     if (failureSystems.has("registry")) {
       sendJson(response, 503, { error: "fixture Registry outage enabled" });
@@ -388,7 +388,7 @@ const server = createServer(async (request, response) => {
   }
 
   const adminMatch = url.pathname.match(
-    /^\/admin\/frame\/apps\/([a-z0-9-]+)\/(roles|runtime|activate|deactivate)$/,
+    /^\/admin\/saas\/apps\/([a-z0-9-]+)\/(roles|runtime|activate|deactivate)$/,
   );
   if (adminMatch) {
     if (!requireAdmin(request, response)) return;
@@ -510,7 +510,7 @@ const server = createServer(async (request, response) => {
         if (!appMetadata.has(appName)) {
           appMetadata.set(appName, {
             name: appName,
-            description: "FRAME application",
+            description: "SAAS application",
             logo: "Boxes",
           });
         }

@@ -1,5 +1,5 @@
 {
-  "name": "@frame/manifest-schema",
+  "name": "@saas-platform/manifest-schema",
   "version": "0.1.0",
   "private": true,
   "type": "module",

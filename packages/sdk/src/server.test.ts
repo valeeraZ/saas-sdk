@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { resolveFrameAppSession } from "./server.ts";
+import { resolveSaasAppSession } from "./server.ts";
 import { manifest } from "./test-fixture.ts";
 
 const request = { headers: new Headers({ cookie: "dsp-token=test" }) };
@@ -9,8 +9,8 @@ const request = { headers: new Headers({ cookie: "dsp-token=test" }) };
 test("standalone resolves identity but makes no permissions or Portal calls", async () => {
   let permissionCalls = 0;
   let portalCalls = 0;
-  const session = await resolveFrameAppSession(request, manifest, {
-    environment: { FRAME_RUNTIME_MODE: "standalone" },
+  const session = await resolveSaasAppSession(request, manifest, {
+    environment: { SAAS_RUNTIME_MODE: "standalone" },
     authClient: {
       async getCurrentUser() {
         return { id: "demo", displayName: "Demo User", secondaryLabel: "demo" };
@@ -35,10 +35,10 @@ test("standalone resolves identity but makes no permissions or Portal calls", as
 });
 
 test("integrated joins Portal session with current-App roles in parallel", async () => {
-  const session = await resolveFrameAppSession(request, manifest, {
+  const session = await resolveSaasAppSession(request, manifest, {
     environment: {
-      FRAME_RUNTIME_MODE: "integrated",
-      FRAME_PORTAL_ORIGIN: "https://frame.example",
+      SAAS_RUNTIME_MODE: "integrated",
+      SAAS_PORTAL_ORIGIN: "https://saas.example",
     },
     authClient: {
       async getCurrentUser() {

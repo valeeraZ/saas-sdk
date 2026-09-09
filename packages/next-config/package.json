@@ -1,5 +1,5 @@
 {
-  "name": "@frame/next-config",
+  "name": "@saas-platform/next-config",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -15,7 +15,7 @@
     "build": "tsc -p tsconfig.build.json && node ../../scripts/copy-assets.mjs"
   },
   "dependencies": {
-    "@frame/manifest-schema": "0.1.0"
+    "@saas-platform/manifest-schema": "0.1.0"
   },
   "devDependencies": {
     "@types/node": "24.10.1",

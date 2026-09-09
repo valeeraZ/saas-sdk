@@ -2,7 +2,7 @@
 
 ## SDK-01 抽取现有共享包并建立独立构建
 
-从固定基线复制 packages/auth、sdk、shell、ui、theme、next-config、manifest-schema、contract-cli、fastapi-auth-sdk、spike-app；tools/create-frame-app；apps/example-app、local-alpha、local-beta、remote-gamma；按测试需要带入 registry-fixture。保留 @frame/* 包名。
+从固定基线复制 packages/auth、sdk、shell、ui、theme、next-config、manifest-schema、contract-cli、fastapi-auth-sdk、spike-app；tools/create-saas-app；apps/example-app、local-alpha、local-beta、remote-gamma；按测试需要带入 registry-fixture。保留 @saas-platform/* 包名。
 
 基线： https://github.com/valeeraZ/portal-multiapps/tree/8cdc9ae56381dcbde8b8d3c965a75a918897896c
 
