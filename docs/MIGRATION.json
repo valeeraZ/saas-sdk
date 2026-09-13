@@ -1,0 +1,806 @@
+{
+  "sourceRepository": "https://github.com/valeeraZ/portal-multiapps",
+  "sourceCommit": "8cdc9ae56381dcbde8b8d3c965a75a918897896c",
+  "method": "git archive of explicitly selected paths; copy extraction without source history rewrite",
+  "files": [
+    {
+      "destination": "apps/example-app/app/api/saas/health/route.ts",
+      "sourceGitBlob": "e5bc6f4958a9c05ee0f2baccd4fb9f73a19303df",
+      "sourceSha256": "8048a2037de0284c4d5fd5e9ea1b151ec10fbd928ef2b0e9047d561d05c7b743",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "apps/example-app/app/layout.tsx",
+      "sourceGitBlob": "3840a4097741214465e8d0b7db822453e7211fbe",
+      "sourceSha256": "a3e0fe6f64bb7d4897ac03d9839a4de6bfcb6ccde5fb2f65f6185627add84ccf",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/example-app/app/page.tsx",
+      "sourceGitBlob": "c57af3c646462e852d547aa98ef4326e3247f97b",
+      "sourceSha256": "3119df95e0ce81afb8117e5692b1795f41538e451eaf3b5fd9e3761debfc8ced",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/example-app/app/release-readiness.tsx",
+      "sourceGitBlob": "5cd282527f5063aaa4c62e19dbb3b68a721fa151",
+      "sourceSha256": "0b6d3d5e542669ac3b5df5389282d34f2c963da832d4d4b60febbd86de9da3b9",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/example-app/saas.manifest.json",
+      "sourceGitBlob": "20166973fb6f9e7a0264b9367eda473bf332a893",
+      "sourceSha256": "146a90ddff70b5d595862f22878e73c33e851ef7a30e23f7d011429b0bf0cf1f",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/example-app/next-env.d.ts",
+      "sourceGitBlob": "9edff1c7cacb3bfac9a1eadcf6f51eaa99565e38",
+      "sourceSha256": "7b550dda9686c16f36a17bf9051d5dbf31e98555b30d114ac49fc49a1e712651",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "apps/example-app/next.config.ts",
+      "sourceGitBlob": "cb3291a3c6ac747f22ba7f03bce8360cb87625a2",
+      "sourceSha256": "10415af0f84bbf9870ec91506f8ef4fcfc2b98166aa71d15a9f0c01d6f662e4e",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/example-app/package.json",
+      "sourceGitBlob": "d70ef98502a1f88a676e2a46781341a9540d919a",
+      "sourceSha256": "9a7e934b938e4e56ceca5e0fdb755f92b2013417fd890bb7e653d6ae80f578b4",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/example-app/postcss.config.mjs",
+      "sourceGitBlob": "a9b5c43d12ca5dd106ede4e9cec451f4ede60fef",
+      "sourceSha256": "a1a188221f064d964dd9958c3d48b0c23252fabbeb6099d95ee8e15c764718b0",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "apps/example-app/public/saas-path.svg",
+      "sourceGitBlob": "16de66f5ed8413aca58a3dbe78af5cdcdc9b2d85",
+      "sourceSha256": "0940b3f47ed828b1ac1dc7cf3398867321062a2fbb30dd19e9cbf3e476082641",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/example-app/tsconfig.json",
+      "sourceGitBlob": "26cb00713a9932ba41ba3bc3f77b4e3e1e612dfb",
+      "sourceSha256": "902826ae572bcc48bafd84ec64bbdc49faab486f9adcf896d17cf300e3751884",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "apps/local-alpha/app/api/saas/health/route.ts",
+      "sourceGitBlob": "f2096a16a4343c03a59749c80639a3ea169e29e5",
+      "sourceSha256": "76f063cb62dd8fc7c3ed1dc6e58bd4d3f3f244913a8efe8ececaa11aa07e23d4",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "apps/local-alpha/app/deep/page.tsx",
+      "sourceGitBlob": "f629d00e94701de44f1df5f9e34fef53c2c57595",
+      "sourceSha256": "498acd4c8137eb4382955a241ae7a20180636ebfa918d25174fd60ec9dd72a7a",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/local-alpha/app/layout.tsx",
+      "sourceGitBlob": "51571e098b66485aff64c2b906236df7f3de8fec",
+      "sourceSha256": "e944f2fbd9108bd3b7d66e508ef8268f142d9cd7d9300d236e1cb76f6b0d7b01",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/local-alpha/app/page.tsx",
+      "sourceGitBlob": "ac1cc6d297952c29ff495481700c5e47e3fa93fd",
+      "sourceSha256": "16d41cc5c7a3aad037c74f0fc5d24faf461d815b58e3364763a63e11e04a1cd0",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/local-alpha/components.json",
+      "sourceGitBlob": "e5ce572e0ccb2de910a2fa2961b096a709f402e3",
+      "sourceSha256": "26baf85c52f07ff00bc8377096e280fb795800ac30304fa203a5955fd7d7751d",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/local-alpha/next-env.d.ts",
+      "sourceGitBlob": "c4b7818fbb2c2c34c24feb1b627ee824507c5600",
+      "sourceSha256": "7ad303e40d4fddf44f156129e397511953a71481c5cfd86b1862649aaaf240cc",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/local-alpha/next.config.ts",
+      "sourceGitBlob": "edfbc3e4944d63545f7ea22ba6aa3c8518935137",
+      "sourceSha256": "ca3fd6333192146889b396b6629c8b258c7e68b6abbbe4b4334536e56b2ef1b5",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/local-alpha/package.json",
+      "sourceGitBlob": "f17b6dfbbef4681dfc83551f15fb847585bc2310",
+      "sourceSha256": "72498ebc663e2b6196df349d7c029318aa292f9af98a81804ebeea0fb45fcbf2",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/local-alpha/postcss.config.mjs",
+      "sourceGitBlob": "a9b5c43d12ca5dd106ede4e9cec451f4ede60fef",
+      "sourceSha256": "a1a188221f064d964dd9958c3d48b0c23252fabbeb6099d95ee8e15c764718b0",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "apps/local-alpha/tsconfig.json",
+      "sourceGitBlob": "d0753394cf4c47eaad1d641fccdb005129d608a5",
+      "sourceSha256": "ad9ba65384df1c74d530c188a4cd5737d7b77168b8bf88c424551eee5bb71f2f",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "apps/local-beta/app/api/saas/health/route.ts",
+      "sourceGitBlob": "8382c2eca0ae7582abd8105e845548a6a86f79b8",
+      "sourceSha256": "d5c6d6f1372e15b4b0cd5c8545f5d2aeb7d6215acfcbf13851b7d9a688e81abb",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "apps/local-beta/app/deep/page.tsx",
+      "sourceGitBlob": "92e321a6183edb260b42ef68e6e9a58ce3cab0bf",
+      "sourceSha256": "48f3461e04109ec833060c8de37f8abc25780ac6cdf192c07991cd5d8894d409",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/local-beta/app/layout.tsx",
+      "sourceGitBlob": "7c2536d47beb3355ea8655a5b6f6a5f9fa1c2785",
+      "sourceSha256": "b31ca15060a490a20a9bc427258caa36e0330328092fd3a579a2cc4c64bb502a",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/local-beta/app/page.tsx",
+      "sourceGitBlob": "c2052fb37b61fbcf387ec12b930060ba9e47c34c",
+      "sourceSha256": "3f11fc90c517a4413514947b51b0653c201049fc2e0ac838d83a8481146e929c",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/local-beta/components.json",
+      "sourceGitBlob": "e5ce572e0ccb2de910a2fa2961b096a709f402e3",
+      "sourceSha256": "26baf85c52f07ff00bc8377096e280fb795800ac30304fa203a5955fd7d7751d",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/local-beta/next-env.d.ts",
+      "sourceGitBlob": "c4b7818fbb2c2c34c24feb1b627ee824507c5600",
+      "sourceSha256": "7ad303e40d4fddf44f156129e397511953a71481c5cfd86b1862649aaaf240cc",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/local-beta/next.config.ts",
+      "sourceGitBlob": "f320031adb1f5fab60612db86f3aa82a881dcd31",
+      "sourceSha256": "0268854c123bbd1fb53fae32e23836c3063c6ab4ac72689ec5fbaea4130fcc0a",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/local-beta/package.json",
+      "sourceGitBlob": "905b61e8531f184270be681b11d30d09687e3112",
+      "sourceSha256": "ff3eb50259d84bcaa1a82a56bbeb9d0bd8c367e77941c78edab54d6d5b62d4d4",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/local-beta/postcss.config.mjs",
+      "sourceGitBlob": "a9b5c43d12ca5dd106ede4e9cec451f4ede60fef",
+      "sourceSha256": "a1a188221f064d964dd9958c3d48b0c23252fabbeb6099d95ee8e15c764718b0",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "apps/local-beta/tsconfig.json",
+      "sourceGitBlob": "d0753394cf4c47eaad1d641fccdb005129d608a5",
+      "sourceSha256": "ad9ba65384df1c74d530c188a4cd5737d7b77168b8bf88c424551eee5bb71f2f",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "apps/remote-gamma/app/api/saas/health/route.ts",
+      "sourceGitBlob": "1ffce5db0fb081ed4cb1283049d534848ae376dd",
+      "sourceSha256": "e34f22c5f4ba1eea40d888fa61ad4a93666845cb325891d96b8f7bf33db4ea8d",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "apps/remote-gamma/app/deep/page.tsx",
+      "sourceGitBlob": "a121fbd9077bd849976496e99f0e22e0b38dbb17",
+      "sourceSha256": "27870c8a84f3e9b1971683008473ddf2812349b2468c95de7a23ff374f0b8815",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/remote-gamma/app/layout.tsx",
+      "sourceGitBlob": "07357368fe3552667a36b7174258f72e07ce9136",
+      "sourceSha256": "e8b3886ea892b1be8287a2b61092639f3fd4238105b606dead65f8f44dcc9c7e",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/remote-gamma/app/page.tsx",
+      "sourceGitBlob": "9c65f07f681d1d406d547784b9bafe58946724dc",
+      "sourceSha256": "43daeb5d66d237bc0b5aec98018b233a98cb86f7b9f1ff34b6b7ab4403b82482",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/remote-gamma/components.json",
+      "sourceGitBlob": "e5ce572e0ccb2de910a2fa2961b096a709f402e3",
+      "sourceSha256": "26baf85c52f07ff00bc8377096e280fb795800ac30304fa203a5955fd7d7751d",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/remote-gamma/next-env.d.ts",
+      "sourceGitBlob": "c4b7818fbb2c2c34c24feb1b627ee824507c5600",
+      "sourceSha256": "7ad303e40d4fddf44f156129e397511953a71481c5cfd86b1862649aaaf240cc",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/remote-gamma/next.config.ts",
+      "sourceGitBlob": "d7d12221b8de6cad06d103e9304e6f3d1e1d11a4",
+      "sourceSha256": "95f15332fc2d287fa6938631e096390b0248d9c51550f3c03e3d1bf7d125e057",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/remote-gamma/package.json",
+      "sourceGitBlob": "3d8012e0bb9397b5d71c262bea472d508a9dcf79",
+      "sourceSha256": "8e5996a8a858e4024882b9797e0d0b634251617139c7ae504f4f4018debfadf7",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "apps/remote-gamma/postcss.config.mjs",
+      "sourceGitBlob": "a9b5c43d12ca5dd106ede4e9cec451f4ede60fef",
+      "sourceSha256": "a1a188221f064d964dd9958c3d48b0c23252fabbeb6099d95ee8e15c764718b0",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "apps/remote-gamma/tsconfig.json",
+      "sourceGitBlob": "d0753394cf4c47eaad1d641fccdb005129d608a5",
+      "sourceSha256": "ad9ba65384df1c74d530c188a4cd5737d7b77168b8bf88c424551eee5bb71f2f",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/auth/package.json",
+      "sourceGitBlob": "c368c743c3a8eef5c40593a04b475bd766692f34",
+      "sourceSha256": "5a766665cc931d993e1f5802f10ddc122d8f7616bfeedd226700ecaa955f19bf",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/auth/src/index.test.ts",
+      "sourceGitBlob": "c238a13ed8b252a6fc6564db00d2dd7fe7f44b9f",
+      "sourceSha256": "0f17a0fd2c2a324a17abdef8d48665526ef7eb6c749d3fb9c57dddfd3b60016c",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/auth/src/index.ts",
+      "sourceGitBlob": "6f5d2ccc6490bbc92ffe52d1a2b3e463e763942d",
+      "sourceSha256": "7114c74ab3620bbf4ac1d6c3e90bb55786331d21e32a9ded28d05a52948ebfcd",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/auth/tsconfig.json",
+      "sourceGitBlob": "8ad9fd83f3eee7846a1997a9b4c7a0cb0e69af6c",
+      "sourceSha256": "87bea0bb7a829a19aea400fb1aaac203cc8f5ed218b42b90b22501ebcfef204c",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/contract-cli/package.json",
+      "sourceGitBlob": "dd9ec389d6ab13c9b5ef39792bd6c7365f174ab6",
+      "sourceSha256": "e84a0a46335e24c43715000a0089c604008abe38fd094ad7e66db28f78b5e43a",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/contract-cli/src/check.test.ts",
+      "sourceGitBlob": "c946b420101d36858f63fbf3ff6ddcfa3c160b23",
+      "sourceSha256": "87368fa0598187491143baa7f11b56cbb577af92c919a37fe03fbbb33a3193d7",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/contract-cli/src/check.ts",
+      "sourceGitBlob": "0c94c4d08765465ec33f61160f01f67cc97cbb43",
+      "sourceSha256": "0c4a4b23e380b45eaafb0632b76595783e27fbee2a5c7600e0628c493b78e727",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/contract-cli/src/cli.ts",
+      "sourceGitBlob": "9f4c3a76a7280b013c26121bddbbac69cd1c50c5",
+      "sourceSha256": "2d2c17b6cd5257ed63382a48f5b2d8da7c84709e1bb22d60c534f332676d6a6e",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/contract-cli/tsconfig.json",
+      "sourceGitBlob": "a5cb75c56281eb27982821fd2608ace769de9c73",
+      "sourceSha256": "c4ef5588f4e0e442aa72db545d02653e9ac2144621d081a486ee64879a5f5dcd",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/fastapi-auth-sdk/README.md",
+      "sourceGitBlob": "b0e6fdda43eaf01517fd6d6b3f31f7b05aa56aa7",
+      "sourceSha256": "64be5f0c45301b0235865d5154a4a99ba6c0de456a07668196012ad64424ca06",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/fastapi-auth-sdk/pyproject.toml",
+      "sourceGitBlob": "862d1819490f1f8a59bc8bb52bde202d8d15a57b",
+      "sourceSha256": "0480294ccefbe7a71b7f84bc7ce084fac599c8e44ca5bd281d3694e0ed72f6c8",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/fastapi-auth-sdk/src/saas_fastapi_auth/__init__.py",
+      "sourceGitBlob": "6329d4e234e68c075fae8238301cdd7ad20f100f",
+      "sourceSha256": "510eb4b641e26c9718a639541269b6fea1004d4b00f7be56e904c28ea5fd03a3",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/fastapi-auth-sdk/src/saas_fastapi_auth/middleware.py",
+      "sourceGitBlob": "aa7bc318e55ffe8095d1cf0a5084ab250a4e4842",
+      "sourceSha256": "0d337956f5d7d7ec8ede67246b12ab65041f48ef78f22924d4c153b645df4e02",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/fastapi-auth-sdk/tests/test_middleware.py",
+      "sourceGitBlob": "b11422a35a81e0944c3e793e20c5f39bcd401a4f",
+      "sourceSha256": "000e21ac1ba237b6a0ae712e25770728481cd6d801319250b7a0a6aad5551137",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/manifest-schema/package.json",
+      "sourceGitBlob": "9aaeca21defcfaba5fbe2066b4fc9a82816d3064",
+      "sourceSha256": "7cc109a3cd0bc58bf9f22918e44a4a8fa0b44c796e2ef290dbbd3d8fb8338a97",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/manifest-schema/src/index.test.ts",
+      "sourceGitBlob": "729993560f87e5d799aec37e7eb72f9a91d4e4bf",
+      "sourceSha256": "d04d8db7ab0722658c73663fe0c70a2491bd1d0c456abd2130b77c0c63a0be9d",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/manifest-schema/src/index.ts",
+      "sourceGitBlob": "de085345215f5cb2f3232fad01bf6d85a83bb112",
+      "sourceSha256": "7d71ef7480e1eab7113d3f167adc82890f745d4fb8d26a652b7508b024032112",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/manifest-schema/tsconfig.json",
+      "sourceGitBlob": "a5cb75c56281eb27982821fd2608ace769de9c73",
+      "sourceSha256": "c4ef5588f4e0e442aa72db545d02653e9ac2144621d081a486ee64879a5f5dcd",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/next-config/package.json",
+      "sourceGitBlob": "d235496dfd558abd4877425ac235d2f96bf99df0",
+      "sourceSha256": "a7880eaf2ac08da915ea898eed652457a3515fa2a096f55be80f1c2d1bc1a82b",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/next-config/src/index.test.ts",
+      "sourceGitBlob": "4f6c576c2772e7278689a4de259f8f741ce77938",
+      "sourceSha256": "a0acc3657b02ea6d83139c427d9eb00506d85dbabc669d5abb437a591180090a",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/next-config/src/index.ts",
+      "sourceGitBlob": "7b41ab3f1beeb7649c382b6ea27c30f7196eea6b",
+      "sourceSha256": "19b2ba3a80f36ca0761e4f7de1ee43682a8c5e54b173d129b929124630e8769f",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/next-config/tsconfig.json",
+      "sourceGitBlob": "a5cb75c56281eb27982821fd2608ace769de9c73",
+      "sourceSha256": "c4ef5588f4e0e442aa72db545d02653e9ac2144621d081a486ee64879a5f5dcd",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/sdk/package.json",
+      "sourceGitBlob": "50ba87b193099909e32c1caa887b4b53308a8d72",
+      "sourceSha256": "4abd1d3ee66bb362621819353b2223f52c77348560a62200d1c6731b687bb199",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/sdk/src/browser.test.ts",
+      "sourceGitBlob": "2fe1e5bae64a8649485c7c725f04ac178ed90d1b",
+      "sourceSha256": "bc649f664a91ca116e5fcae2f700d3512f04b7de1810fa8f6cb6edd229c3891d",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/sdk/src/browser.ts",
+      "sourceGitBlob": "d9ae072f34b746fb3b8941dc2f70dcadab47f9cf",
+      "sourceSha256": "7a90c63e66d06ebdd58862e0ddb548fa9024d8dc1ac7f3bfab180f119e015bfc",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/sdk/src/index.ts",
+      "sourceGitBlob": "abb2aadbfd58f2ab97737bf8801fec90efd7c9f8",
+      "sourceSha256": "79ba4e0c2561288cc879204eee02459926a27623aa64626e51e09781e52f68de",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/sdk/src/react.tsx",
+      "sourceGitBlob": "ad55e85d784ad9d451d40da99953b36481ef0416",
+      "sourceSha256": "69fbdb4197ebd9233276f4956fb43f8ea820ba5b83825cc22755b8ec3b2d9cf2",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/sdk/src/runtime.test.ts",
+      "sourceGitBlob": "d1f9ad64650c480a19742591aa367535cd9280eb",
+      "sourceSha256": "a495359c0e6ad6d6e384516f6556098d262ff532b1755f7ff1eb70900f8b5f37",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/sdk/src/runtime.ts",
+      "sourceGitBlob": "e2592fb3dde3a9aa590535c025e14388b1481322",
+      "sourceSha256": "5f78ff341d8f8ee6b4ec3a5d3e76b190699c30cd1780db3a39a0822926ae9cbb",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/sdk/src/server.test.ts",
+      "sourceGitBlob": "4767096cc51f250cbb833c36235c7c7538fccca9",
+      "sourceSha256": "b7de63ed62b14ac60f196d790b78ccc2acff136defc0f315bb89e0112c259a42",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/sdk/src/server.ts",
+      "sourceGitBlob": "4cf6f35364902619ce9ea9682898e3e706e7e533",
+      "sourceSha256": "66cab21eab3e070f5d8419b56480a8fec23887e5e6e9024f6bf17ef7fc17fd82",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/sdk/src/test-fixture.ts",
+      "sourceGitBlob": "ce21d9804aa8b8f161fabb32ad719a828d565925",
+      "sourceSha256": "76765db4eb2da61e3d7083a92809aae1aaec2018383723ac6fdca6c1a6b01378",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/sdk/tsconfig.json",
+      "sourceGitBlob": "32a0dfe3c8bdbd02034a1e19df0fcf910315fbb7",
+      "sourceSha256": "bbccb8bab9670cda697161c5a3307ddcb6b6abc302be224058bdeb4ffcb21519",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/shell/package.json",
+      "sourceGitBlob": "be586a8db91b5e5412816454b15f674173f7265a",
+      "sourceSha256": "cf1587e727681b4d2fffcd1a6ecc85e9af45495b3baccce692ecb412cf86da42",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/shell/src/saas-shell.tsx",
+      "sourceGitBlob": "ce38cca305f0b105239a82e34f924ebd9dd97eae",
+      "sourceSha256": "2af9ab485b530b5fe59004436cb99840f63dba49366a70340340a4d4b3f55c28",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/shell/src/integrated-session.test.ts",
+      "sourceGitBlob": "a491e382d964f33b78022c409a83978038bb6aa5",
+      "sourceSha256": "dc7bdb7422f6358af2ba7ec8050d4241c61e44e4e1f7c5afb385e24808d47a68",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/shell/src/integrated-session.ts",
+      "sourceGitBlob": "a38c24099309208dda385f26d30a7d1cc13f7201",
+      "sourceSha256": "b37ce69698d4dad34b48c45bf8a951c18463c5ac74f68ef66de571513dbbcc66",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/shell/src/navigation-context.tsx",
+      "sourceGitBlob": "937fc063399749dbbef032a187f8aa7215c61811",
+      "sourceSha256": "2c57c4bed51e4fae7a8cba95e15f9b62c691c3e36a308a96dec051b02355a8c6",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/shell/src/navigation.test.ts",
+      "sourceGitBlob": "366e03b8e522a0e7624a3fa042a5c4061dabc1e2",
+      "sourceSha256": "67d2253fc032645df7560650a5335ad8ae7f389c113809b792feaf16f63fe175",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/shell/src/navigation.ts",
+      "sourceGitBlob": "83e99f890382cf5df0d0605cc3d0486768141b2d",
+      "sourceSha256": "b359c822ce0ba46f3c327b04fffac7f8816d62f25bbaacece8c6fa13f503a6b9",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/shell/src/page-header.tsx",
+      "sourceGitBlob": "7425cdc2c2838cfa9d2d220ff85699a4df3e33bd",
+      "sourceSha256": "0512410fd1da4875770c07e967140b06b6fdac3107418c0bba5fd04339990b9d",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/shell/src/preferences-context.tsx",
+      "sourceGitBlob": "04586fe235065861bffb702e2dc2fb8cee78107f",
+      "sourceSha256": "ce952ef27c431abc1960e331fc71eb3fb265506e4451f55032fa51d617c725a3",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/shell/src/version.ts",
+      "sourceGitBlob": "fe323b35205c5043827c24e092691a8a76243a96",
+      "sourceSha256": "2156f7345adbaa6e5a37bc928b8f3501897bf359a8205ae3fd9bce4ed71b5a3b",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/shell/tsconfig.json",
+      "sourceGitBlob": "32a0dfe3c8bdbd02034a1e19df0fcf910315fbb7",
+      "sourceSha256": "bbccb8bab9670cda697161c5a3307ddcb6b6abc302be224058bdeb4ffcb21519",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/spike-app/package.json",
+      "sourceGitBlob": "d76dd51fdb582c2cf4a860f6d5fcd9d40f6ebd2e",
+      "sourceSha256": "9c4648451896d3df11559ed9cebf86f298cea9acd3b786c09d78b17754bb1140",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/spike-app/src/actions.ts",
+      "sourceGitBlob": "23468846d0a93113c995b752977488e493b42a9f",
+      "sourceSha256": "71f5dc77c94f1aedf917acb85da05258ec60934a8e78cb3f7988d54c05219ba8",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/spike-app/src/spike-page.tsx",
+      "sourceGitBlob": "f81f7eb9546c711018f818047cb7a40d6d65e18d",
+      "sourceSha256": "0b05fbcc3f61e0ff1624665164641f1bf8ad977f4b7c55303a1bbd4a400fcbdb",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/spike-app/src/styles.css",
+      "sourceGitBlob": "43a5ee16cf3bc33f995e3a63c5b28b48eb102cc3",
+      "sourceSha256": "25f967bb52be3e79710cd1cecbfeed6995de9ebc2a48543970feb40ad290c3d7",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/theme/package.json",
+      "sourceGitBlob": "2d12a879eeed2515cde7368f1670704c3337587f",
+      "sourceSha256": "ac9f503cb8fb0bb1bec855e844ebcf7b8b2724a36f71af43aa49c1bb206cdc8b",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/theme/src/index.ts",
+      "sourceGitBlob": "a950d8456b7e3c0785c8ecf98ac75bf87ff47565",
+      "sourceSha256": "6620ba512bdc6018137db2643a0233fa340344eaa44cb58f8220d077cd77ea2f",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/theme/src/styles.css",
+      "sourceGitBlob": "b3f53841202014ffdb1a07210dbd178e9fcc8354",
+      "sourceSha256": "ba615a658e09cb94d4c9efcb76c048b062403f96d28261d967e9139bf0c0ae4a",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/theme/tsconfig.json",
+      "sourceGitBlob": "a5cb75c56281eb27982821fd2608ace769de9c73",
+      "sourceSha256": "c4ef5588f4e0e442aa72db545d02653e9ac2144621d081a486ee64879a5f5dcd",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/components.json",
+      "sourceGitBlob": "4c0375d293e2aabecfcf395a43407b883a0bdcc7",
+      "sourceSha256": "b67950500e2e9364206169170abf236cadda09485331897dfca952d85158bfd2",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/package.json",
+      "sourceGitBlob": "644d29dd4ba58c0f044032e52e2b1c7db26a2c49",
+      "sourceSha256": "3cc5742083f74342bbe3ff8c3073558d08691bfce04bcc1bb91609d2f82e04f3",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/ui/src/components/alert.tsx",
+      "sourceGitBlob": "dc8f1de51a59c757675e3a9a0effd7dc88fcdb8d",
+      "sourceSha256": "2eba3a0bad73e253d0b12f5a0d8db834d535effcc22b63fd8552d0fbf07d8e79",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/components/avatar.tsx",
+      "sourceGitBlob": "7aff4a9bead312bc5a29c7fc49f0d822076d2552",
+      "sourceSha256": "554c130ba0e20ef9faf5884cbb3cd61bd7a44dad8abc8e361b8c01038b27f492",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/components/badge.tsx",
+      "sourceGitBlob": "7a5a1458f192581e5ff4af3111478cc769cec7e0",
+      "sourceSha256": "2310ae0a2f1b1714c2161b4df311dc91d8e483892258c6a5b91322dc476162a3",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/components/breadcrumb.tsx",
+      "sourceGitBlob": "0d1e9d7ac04f9061d0f1cc5d446fd91d33c43c7a",
+      "sourceSha256": "101d8e5210de32fb490b448b7b6bf837ef4fe99459ff737f03ae8128f326ebdb",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/components/button.tsx",
+      "sourceGitBlob": "1deda42ce22d7583d884528874df19ca5a8d9ef3",
+      "sourceSha256": "592f70f333bead4482ec7479113e17245c8dc68d8b8475392e4bee47af5d0cce",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/components/card.tsx",
+      "sourceGitBlob": "ea268892e8a45514f38ce958b3f7ec7a138222b3",
+      "sourceSha256": "cb5f668fac6b5fdb068ae655916fd4ac0f8f4626a84bca12fe026721332f1aaf",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/components/dropdown-menu.tsx",
+      "sourceGitBlob": "daf55fbeac7088b9892ffd044ddf447beb4eadf6",
+      "sourceSha256": "c9f1c1d50cb4ca13fd997f5b906ae4c3544920e919755ddd4bf6fd8fb2aeb964",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/components/empty.tsx",
+      "sourceGitBlob": "5668e5b2962c836c9cc68fa88576c624e36eaa78",
+      "sourceSha256": "921edd0355f0f3ccdb78f5860b319365ed1b91ee59ed4f00dae5a62901e24b18",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/components/field.tsx",
+      "sourceGitBlob": "95c6e49d67df4bad5ed56d3240411c0a048662e5",
+      "sourceSha256": "927206512c3ba668c9972da15629d4316c2cb41835131c4625c6d8f3527206b1",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/components/input.tsx",
+      "sourceGitBlob": "0bced1d2ed6c647cf249210fd223bee31b58417d",
+      "sourceSha256": "df76dd51232384112c709fb35c6148b92da8b67a57f7ad228ecc89eb8bbb25ca",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/components/label.tsx",
+      "sourceGitBlob": "22cd3e0c67977195825f79c047332c668fe2f180",
+      "sourceSha256": "b90b8dabd5ae1abec3831c71510fa7c08b530a0224cb655f478550a1fe46b203",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/components/separator.tsx",
+      "sourceGitBlob": "36a819505cfe14492af7b2991bfd3aba032ecad2",
+      "sourceSha256": "f75360081626965abe788bbe3bb86fbbc67d09b2196fa6ac81f75a008261deb6",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/components/sheet.tsx",
+      "sourceGitBlob": "aad6bea1d78eb21709836dbca7469c8872eced03",
+      "sourceSha256": "2a50685b639775b74aacb5a2ab15d40224f98e47948d3884c4572020ddb38ab4",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/components/sidebar.tsx",
+      "sourceGitBlob": "058fe6f5ee64411cefa2d956378e8ad01eef8b39",
+      "sourceSha256": "29d49d0b88ba572a3dd5867d7309e2a65523991075694ebab60a2f987df93e6a",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/components/skeleton.tsx",
+      "sourceGitBlob": "7fd2048ae78f6f4d8642a17f9fdb37edd86b76c9",
+      "sourceSha256": "0b44e4cfe26f3fcce28e7e589958b25b0b12b55d468ad9f0dafcfc64f2be0a5e",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/components/switch.tsx",
+      "sourceGitBlob": "3469980b9a22dea310b10d34575474d31c0266fc",
+      "sourceSha256": "06313e81ca118b6dfea1ee8a0a626f47ed07e419b93e048a0456076f54a2af6f",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/components/tooltip.tsx",
+      "sourceGitBlob": "9864f70f4d441c8b669072b9781ff08d2ee27873",
+      "sourceSha256": "12e9d74722abfd45f287fd77c7315803b297731868d2c5dfc900b4a808324b75",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/hooks/use-mobile.ts",
+      "sourceGitBlob": "2b0fe1dfef3b17850bbac040665f514a8ffd0f15",
+      "sourceSha256": "ad0936f84f1df79d3697bfbff9c18f8ad58431c1cbaf2359c6a853b0fcc9f28b",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/lib/utils.ts",
+      "sourceGitBlob": "b500fb167fdaa78785feb0ff03b51f8a182a44ae",
+      "sourceSha256": "53f3d3d070f0a9082934da25b875f9499855c2b0693868dd28be8c23d8730f68",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/src/styles/globals.css",
+      "sourceGitBlob": "ce219d6120818785d3a78305128a0215925563ac",
+      "sourceSha256": "08b26ac7d7c03282c62e564fd52bae0d67592cc704a8e94ad939d8d02610495c",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "packages/ui/src/styles/shadcn.css",
+      "sourceGitBlob": "eebe212863d58d47a5be2a0e8313713c0a5a396b",
+      "sourceSha256": "f1184eaf1e453dbb0113db633a1203af92ad00613a7a7b1c388aab3429cf626e",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "packages/ui/tsconfig.json",
+      "sourceGitBlob": "257e7cab972fe20b6227f6a7886907fab70ef89e",
+      "sourceSha256": "f6b48a0b47becc95435d31cd2a77c7afa74c02d9217fce347270820541583566",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "tools/create-saas-app/package.json",
+      "sourceGitBlob": "438fa0a7dafe7e55712ef7917af592d393ae578f",
+      "sourceSha256": "d2f19deda096b807097b5b1fad3c63bcb9770258fc160630524272929c77b801",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "tools/create-saas-app/src/index.mjs",
+      "sourceGitBlob": "761a567ab8aacc731f4b16bf1ca585c4f9f95af0",
+      "sourceSha256": "1633ddf71c7972a9fcf937f3ad617cad12a8171d71cee273604f71221f7c123f",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "tools/create-saas-app/src/index.test.mjs",
+      "sourceGitBlob": "808ba86bd43edcb7830269b3bf70633996432042",
+      "sourceSha256": "cac633ced41a3e3b305fea28c6bb81f525b1ab3e6ca4cd93c48baf48e024d6b4",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "tools/create-saas-app/template/app/api/saas/health/route.ts",
+      "sourceGitBlob": "0b09468672b034613e2f5ec4acc003baf92fd966",
+      "sourceSha256": "0bcb959c57c57d1d4bbf7606705e43284c6bd0f57372333c42ba647c75b3f801",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "tools/create-saas-app/template/app/layout.tsx",
+      "sourceGitBlob": "054a4a8328c4d4b32b871b7fe62acf88082b0c3e",
+      "sourceSha256": "74cfef4a292389df62b685c24665d197df5315cb6429c0548e6476957fabf0e6",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "tools/create-saas-app/template/app/page.tsx",
+      "sourceGitBlob": "8d5786355a29774e51d8e4b69f3ce2294bca4e1e",
+      "sourceSha256": "9e2ae00b6dc8cfc4fa89b960e448cec7ffb944c7e04d8249f88ab199cbbb2c17",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "tools/create-saas-app/template/saas.manifest.json",
+      "sourceGitBlob": "1493a8c994835eb1fcfa74e6e208507a5865dd94",
+      "sourceSha256": "6bf3b4fbb756cfcebdfc58577ddfec1ecd50e8b6cb43b0ddbbd0468ea33355ea",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "tools/create-saas-app/template/next-env.d.ts",
+      "sourceGitBlob": "6080addc2d9595896fa4440b16cf51a41bfcfef8",
+      "sourceSha256": "879741880b6ab48da99dcc06dcc674d381c9826137b0496bf7bb368f302de9fc",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "tools/create-saas-app/template/next.config.ts",
+      "sourceGitBlob": "63c14b646131a669e5f1a5ae8ec0d5c5b37d79fa",
+      "sourceSha256": "c182daaac4d07e2b21619782a5eb27f4f8631079d22c4e071fc51ae3d66cbd44",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "tools/create-saas-app/template/package.json",
+      "sourceGitBlob": "94b3ecca206e222e510e37d823831894e0ea8f72",
+      "sourceSha256": "12b245c25fdeff439dd7dec9741f7c4b94c4c800968999fbbe67e688cf6d44e5",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "tools/create-saas-app/template/postcss.config.mjs",
+      "sourceGitBlob": "a9b5c43d12ca5dd106ede4e9cec451f4ede60fef",
+      "sourceSha256": "a1a188221f064d964dd9958c3d48b0c23252fabbeb6099d95ee8e15c764718b0",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "tools/create-saas-app/template/tsconfig.json",
+      "sourceGitBlob": "26cb00713a9932ba41ba3bc3f77b4e3e1e612dfb",
+      "sourceSha256": "902826ae572bcc48bafd84ec64bbdc49faab486f9adcf896d17cf300e3751884",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "tools/registry-fixture/Dockerfile",
+      "sourceGitBlob": "c8d88a46a1601e07a210556e1ff434210df4bce3",
+      "sourceSha256": "c27b3564983b5a744694a51e0818e7174516d25fab3bcdd91ac21311e2328573",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "tools/registry-fixture/routes.local.json",
+      "sourceGitBlob": "600d1c7cf5f8a4d46118ab3250d9da293461562f",
+      "sourceSha256": "aaa48d34416069f8ccb3903d19e1901ea5ca59650eb251b8412c69dfd7caef4a",
+      "modifiedDuringExtraction": false
+    },
+    {
+      "destination": "tools/registry-fixture/server.mjs",
+      "sourceGitBlob": "2fd39259e22e900fd9f4b62fba4396074b69cf41",
+      "sourceSha256": "87f8ec08c356464e66d403736588abfa44c4fe9643ae2415793b915cf843ce0f",
+      "modifiedDuringExtraction": true
+    },
+    {
+      "destination": "tsconfig.json",
+      "sourceGitBlob": "b5c0b24fdfc1b9968643ffdce78856c1400bb0ff",
+      "sourceSha256": "b1113cae2280983b33109101b270323c5efd0ac56d393a9ce6131331fd434099",
+      "modifiedDuringExtraction": false
+    }
+  ],
+  "namingMigration": "Generic SaaS naming applied after extraction; sourceGitBlob/sourceSha256 preserve original provenance; destination paths use current names."
+}

@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "generatedAt": "2026-07-19T00:00:00.000Z",
+  "routes": [
+    {
+      "appName": "local-alpha",
+      "basePath": "/alpha",
+      "frontendTarget": "http://localhost:3101",
+      "active": true
+    },
+    {
+      "appName": "local-beta",
+      "basePath": "/beta",
+      "frontendTarget": "http://localhost:3102",
+      "active": true
+    },
+    {
+      "appName": "remote-gamma",
+      "basePath": "/remote",
+      "frontendTarget": "http://localhost:3103",
+      "active": true
+    }
+  ]
+}

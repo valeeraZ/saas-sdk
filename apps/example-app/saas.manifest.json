@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "appName": "launchpad",
+  "name": "Launchpad",
+  "description": "Release readiness for SAAS applications",
+  "logo": "CircleGauge",
+  "basePath": "/launchpad",
+  "healthPath": "/api/saas/health",
+  "shellVersion": "^0.1.0",
+  "roles": [
+    {
+      "name": "developer",
+      "description": "Can inspect release readiness"
+    },
+    {
+      "name": "release-manager",
+      "description": "Can run and approve release checks"
+    }
+  ],
+  "standaloneRoles": ["developer"],
+  "publicAssets": ["saas-path.svg"]
+}

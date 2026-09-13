@@ -1,0 +1,19 @@
+{
+  "name": "create-saas-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "create-saas-app": "./src/index.mjs"
+  },
+  "scripts": {
+    "test": "node --test src/*.test.mjs"
+  },
+  "files": [
+    "src/index.mjs",
+    "template"
+  ],
+  "engines": {
+    "node": ">=24.10.0"
+  }
+}

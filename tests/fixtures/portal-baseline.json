@@ -1,0 +1,256 @@
+{
+  "repository": "https://github.com/valeeraZ/portal-multiapps",
+  "commit": "8cdc9ae56381dcbde8b8d3c965a75a918897896c",
+  "sha256": "b2b777d7bbfb86806c98d6b1284dad427858544d15149491503a63e8c932e200",
+  "files": [
+    {
+      "path": "apps/portal/app/admin/admin-dashboard.tsx",
+      "sha256": "9ed36a479549f75af7672068a0d2157247172c006e0834587cbe70e3eddcb91e"
+    },
+    {
+      "path": "apps/portal/app/admin/page.tsx",
+      "sha256": "05da7a79c9bfb01b3bb46d815d316aac2f4e11dd134bcf2e6fa488e106de208d"
+    },
+    {
+      "path": "apps/portal/app/api/admin/apps/[appName]/activate/route.ts",
+      "sha256": "5461a369f2313d5832678dd52c86136a39fa8303ffcd932d1c8c84f8b59af9c6"
+    },
+    {
+      "path": "apps/portal/app/api/admin/apps/[appName]/retry/route.ts",
+      "sha256": "e177e8515076c0556876f97d41d4e5ed03c67b4e943db52a1d66ab08558e403f"
+    },
+    {
+      "path": "apps/portal/app/api/admin/apps/onboard/route.ts",
+      "sha256": "7c611095f1357b1c92b91fa93837e562a775d52a911426fa7c5c803982192509"
+    },
+    {
+      "path": "apps/portal/app/api/admin/apps/route.ts",
+      "sha256": "68b9629aa5f5380add880d7598f8cc3fed22a56c4367d92dfacbb20436005b6c"
+    },
+    {
+      "path": "apps/portal/app/api/saas/me/preferences/route.ts",
+      "sha256": "ba45ae175d5f780531027321bcd36bfabf2b60ce165bc9c5cba87937daf93385"
+    },
+    {
+      "path": "apps/portal/app/api/saas/session/route.ts",
+      "sha256": "5a11742e54cfff9b0dd7d4fa746dc2a7d46316e0eaa94375f89321c3fe76ec94"
+    },
+    {
+      "path": "apps/portal/app/app-unavailable/page.tsx",
+      "sha256": "b92e5f4d8733e92b2019a082d1d9cbf0205cc1d9b84e74349ab225e9cb9bde06"
+    },
+    {
+      "path": "apps/portal/app/layout.tsx",
+      "sha256": "2727ca9e2c4dc03139988835359128dda08ebd8667bf52e40def4bf34688cacc"
+    },
+    {
+      "path": "apps/portal/app/page.tsx",
+      "sha256": "7750d009a469c9c89ce56a240aa6c601a01b950cc7c5b882f3c20298d76c501c"
+    },
+    {
+      "path": "apps/portal/app/settings/page.tsx",
+      "sha256": "680ec3a96c6b5fd45b2091de778d0831738496f2b1b851b89a9a106d634c137a"
+    },
+    {
+      "path": "apps/portal/app/styles.css",
+      "sha256": "25539e584cf86fb1bf7bae1e665fd4901f2cb1585fa4559286eb9825b4627c1b"
+    },
+    {
+      "path": "apps/portal/components.json",
+      "sha256": "33e739d56a1373ef0862e12ae7b2a65f02eba6bba210b6f23bf1e5558db86f6b"
+    },
+    {
+      "path": "apps/portal/instrumentation.ts",
+      "sha256": "41a5a891f4ab159d351e4f86a5d5e3a673e693c16b59560ddaed5bbc6fcf9f6d"
+    },
+    {
+      "path": "apps/portal/lib/admin/clients.test.ts",
+      "sha256": "36ee005db947945042d4ed794c70357022d65da0121351a98d40508c6f4660cd"
+    },
+    {
+      "path": "apps/portal/lib/admin/clients.ts",
+      "sha256": "b1b8d69668c8aa8e86c9e6ead329bd834b1d00a7b27cc7ab3cfcde20e4da002f"
+    },
+    {
+      "path": "apps/portal/lib/admin/contracts.test.ts",
+      "sha256": "9cd6dc6296a75212c87818f877a614ca7d32b636867170636b2fece0f8c37b6e"
+    },
+    {
+      "path": "apps/portal/lib/admin/contracts.ts",
+      "sha256": "b4aed4e66918240a1ce5011c00c4c373abbaca3b28fa790728b28830a453f6d9"
+    },
+    {
+      "path": "apps/portal/lib/admin/http.ts",
+      "sha256": "197ac90f5323653cb31fd86bb5c0127563ac9cf298e9120e7fdd853974291c02"
+    },
+    {
+      "path": "apps/portal/lib/admin/security.test.ts",
+      "sha256": "abb86d28ffa6abf379205c68d76eade5c22f61b30538334bf6988de4c2439272"
+    },
+    {
+      "path": "apps/portal/lib/admin/security.ts",
+      "sha256": "40c95c77ac957bafeb704304790f00d833edd85910f904169807764e0cff6733"
+    },
+    {
+      "path": "apps/portal/lib/admin/service.test.ts",
+      "sha256": "e7c9a6fbe7ebd732fb3adfd709a721ae3abeb3d98a832922ec44fd8c27984bcb"
+    },
+    {
+      "path": "apps/portal/lib/admin/service.ts",
+      "sha256": "28a7355e5917622e2255bc347606a9c1049b3b23892028f292b1a37bea504429"
+    },
+    {
+      "path": "apps/portal/lib/saas-session.ts",
+      "sha256": "eaf7909c54904e61859da9166d064f74b4b02d1588f1b828169319bda7cdc6ee"
+    },
+    {
+      "path": "apps/portal/lib/preferences/identity.test.ts",
+      "sha256": "dbccdd3e4d6fd61064fe285614f9f632d3e65842e9f1531e3b8891ff0abac901"
+    },
+    {
+      "path": "apps/portal/lib/preferences/identity.ts",
+      "sha256": "c13cb86a43f7a5ee84c80cf323ea2fb4d761126c2cdd0ce0274cb6e5f417d69a"
+    },
+    {
+      "path": "apps/portal/lib/preferences/migration-runner.ts",
+      "sha256": "97a699100b79efca80c7b863d07f5feadb91217a2e25ed2c78569e36afb7dd5d"
+    },
+    {
+      "path": "apps/portal/lib/preferences/pool.ts",
+      "sha256": "f2e0ecf5cac098fb64d712349ff69a45b11a5b949aa029b50a82f8338708fc88"
+    },
+    {
+      "path": "apps/portal/lib/preferences/repository.integration.test.ts",
+      "sha256": "1408bbd207c6de8ce4684b1a222db4c5a946eb7f9ac7fef1a67580c11ece9cdc"
+    },
+    {
+      "path": "apps/portal/lib/preferences/repository.ts",
+      "sha256": "d094900bb33f3a09c6804ac24812710a5e3450b0e4aa51dfdc12e714f5729b0d"
+    },
+    {
+      "path": "apps/portal/lib/preferences/service.test.ts",
+      "sha256": "f5c7a141145595b7cb096d852ef9a24cbe0b69bfbd67ae6919fb163037799729"
+    },
+    {
+      "path": "apps/portal/lib/preferences/service.ts",
+      "sha256": "76866d2ec885d275f300f538b95d3ef4baaa6acd3adbb7603148e73b8743c732"
+    },
+    {
+      "path": "apps/portal/lib/preferences/types.ts",
+      "sha256": "43f6224a793289861335a27ea637d653824f66396de93b44f40be1ecde8c04f4"
+    },
+    {
+      "path": "apps/portal/lib/preferences/validation.test.ts",
+      "sha256": "9fa0754beab6be5bba4f98faa86af67559194a29513e946e96599b70ac44a543"
+    },
+    {
+      "path": "apps/portal/lib/preferences/validation.ts",
+      "sha256": "73f83d0db673d9b47f20ff97bcff85b2fb5c2ef069289bb88ac9bc1529430713"
+    },
+    {
+      "path": "apps/portal/lib/registry-runtime.ts",
+      "sha256": "657b56281797342af13868fd4bb8f7406d78609e46e0c5d2df94f0843d1e57da"
+    },
+    {
+      "path": "apps/portal/migrations/0001_create_user_preferences.sql",
+      "sha256": "51b32855b6edea6326cb7d55a978eca78b215ff3a7f009b6ce1da599879137e9"
+    },
+    {
+      "path": "apps/portal/next-env.d.ts",
+      "sha256": "7ad303e40d4fddf44f156129e397511953a71481c5cfd86b1862649aaaf240cc"
+    },
+    {
+      "path": "apps/portal/next.config.ts",
+      "sha256": "c34a4041e0cdb22a9683eee55494eadb3f139c42386f1bb0271c033b06782c6f"
+    },
+    {
+      "path": "apps/portal/package.json",
+      "sha256": "f736afa539cdaf7c2977822c4635aaa25e1464c399a19c4069602e0789b6836d"
+    },
+    {
+      "path": "apps/portal/postcss.config.mjs",
+      "sha256": "a1a188221f064d964dd9958c3d48b0c23252fabbeb6099d95ee8e15c764718b0"
+    },
+    {
+      "path": "apps/portal/proxy.ts",
+      "sha256": "0d2ab0227d3e5271849ef47c2f571bc12784432b33f34f94a44dbdaf30619566"
+    },
+    {
+      "path": "apps/portal/scripts/migrate.ts",
+      "sha256": "6c5ca8af81c46bf69ae37423340bfd4fc6e30c137505d76603523474c2050b49"
+    },
+    {
+      "path": "apps/portal/tsconfig.json",
+      "sha256": "53547b555c8440db5b846e1ece06ace75313ca05535520c942b1690462294828"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "81aced9d533654899d1911616a7fd2183cd0bfa0b0e65bd834f5917dce4eb3e3"
+    },
+    {
+      "path": "packages/registry-cache/package.json",
+      "sha256": "6c3a72012556da1d0bdb1dc65e98c01a35d228ac64bd7cccddde7b39c912e69b"
+    },
+    {
+      "path": "packages/registry-cache/src/catalog.test.ts",
+      "sha256": "1d04d8843381e2366e81495ebe7ca8922b0862010a921bde8340e6017bfdd13a"
+    },
+    {
+      "path": "packages/registry-cache/src/catalog.ts",
+      "sha256": "b68a8703e198cb01311af8998816492048d58a3824c7979820ef3165783ed184"
+    },
+    {
+      "path": "packages/registry-cache/src/client.test.ts",
+      "sha256": "96e480872eaf2b8d5c42a3ebbb46dc39c05dae02d28747b98220f7b51b1118f2"
+    },
+    {
+      "path": "packages/registry-cache/src/client.ts",
+      "sha256": "cfed24e6e678a9e46a65a4fdd6d94fb788b2569e27cb5669452b59d954f48fcc"
+    },
+    {
+      "path": "packages/registry-cache/src/config.ts",
+      "sha256": "05d812649b2a5a403900a7cbc0c3201af34bed4abdbaa23095cf1f39a25b0010"
+    },
+    {
+      "path": "packages/registry-cache/src/index.ts",
+      "sha256": "d43cdfccb468e489c4367efe9e2bfa1c2b9cb022ee29dcfa8f571b3bb1f7e17c"
+    },
+    {
+      "path": "packages/registry-cache/src/poller.ts",
+      "sha256": "5373b6e964e1ce6a577b81e5ab962f96bd78a1fff33f1c62917c5a62a063ca0a"
+    },
+    {
+      "path": "packages/registry-cache/src/runtime.test.ts",
+      "sha256": "e22242b09ea9d48630bef5c8d12a880eeccf91eabd4ec12cde1051100187f450"
+    },
+    {
+      "path": "packages/registry-cache/src/snapshot.test.ts",
+      "sha256": "f85998fdb846b5ca02129b67d87495b24116f3bf1f2656218f50c78271ed1148"
+    },
+    {
+      "path": "packages/registry-cache/src/snapshot.ts",
+      "sha256": "9c157e80250571459579d6ba9fb85db20b95b9685972f0096b077f6252b74276"
+    },
+    {
+      "path": "packages/registry-cache/src/store.ts",
+      "sha256": "2531fca4050a6857058463dcba5c234bd10e0dac8e7994043d9bd05d1a8859b8"
+    },
+    {
+      "path": "packages/registry-cache/src/types.ts",
+      "sha256": "df946165ca355885c39caec610a974c6a681fef23472e15ca69bcf17146a004e"
+    },
+    {
+      "path": "packages/registry-cache/src/validation.ts",
+      "sha256": "34212753bf24f7b14f9724638e1c78aa86cafcacdb14465f06a29ab4adec2eab"
+    },
+    {
+      "path": "packages/registry-cache/tsconfig.json",
+      "sha256": "65d94a0c35d9c74e2ac623370a66aeb9b2e666e3656c6f6ebcac12a18e7c67e7"
+    },
+    {
+      "path": "tsconfig.json",
+      "sha256": "b1113cae2280983b33109101b270323c5efd0ac56d393a9ce6131331fd434099"
+    }
+  ],
+  "normalization": "Mechanical generic SaaS naming migration; source commit retained for provenance, fixture hashes describe normalized input."
+}

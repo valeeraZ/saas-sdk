@@ -1,0 +1,44 @@
+{
+  "name": "@saas-platform/spike-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/spike-page.d.ts",
+      "import": "./dist/spike-page.js",
+      "default": "./dist/spike-page.js"
+    },
+    "./actions": {
+      "types": "./dist/actions.d.ts",
+      "import": "./dist/actions.js",
+      "default": "./dist/actions.js"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "peerDependencies": {
+    "next": "16.2.10",
+    "react": "19.2.0"
+  },
+  "dependencies": {
+    "@saas-platform/shell": "0.1.0",
+    "@saas-platform/ui": "0.1.0",
+    "lucide-react": "^1.25.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.2",
+    "next": "16.2.10",
+    "react": "19.2.0",
+    "typescript": "5.9.3"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=24.10.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node ../../scripts/copy-assets.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}
