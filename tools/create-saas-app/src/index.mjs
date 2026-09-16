@@ -108,7 +108,7 @@ if (
     const directory = createSaasApp();
     console.log(`Created SAAS App at ${directory}`);
     console.log(
-      "Next: install the @saas packages from your private package channel, then run npm run dev.",
+      "Next: install the private @saas packages, configure the environment, and follow the generated README.",
     );
   } catch (error) {
     console.error(
