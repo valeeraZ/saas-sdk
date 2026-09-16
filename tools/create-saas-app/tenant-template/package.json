@@ -1,0 +1,26 @@
+{
+  "name": "__APP_NAME__",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node assets.mjs && next build",
+    "start": "node server.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@saas-platform/sdk": "0.1.0",
+    "@saas-platform/next-config": "0.1.0",
+    "next": "16.3.5",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "jose": "6.2.2",
+    "pg": "8.23.0"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "@types/node": "24.10.1",
+    "@types/react": "19.2.2",
+    "@types/pg": "8.20.0"
+  }
+}

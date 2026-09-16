@@ -18,7 +18,9 @@ const manifest = {
 };
 
 test("derives build-time routing from the manifest", () => {
-  const config = withSaasNextConfig(manifest, { transpilePackages: ["@company/widgets"] });
+  const config = withSaasNextConfig(manifest, {
+    transpilePackages: ["@company/widgets"],
+  });
   assert.equal(config.basePath, "/launchpad");
   assert.equal(config.output, "standalone");
   assert.deepEqual(config.transpilePackages, [
@@ -31,9 +33,37 @@ test("derives build-time routing from the manifest", () => {
 });
 
 test("rejects configuration drift", () => {
-  assert.throws(() => withSaasNextConfig(manifest, { basePath: "/wrong" }), /does not match/);
+  assert.throws(
+    () => withSaasNextConfig(manifest, { basePath: "/wrong" }),
+    /does not match/,
+  );
   assert.throws(
     () => withSaasNextConfig(manifest, { assetPrefix: "/launchpad" }),
     /Do not use assetPrefix/,
+  );
+});
+
+test("dynamic tenant config isolates assets and pins public Server Action origin", async () => {
+  const { withSaasTenantNextConfig } = await import("./index.ts");
+  const config = withSaasTenantNextConfig({
+    mount: "reports",
+    assetVersion: "v1",
+    portalOrigin: "https://portal.test",
+  });
+  assert.equal(config.basePath, "");
+  assert.equal(config.assetPrefix, "/app-assets/reports/v1");
+  assert.deepEqual(config.experimental.serverActions.allowedOrigins, [
+    "portal.test",
+  ]);
+  assert.equal(config.output, undefined);
+  assert.throws(() =>
+    withSaasTenantNextConfig(
+      {
+        mount: "reports",
+        assetVersion: "v1",
+        portalOrigin: "https://portal.test",
+      },
+      { basePath: "/reports" },
+    ),
   );
 });
