@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, mkdtempSync, rmSync } from "node:fs";
 import { mkdtemp } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
@@ -11,25 +11,80 @@ test("creates a manifest-driven standalone/integrated App without installing dep
   const parent = await mkdtemp(join(tmpdir(), "create-saas-app-"));
   const target = join(parent, "risk-console");
   createSaasApp([
-    "--directory", target,
-    "--name", "risk-console",
-    "--title", "Risk Console",
+    "--directory",
+    target,
+    "--name",
+    "risk-console",
+    "--title",
+    "Risk Console",
   ]);
   assert.ok(existsSync(join(target, "app/api/saas/health/route.ts")));
-  const manifest = JSON.parse(readFileSync(join(target, "saas.manifest.json"), "utf8"));
+  const manifest = JSON.parse(
+    readFileSync(join(target, "saas.manifest.json"), "utf8"),
+  );
   assert.equal(manifest.appName, "risk-console");
   assert.equal(manifest.basePath, "/risk-console");
-  assert.match(readFileSync(join(target, "next.config.ts"), "utf8"), /withSaasNextConfig/);
+  assert.match(
+    readFileSync(join(target, "next.config.ts"), "utf8"),
+    /withSaasNextConfig/,
+  );
 });
 
 test("refuses to overwrite a target or create a reserved App", async () => {
   const parent = await mkdtemp(join(tmpdir(), "create-saas-app-"));
   assert.throws(
-    () => createSaasApp(["--directory", parent, "--name", "risk", "--title", "Risk"]),
+    () =>
+      createSaasApp([
+        "--directory",
+        parent,
+        "--name",
+        "risk",
+        "--title",
+        "Risk",
+      ]),
     /already exists/,
   );
   assert.throws(
-    () => createSaasApp(["--directory", join(parent, "admin"), "--name", "admin", "--title", "Admin"]),
+    () =>
+      createSaasApp([
+        "--directory",
+        join(parent, "admin"),
+        "--name",
+        "admin",
+        "--title",
+        "Admin",
+      ]),
     /non-reserved/,
   );
+});
+
+test("creates a dynamic tenant SDK adapter and isolates its asset namespace", () => {
+  const temporary = mkdtempSync(join(tmpdir(), "saas-tenant-template-"));
+  const directory = join(temporary, "application");
+  createSaasApp([
+    "--directory",
+    directory,
+    "--name",
+    "reports",
+    "--title",
+    "Reports",
+    "--routing",
+    "tenant",
+  ]);
+  assert.ok(
+    readFileSync(join(directory, "server.mjs"), "utf8").includes(
+      "createSaasTenantHandler",
+    ),
+  );
+  assert.ok(
+    readFileSync(join(directory, "next.config.ts"), "utf8").includes(
+      "withSaasTenantNextConfig",
+    ),
+  );
+  assert.ok(
+    existsSync(
+      join(directory, "app/tenants/[tenantId]/apps/[mount]/notes/actions.ts"),
+    ),
+  );
+  rmSync(temporary, { recursive: true, force: true });
 });

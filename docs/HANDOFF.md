@@ -27,3 +27,7 @@
 ## 通用项目命名
 
 用户要求去除原专有名称，使用 generic SaaS Platform。已同步更新包名、API 标识符、CLI、环境变量、路由、manifest、Python 模块和测试夹具。不要恢复旧名称或兼容别名。源仓库仍只读。当前验收以 NAMING.md 和最新提交 CI 为准。
+
+## 2026-09-16 — tenant Next.js SDK / native Portal Proxy
+
+分支 `codex/sdk-tenant-next-proxy` 增加兼容导出 tenant、tenant-react、tenant-server、tenant-next，新增 withSaasTenantNextConfig 和 `--routing tenant` 脚手架。先阅读 TENANT-NEXT-SDK.md。Next 应用保留完整租户路径；公共 JS/CSS/font 构建资源使用应用/构建命名空间，其余资源仍需授权。Next 组件使用 async getSaasTenant；不能 externalize 整个 SDK 或用裸 next start 跳过验签适配器。当前为私有 0.1.0 开发 tarball，消费时固定此提交的产物/锁文件，不代表已发布版本。Portal 配套改动在 #6；真实浏览器联调脚本与配置见 Portal TENANT-NEXT-VALIDATION.md。WebSocket、应用 Cookie、自动 Registry 资源投影和生产部署未交付。

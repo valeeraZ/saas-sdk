@@ -23,6 +23,26 @@
       "types": "./dist/server.d.ts",
       "import": "./dist/server.js",
       "default": "./dist/server.js"
+    },
+    "./tenant": {
+      "types": "./dist/tenant.d.ts",
+      "import": "./dist/tenant.js",
+      "default": "./dist/tenant.js"
+    },
+    "./tenant-react": {
+      "types": "./dist/tenant-react.d.ts",
+      "import": "./dist/tenant-react.js",
+      "default": "./dist/tenant-react.js"
+    },
+    "./tenant-server": {
+      "types": "./dist/tenant-server.d.ts",
+      "import": "./dist/tenant-server.js",
+      "default": "./dist/tenant-server.js"
+    },
+    "./tenant-next": {
+      "types": "./dist/tenant-next.d.ts",
+      "import": "./dist/tenant-next.js",
+      "default": "./dist/tenant-next.js"
     }
   },
   "scripts": {
@@ -33,15 +53,19 @@
     "@saas-platform/auth": "0.1.0",
     "@saas-platform/manifest-schema": "0.1.0",
     "@saas-platform/shell": "0.1.0",
-    "@saas-platform/theme": "0.1.0"
+    "@saas-platform/theme": "0.1.0",
+    "jose": "6.2.2"
   },
   "devDependencies": {
     "@types/node": "24.10.1",
     "@types/react": "19.2.2",
+    "next": "16.3.5",
     "react": "19.2.0",
+    "react-dom": "19.2.0",
     "typescript": "5.9.3"
   },
   "peerDependencies": {
+    "next": "^16.2.10",
     "react": "19.2.0"
   },
   "files": [
@@ -49,5 +73,10 @@
   ],
   "engines": {
     "node": ">=24.10.0"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    }
   }
 }

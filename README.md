@@ -36,3 +36,5 @@ npm run test:wheel
 CI 在 main、codex/** 推送与 PR 上执行同一 `npm run verify`，然后构建/测试 wheel，保存提交级产物 14 天。workflow 固定 Node 24.10.0、npm 11.6.1、Python 3.11；仅需本仓库读取权限，不依赖兄弟仓库源码或凭据。`npm run test:portal` 单独运行 Portal 消费验证，`npm run test:packed` 单独运行模板/HTTP 验证，均需先 `npm run pack`。
 
 当前命名与不兼容变更见 [NAMING.md](docs/NAMING.md)。所有包仍未发布，不保留旧名称别名。
+
+租户感知 Next.js 接入已扩展到现有 SDK：路径/Link/router/fetch、服务端请求验签、Next.js 上下文与配置、`create-saas-app --routing tenant` 模板。协议、打包消费、真实服务验收和限制见 [Tenant Next SDK](docs/TENANT-NEXT-SDK.md)。

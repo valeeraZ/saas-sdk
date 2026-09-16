@@ -26,8 +26,9 @@
     "create:saas-app": "node tools/create-saas-app/src/index.mjs",
     "contract:example": "node packages/contract-cli/dist/cli.js check apps/example-app --require-build",
     "test:wheel": "python3 scripts/test-wheel.py",
-    "verify": "npm run build:packages && npm run test:node && npm run test:python && node scripts/typecheck.mjs && npm run build:examples && npm run contract:example && node scripts/pack.mjs && npm run test:packed && npm run test:portal",
-    "test:portal": "node scripts/test-portal.mjs"
+    "verify": "npm run build:packages && npm run test:node && npm run test:python && node scripts/typecheck.mjs && npm run build:examples && npm run contract:example && node scripts/pack.mjs && npm run test:packed && npm run test:portal && npm run test:tenant-next",
+    "test:portal": "node scripts/test-portal.mjs",
+    "test:tenant-next": "node scripts/prepare-tenant-next.mjs"
   },
   "devDependencies": {
     "@types/node": "24.10.1",
