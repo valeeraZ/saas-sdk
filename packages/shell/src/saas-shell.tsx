@@ -347,7 +347,10 @@ function ShellScaffold({
                       : messages.synced}
             </span>
           </header>
-          <main className="relative min-h-[calc(100dvh-3.5rem)] overflow-hidden">
+          <div
+            data-slot="saas-content"
+            className="relative min-h-[calc(100dvh-3.5rem)] overflow-hidden"
+          >
             <div
               className="pointer-events-none absolute inset-0 opacity-70 [background-image:linear-gradient(var(--saas-grid)_1px,transparent_1px),linear-gradient(90deg,var(--saas-grid)_1px,transparent_1px)] [background-size:32px_32px] [mask-image:linear-gradient(to_bottom,black,transparent_68%)]"
               aria-hidden="true"
@@ -355,7 +358,7 @@ function ShellScaffold({
             <div className="relative mx-auto w-full max-w-[92rem] px-5 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
               {children}
             </div>
-          </main>
+          </div>
         </SidebarInset>
       </SidebarProvider>
     </TooltipProvider>
