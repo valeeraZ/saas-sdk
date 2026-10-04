@@ -27,6 +27,7 @@ test("tenant adapter independently verifies request bindings, replay and concurr
       res.end(
         JSON.stringify({
           tenant: before,
+          presentation: requireSaasTenant().presentation,
           body: Buffer.concat(chunks).toString(),
         }),
       );
@@ -61,6 +62,12 @@ test("tenant adapter independently verifies request bindings, replay and concurr
       basePath: `/tenants/${tenant}/apps/reports`,
       deploymentId: b,
       roles: ["viewer"],
+      presentation: {
+        theme: "dark",
+        sidebarCollapsed: true,
+        locale: "en",
+        roles: ["admin"],
+      },
       method: "POST",
       path,
       bodyHash: createHash("sha256").update("hello").digest("hex"),
@@ -95,7 +102,28 @@ test("tenant adapter independently verifies request bindings, replay and concurr
     const token = await signed(a);
     const success = await send(a, token);
     assert.equal(success.status, 200);
-    assert.equal((await success.json()).body, "hello");
+    const successBody = await success.json();
+    assert.equal(successBody.body, "hello");
+    assert.deepEqual(successBody.presentation, {
+      theme: "dark",
+      sidebarCollapsed: true,
+      locale: "en",
+    });
+    const invalid = await send(
+      a,
+      await signed(a, {
+        presentation: {
+          theme: "unsafe",
+          locale: "de",
+          sidebarCollapsed: "true",
+        },
+      }),
+    );
+    assert.deepEqual((await invalid.json()).presentation, {
+      theme: "light",
+      locale: "zh",
+      sidebarCollapsed: false,
+    });
     assert.equal((await send(a, token)).status, 401);
     assert.equal((await send(a)).status, 401);
     assert.equal((await send(a, "forged")).status, 401);

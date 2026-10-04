@@ -1,6 +1,6 @@
 {
   "name": "@saas-platform/shell",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "exports": {
@@ -38,6 +38,16 @@
       "types": "./dist/version.d.ts",
       "import": "./dist/version.js",
       "default": "./dist/version.js"
+    },
+    "./messages": {
+      "types": "./dist/messages.d.ts",
+      "import": "./dist/messages.js",
+      "default": "./dist/messages.js"
+    },
+    "./presentation-controls": {
+      "types": "./dist/presentation-controls.d.ts",
+      "import": "./dist/presentation-controls.js",
+      "default": "./dist/presentation-controls.js"
     }
   },
   "scripts": {
@@ -45,8 +55,8 @@
     "build": "tsc -p tsconfig.build.json && node ../../scripts/copy-assets.mjs"
   },
   "dependencies": {
-    "@saas-platform/theme": "0.1.0",
-    "@saas-platform/ui": "0.1.0",
+    "@saas-platform/theme": "0.1.1",
+    "@saas-platform/ui": "0.1.1",
     "lucide-react": "^1.25.0"
   },
   "devDependencies": {

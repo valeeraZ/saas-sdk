@@ -57,6 +57,9 @@ const tsconfig = JSON.parse(readFileSync(join(generated, 'tsconfig.json')));
 tsconfig.compilerOptions.skipLibCheck = false;
 tsconfig.compilerOptions.allowImportingTsExtensions = false;
 json(join(generated, 'tsconfig.json'), tsconfig);
+// Next 16.3.8 references DOM URLPattern aliases absent from TypeScript 5.9.
+// Keep full declaration checking; supply only the missing platform aliases.
+writeFileSync(join(generated, 'url-pattern-compat.d.ts'), 'declare global { type URLPatternInput = string | URLPatternInit; interface URLPatternOptions { ignoreCase?: boolean; } }\nexport {};\n');
 writeFileSync(join(generated, 'exports-check.ts'), typeImports);
 writeFileSync(join(generated, 'runtime-check.mjs'), runtimeImports);
 run('node', ['runtime-check.mjs'], {cwd: generated});

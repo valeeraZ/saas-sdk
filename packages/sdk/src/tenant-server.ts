@@ -1,3 +1,4 @@
+import { createSaasPresentation } from "@saas-platform/theme";
 import { AsyncLocalStorage } from "node:async_hooks";
 import {
   createHmac,
@@ -166,6 +167,7 @@ export function createSaasTenantHandler(
         mount: options.mount,
         basePath,
         roles: p.roles as string[],
+        presentation: createSaasPresentation(p.presentation),
       });
       let internalUrl = req.url;
       const rest = url.pathname.slice(basePath.length);
