@@ -1,6 +1,6 @@
 {
   "name": "@saas-platform/shell",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "type": "module",
   "exports": {
@@ -61,7 +61,7 @@
   },
   "dependencies": {
     "@saas-platform/theme": "0.1.1",
-    "@saas-platform/ui": "0.1.1",
+    "@saas-platform/ui": "0.1.2",
     "lucide-react": "^1.25.0"
   },
   "devDependencies": {
