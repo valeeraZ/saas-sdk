@@ -144,6 +144,7 @@ function NavigationGroup({
 
 function ShellScaffold({
   canAccessAdmin,
+  navigationVisibility,
   children,
   currentAppName,
   currentAppLabel,
@@ -153,6 +154,7 @@ function ShellScaffold({
   user,
 }: Readonly<{
   canAccessAdmin: boolean;
+  navigationVisibility: "all" | "personalized";
   children: ReactNode;
   currentAppName: string;
   currentAppLabel: string;
@@ -171,8 +173,8 @@ function ShellScaffold({
   );
   const visibleNavigation = useMemo(
     () =>
-      filterSaasNavigation(navigation, preferences.hiddenApps, canAccessAdmin),
-    [canAccessAdmin, navigation, preferences.hiddenApps],
+      filterSaasNavigation(navigation, navigationVisibility === "all" ? [] : preferences.hiddenApps, canAccessAdmin),
+    [canAccessAdmin, navigation, navigationVisibility, preferences.hiddenApps],
   );
   const platformItems = visibleNavigation.filter(
     (item) => item.section === "platform",
@@ -367,6 +369,7 @@ function ShellScaffold({
 
 export function SaasShell({
   canAccessAdmin = false,
+  navigationVisibility = "personalized",
   children,
   currentAppLabel,
   currentAppName,
@@ -380,6 +383,7 @@ export function SaasShell({
   user,
 }: Readonly<{
   canAccessAdmin: boolean;
+  navigationVisibility?: "all" | "personalized";
   children: ReactNode;
   currentAppLabel: string;
   currentAppName: string;
@@ -401,6 +405,7 @@ export function SaasShell({
       >
         <ShellScaffold
           canAccessAdmin={canAccessAdmin}
+          navigationVisibility={navigationVisibility}
           currentAppLabel={currentAppLabel}
           currentAppName={currentAppName}
           homeHref={homeHref}
