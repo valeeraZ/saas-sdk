@@ -24,8 +24,8 @@ export const SAAS_SHELL_MESSAGES_EN = {
   english: "English",
   chinese: "中文",
 };
-export type SaasShellMessages = typeof SAAS_SHELL_MESSAGES_EN;
-export const SAAS_SHELL_MESSAGES_ZH: SaasShellMessages = {
+export type SaasShellMessages = Omit<typeof SAAS_SHELL_MESSAGES_EN, "moreApps"> & { moreApps?: string };
+export const SAAS_SHELL_MESSAGES_ZH = {
   home: "SAAS 首页",
   navigationUnavailable: "应用导航暂时不可用。",
   retry: "重试",
@@ -50,6 +50,6 @@ export const SAAS_SHELL_MESSAGES_ZH: SaasShellMessages = {
   english: "English",
   chinese: "中文",
 };
-export function getSaasShellMessages(locale: string): SaasShellMessages {
+export function getSaasShellMessages(locale: string): typeof SAAS_SHELL_MESSAGES_EN {
   return locale === "zh" ? SAAS_SHELL_MESSAGES_ZH : SAAS_SHELL_MESSAGES_EN;
 }
