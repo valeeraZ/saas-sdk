@@ -21,7 +21,7 @@
     "react": "19.2.0"
   },
   "dependencies": {
-    "@saas-platform/shell": "0.1.1",
+    "@saas-platform/shell": "0.2.0",
     "@saas-platform/ui": "0.1.1",
     "lucide-react": "^1.25.0"
   },

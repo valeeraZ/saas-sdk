@@ -37,7 +37,7 @@ function parseArgs(args) {
     values.get("base-path") ?? (appName ? `/${appName}` : undefined);
   if (!directory || !appName || !title || !basePath) {
     throw new Error(
-      "Usage: create-saas-app --directory <path> --name <kebab-name> --title <title> [--base-path /path] [--routing fixed|tenant]",
+      "Usage: create-saas-app --directory <path> --name <kebab-name> --title <title> [--base-path /path] [--routing fixed|portal]",
     );
   }
   if (!APP_NAME_PATTERN.test(appName) || RESERVED.has(appName)) {
@@ -50,11 +50,11 @@ function parseArgs(args) {
     throw new Error("--title must be 1-120 trimmed characters");
   }
   const routing = values.get("routing") ?? "fixed";
-  if (!["fixed", "tenant"].includes(routing))
-    throw new Error("--routing must be fixed or tenant");
-  if (routing === "tenant" && !/^[a-z][a-z0-9-]{0,62}$/.test(appName))
+  if (!["fixed", "portal"].includes(routing))
+    throw new Error("--routing must be fixed or portal");
+  if (routing === "portal" && !/^[a-z][a-z0-9-]{0,62}$/.test(appName))
     throw new Error(
-      "Tenant app name must start with a letter and be at most 63 characters",
+      "Portal app name must start with a letter and be at most 63 characters",
     );
   return { directory: resolve(directory), appName, title, basePath, routing };
 }
@@ -84,7 +84,7 @@ export function createSaasApp(args = process.argv.slice(2)) {
   }
   const template = resolve(
     dirname(fileURLToPath(import.meta.url)),
-    options.routing === "tenant" ? "../tenant-template" : "../template",
+    options.routing === "portal" ? "../app-template" : "../template",
   );
   try {
     renderDirectory(template, options.directory, {

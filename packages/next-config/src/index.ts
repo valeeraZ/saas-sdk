@@ -55,8 +55,8 @@ export function withSaasNextConfig<T extends SaasNextConfig>(
   });
 }
 
-/** Dynamic tenant paths are application routes, never a runtime Next basePath. */
-export function withSaasTenantNextConfig<T extends SaasNextConfig>(
+/** Dynamic application paths are application routes, never a runtime Next basePath. */
+export function withSaasAppNextConfig<T extends SaasNextConfig>(
   options: Readonly<{
     mount: string;
     assetVersion: string;
@@ -68,7 +68,7 @@ export function withSaasTenantNextConfig<T extends SaasNextConfig>(
     !/^[a-z][a-z0-9-]{0,62}$/.test(options.mount) ||
     !/^[a-zA-Z0-9-]{1,80}$/.test(options.assetVersion)
   )
-    throw new Error("Invalid tenant application namespace");
+    throw new Error("Invalid application namespace");
   const portal = new URL(options.portalOrigin);
   if (
     portal.origin !== options.portalOrigin ||
@@ -80,7 +80,7 @@ export function withSaasTenantNextConfig<T extends SaasNextConfig>(
     nextConfig.basePath ||
     ("assetPrefix" in nextConfig && nextConfig.assetPrefix !== assetPrefix)
   )
-    throw new Error("Tenant routing owns basePath and assetPrefix");
+    throw new Error("Portal routing owns basePath and assetPrefix");
   const experimental = (nextConfig.experimental ?? {}) as Record<
     string,
     unknown

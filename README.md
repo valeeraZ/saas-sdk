@@ -1,3 +1,7 @@
+# Current platform contract
+
+See [User/application SDK 0.2](docs/APP-PLATFORM.md). This supersedes tenant routing and data tenancy described in historical sections below.
+
 # saas-sdk
 
 共享 SDK、Shell/UI/theme、FastAPI 中间件、manifest、CLI、脚手架与示例。无生产数据库。

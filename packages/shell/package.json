@@ -1,6 +1,6 @@
 {
   "name": "@saas-platform/shell",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -48,6 +48,11 @@
       "types": "./dist/presentation-controls.d.ts",
       "import": "./dist/presentation-controls.js",
       "default": "./dist/presentation-controls.js"
+    },
+    "./platform-shell": {
+      "types": "./dist/platform-shell.d.ts",
+      "import": "./dist/platform-shell.js",
+      "default": "./dist/platform-shell.js"
     }
   },
   "scripts": {

@@ -1,0 +1,19 @@
+{
+  "App": {
+    "portal": "返回 Portal",
+    "notesLink": "记录页面",
+    "resources": "应用资源与流式内容",
+    "publicAsset": "公共资源",
+    "optimizedAsset": "优化图片",
+    "streaming": "加载流式内容…",
+    "streamed": "流式内容已加载",
+    "notes": "我的记录",
+    "home": "应用首页",
+    "noteBody": "记录内容",
+    "save": "保存 Server Action",
+    "checkFetch": "检查 SDK fetch",
+    "apiFailed": "API 请求失败",
+    "user": "用户：{id}",
+    "apiUser": "API 用户：{id}"
+  }
+}

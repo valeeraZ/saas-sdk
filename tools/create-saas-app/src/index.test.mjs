@@ -58,7 +58,7 @@ test("refuses to overwrite a target or create a reserved App", async () => {
   );
 });
 
-test("creates a dynamic tenant SDK adapter and isolates its asset namespace", () => {
+test("creates a dynamic application SDK adapter and isolates its asset namespace", () => {
   const temporary = mkdtempSync(join(tmpdir(), "saas-tenant-template-"));
   const directory = join(temporary, "application");
   createSaasApp([
@@ -69,21 +69,21 @@ test("creates a dynamic tenant SDK adapter and isolates its asset namespace", ()
     "--title",
     "Reports",
     "--routing",
-    "tenant",
+    "portal",
   ]);
   assert.ok(
     readFileSync(join(directory, "server.mjs"), "utf8").includes(
-      "createSaasTenantHandler",
+      "createSaasAppHandler",
     ),
   );
   assert.ok(
     readFileSync(join(directory, "next.config.ts"), "utf8").includes(
-      "withSaasTenantNextConfig",
+      "withSaasAppNextConfig",
     ),
   );
   assert.ok(
     existsSync(
-      join(directory, "app/tenants/[tenantId]/apps/[mount]/notes/actions.ts"),
+      join(directory, "app/apps/[mount]/notes/actions.ts"),
     ),
   );
   rmSync(temporary, { recursive: true, force: true });

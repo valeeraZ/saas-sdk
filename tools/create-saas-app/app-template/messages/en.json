@@ -1,0 +1,19 @@
+{
+  "App": {
+    "portal": "Back to Portal",
+    "notesLink": "Notes",
+    "resources": "Application assets and streaming",
+    "publicAsset": "Public asset",
+    "optimizedAsset": "Optimized image",
+    "streaming": "Loading streamed content…",
+    "streamed": "Streamed content loaded",
+    "notes": "My notes",
+    "home": "Application home",
+    "noteBody": "Note content",
+    "save": "Save Server Action",
+    "checkFetch": "Check SDK fetch",
+    "apiFailed": "API request failed",
+    "user": "User: {id}",
+    "apiUser": "API user: {id}"
+  }
+}
