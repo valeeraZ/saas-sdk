@@ -1,8 +1,10 @@
 /** Applications can supply translations without an i18n runtime dependency. */
 export const SAAS_SHELL_MESSAGES_EN = {
   home: "SAAS home",
-  workspace: "Workspace",
-  unified: "Unified workspace",
+  navigationUnavailable: "Application navigation is unavailable.",
+  retry: "Retry",
+  workspace: "Navigation",
+  unified: "Application portal",
   applications: "Applications",
   lightTheme: "Use light theme",
   darkTheme: "Use dark theme",
@@ -14,7 +16,7 @@ export const SAAS_SHELL_MESSAGES_EN = {
   local: "Local",
   synced: "Synced",
   sidebar: "Navigation",
-  sidebarDescription: "Workspace and application navigation",
+  sidebarDescription: "Application navigation",
   toggleSidebar: "Toggle Sidebar",
   close: "Close",
   language: "Language",
@@ -24,8 +26,10 @@ export const SAAS_SHELL_MESSAGES_EN = {
 export type SaasShellMessages = typeof SAAS_SHELL_MESSAGES_EN;
 export const SAAS_SHELL_MESSAGES_ZH: SaasShellMessages = {
   home: "SAAS 首页",
-  workspace: "工作空间",
-  unified: "统一工作空间",
+  navigationUnavailable: "应用导航暂时不可用。",
+  retry: "重试",
+  workspace: "导航",
+  unified: "应用门户",
   applications: "应用",
   lightTheme: "使用浅色主题",
   darkTheme: "使用深色主题",
@@ -37,7 +41,7 @@ export const SAAS_SHELL_MESSAGES_ZH: SaasShellMessages = {
   local: "本地",
   synced: "已同步",
   sidebar: "导航",
-  sidebarDescription: "工作空间与应用导航",
+  sidebarDescription: "应用导航",
   toggleSidebar: "切换侧栏",
   close: "关闭",
   language: "语言",

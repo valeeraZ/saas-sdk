@@ -1,6 +1,6 @@
 {
   "name": "@saas-platform/sdk",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -24,25 +24,25 @@
       "import": "./dist/server.js",
       "default": "./dist/server.js"
     },
-    "./tenant": {
-      "types": "./dist/tenant.d.ts",
-      "import": "./dist/tenant.js",
-      "default": "./dist/tenant.js"
+    "./app": {
+      "types": "./dist/app.d.ts",
+      "import": "./dist/app.js",
+      "default": "./dist/app.js"
     },
-    "./tenant-react": {
-      "types": "./dist/tenant-react.d.ts",
-      "import": "./dist/tenant-react.js",
-      "default": "./dist/tenant-react.js"
+    "./app-react": {
+      "types": "./dist/app-react.d.ts",
+      "import": "./dist/app-react.js",
+      "default": "./dist/app-react.js"
     },
-    "./tenant-server": {
-      "types": "./dist/tenant-server.d.ts",
-      "import": "./dist/tenant-server.js",
-      "default": "./dist/tenant-server.js"
+    "./app-server": {
+      "types": "./dist/app-server.d.ts",
+      "import": "./dist/app-server.js",
+      "default": "./dist/app-server.js"
     },
-    "./tenant-next": {
-      "types": "./dist/tenant-next.d.ts",
-      "import": "./dist/tenant-next.js",
-      "default": "./dist/tenant-next.js"
+    "./app-next": {
+      "types": "./dist/app-next.d.ts",
+      "import": "./dist/app-next.js",
+      "default": "./dist/app-next.js"
     }
   },
   "scripts": {
@@ -52,7 +52,7 @@
   "dependencies": {
     "@saas-platform/auth": "0.1.0",
     "@saas-platform/manifest-schema": "0.1.0",
-    "@saas-platform/shell": "0.1.1",
+    "@saas-platform/shell": "0.2.0",
     "@saas-platform/theme": "0.1.1",
     "jose": "6.2.2"
   },

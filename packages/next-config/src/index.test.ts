@@ -43,9 +43,9 @@ test("rejects configuration drift", () => {
   );
 });
 
-test("dynamic tenant config isolates assets and pins public Server Action origin", async () => {
-  const { withSaasTenantNextConfig } = await import("./index.ts");
-  const config = withSaasTenantNextConfig({
+test("dynamic application config isolates assets and pins public Server Action origin", async () => {
+  const { withSaasAppNextConfig } = await import("./index.ts");
+  const config = withSaasAppNextConfig({
     mount: "reports",
     assetVersion: "v1",
     portalOrigin: "https://portal.test",
@@ -57,7 +57,7 @@ test("dynamic tenant config isolates assets and pins public Server Action origin
   ]);
   assert.equal(config.output, undefined);
   assert.throws(() =>
-    withSaasTenantNextConfig(
+    withSaasAppNextConfig(
       {
         mount: "reports",
         assetVersion: "v1",

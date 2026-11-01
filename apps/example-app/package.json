@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "@saas-platform/manifest-schema": "0.1.0",
-    "@saas-platform/next-config": "0.1.0",
-    "@saas-platform/sdk": "0.1.1",
-    "@saas-platform/shell": "0.1.1",
+    "@saas-platform/next-config": "0.2.0",
+    "@saas-platform/sdk": "0.2.0",
+    "@saas-platform/shell": "0.2.0",
     "@saas-platform/theme": "0.1.1",
     "@saas-platform/ui": "0.1.1",
     "lucide-react": "^1.25.0",
