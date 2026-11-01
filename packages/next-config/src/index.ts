@@ -97,7 +97,7 @@ export function withSaasTenantNextConfig<T extends SaasNextConfig>(
       serverActions: {
         ...actions,
         allowedOrigins: [portal.host],
-        bodySizeLimit: "8mb",
+        bodySizeLimit: "8mb" as const,
       },
     },
     // This mode requires the SDK server adapter; standalone generated server omits it.

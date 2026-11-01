@@ -1,0 +1,49 @@
+/** Applications can supply translations without an i18n runtime dependency. */
+export const SAAS_SHELL_MESSAGES_EN = {
+  home: "SAAS home",
+  workspace: "Workspace",
+  unified: "Unified workspace",
+  applications: "Applications",
+  lightTheme: "Use light theme",
+  darkTheme: "Use dark theme",
+  settings: "Preference settings",
+  shell: "Shell",
+  localState: "Local state",
+  syncing: "Syncing",
+  saving: "Saving",
+  local: "Local",
+  synced: "Synced",
+  sidebar: "Navigation",
+  sidebarDescription: "Workspace and application navigation",
+  toggleSidebar: "Toggle Sidebar",
+  close: "Close",
+  language: "Language",
+  english: "English",
+  chinese: "中文",
+};
+export type SaasShellMessages = typeof SAAS_SHELL_MESSAGES_EN;
+export const SAAS_SHELL_MESSAGES_ZH: SaasShellMessages = {
+  home: "SAAS 首页",
+  workspace: "工作空间",
+  unified: "统一工作空间",
+  applications: "应用",
+  lightTheme: "使用浅色主题",
+  darkTheme: "使用深色主题",
+  settings: "偏好设置",
+  shell: "导航框架",
+  localState: "本地状态",
+  syncing: "同步中",
+  saving: "保存中",
+  local: "本地",
+  synced: "已同步",
+  sidebar: "导航",
+  sidebarDescription: "工作空间与应用导航",
+  toggleSidebar: "切换侧栏",
+  close: "关闭",
+  language: "语言",
+  english: "English",
+  chinese: "中文",
+};
+export function getSaasShellMessages(locale: string): SaasShellMessages {
+  return locale === "zh" ? SAAS_SHELL_MESSAGES_ZH : SAAS_SHELL_MESSAGES_EN;
+}

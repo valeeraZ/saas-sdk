@@ -40,7 +40,12 @@ import {
   ShieldCheckIcon,
   SunIcon,
 } from "lucide-react";
-import { useMemo, useSyncExternalStore, type CSSProperties, type ReactNode } from "react";
+import {
+  useMemo,
+  useSyncExternalStore,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
 
 import {
   filterSaasNavigation,
@@ -56,6 +61,7 @@ import {
   useSaasPreferences,
   type SaasPreferencesMode,
 } from "./preferences-context.tsx";
+import { SAAS_SHELL_MESSAGES_EN, type SaasShellMessages } from "./messages.ts";
 import { SAAS_SHELL_VERSION } from "./version.ts";
 
 const ICONS = {
@@ -114,8 +120,15 @@ function NavigationGroup({
                 : path.startsWith(item.href);
             return (
               <SidebarMenuItem key={item.href}>
-                <SidebarMenuButton asChild isActive={isActive} tooltip={item.label}>
-                  <a href={item.href} aria-current={isActive ? "page" : undefined}>
+                <SidebarMenuButton
+                  asChild
+                  isActive={isActive}
+                  tooltip={item.label}
+                >
+                  <a
+                    href={item.href}
+                    aria-current={isActive ? "page" : undefined}
+                  >
                     <Icon />
                     <span>{item.label}</span>
                   </a>
@@ -135,6 +148,8 @@ function ShellScaffold({
   currentAppName,
   currentAppLabel,
   homeHref,
+  messages,
+  headerActions,
   user,
 }: Readonly<{
   canAccessAdmin: boolean;
@@ -142,32 +157,43 @@ function ShellScaffold({
   currentAppName: string;
   currentAppLabel: string;
   homeHref: string;
+  messages: SaasShellMessages;
+  headerActions?: ReactNode;
   user: Readonly<{ displayName: string; secondaryLabel: string }>;
 }>) {
   const navigation = useSaasNavigation();
-  const {
-    error,
-    isLoading,
-    isSaving,
-    mode,
-    preferences,
-    updatePreferences,
-  } = useSaasPreferences();
-  const path = useSyncExternalStore(subscribeToLocation, getBrowserPath, getServerPath);
+  const { error, isLoading, isSaving, mode, preferences, updatePreferences } =
+    useSaasPreferences();
+  const path = useSyncExternalStore(
+    subscribeToLocation,
+    getBrowserPath,
+    getServerPath,
+  );
   const visibleNavigation = useMemo(
-    () => filterSaasNavigation(navigation, preferences.hiddenApps, canAccessAdmin),
+    () =>
+      filterSaasNavigation(navigation, preferences.hiddenApps, canAccessAdmin),
     [canAccessAdmin, navigation, preferences.hiddenApps],
   );
-  const platformItems = visibleNavigation.filter((item) => item.section === "platform");
+  const platformItems = visibleNavigation.filter(
+    (item) => item.section === "platform",
+  );
   const appItems = visibleNavigation.filter((item) => item.section === "apps");
 
   return (
     <TooltipProvider delayDuration={100}>
       <SidebarProvider
+        labels={{
+          title: messages.sidebar,
+          description: messages.sidebarDescription,
+          toggle: messages.toggleSidebar,
+          close: messages.close,
+        }}
         open={!preferences.sidebarCollapsed}
         onOpenChange={(open) => {
           if (open === !preferences.sidebarCollapsed) return;
-          void updatePreferences({ sidebarCollapsed: !open }).catch(() => undefined);
+          void updatePreferences({ sidebarCollapsed: !open }).catch(
+            () => undefined,
+          );
         }}
         style={
           {
@@ -180,13 +206,18 @@ function ShellScaffold({
           <SidebarHeader className="border-b border-sidebar-border/70 px-2 py-3">
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild className="h-12 data-[slot=sidebar-menu-button]:p-2">
-                  <a href={homeHref} aria-label="SAAS home">
+                <SidebarMenuButton
+                  asChild
+                  className="h-12 data-[slot=sidebar-menu-button]:p-2"
+                >
+                  <a href={homeHref} aria-label={messages.home}>
                     <SaasMark />
                     <span className="grid min-w-0 flex-1 text-left leading-tight">
-                      <span className="truncate text-sm font-semibold tracking-[-0.02em]">SAAS</span>
+                      <span className="truncate text-sm font-semibold tracking-[-0.02em]">
+                        SAAS
+                      </span>
                       <span className="truncate font-mono text-[0.62rem] uppercase tracking-[0.12em] text-sidebar-foreground/55">
-                        Unified workspace
+                        {messages.unified}
                       </span>
                     </span>
                   </a>
@@ -200,7 +231,7 @@ function ShellScaffold({
               <NavigationGroup
                 currentAppName={currentAppName}
                 items={platformItems}
-                label="Workspace"
+                label={messages.workspace}
                 path={path}
               />
             ) : null}
@@ -208,7 +239,7 @@ function ShellScaffold({
               <NavigationGroup
                 currentAppName={currentAppName}
                 items={appItems}
-                label="Applications"
+                label={messages.applications}
                 path={path}
               />
             ) : null}
@@ -231,7 +262,9 @@ function ShellScaffold({
                         </AvatarFallback>
                       </Avatar>
                       <span className="grid min-w-0 flex-1 text-left leading-tight">
-                        <span className="truncate text-sm font-medium">{user.displayName}</span>
+                        <span className="truncate text-sm font-medium">
+                          {user.displayName}
+                        </span>
                         <span className="truncate text-xs text-sidebar-foreground/55">
                           {user.secondaryLabel}
                         </span>
@@ -241,33 +274,44 @@ function ShellScaffold({
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="top" align="end" className="w-64">
                     <DropdownMenuLabel className="font-normal">
-                      <span className="block text-sm font-medium">{user.displayName}</span>
-                      <span className="block text-xs text-muted-foreground">{user.secondaryLabel}</span>
+                      <span className="block text-sm font-medium">
+                        {user.displayName}
+                      </span>
+                      <span className="block text-xs text-muted-foreground">
+                        {user.secondaryLabel}
+                      </span>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
                       <DropdownMenuItem
                         onSelect={() =>
                           void updatePreferences({
-                            theme: preferences.theme === "dark" ? "light" : "dark",
+                            theme:
+                              preferences.theme === "dark" ? "light" : "dark",
                           }).catch(() => undefined)
                         }
                       >
-                        {preferences.theme === "dark" ? <SunIcon /> : <MoonIcon />}
-                        Use {preferences.theme === "dark" ? "light" : "dark"} theme
+                        {preferences.theme === "dark" ? (
+                          <SunIcon />
+                        ) : (
+                          <MoonIcon />
+                        )}
+                        {preferences.theme === "dark"
+                          ? messages.lightTheme
+                          : messages.darkTheme}
                       </DropdownMenuItem>
                       {mode === "portal" ? (
                         <DropdownMenuItem asChild>
                           <a href="/settings">
                             <Settings2Icon />
-                            Preference settings
+                            {messages.settings}
                           </a>
                         </DropdownMenuItem>
                       ) : null}
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
                     <DropdownMenuLabel className="font-mono text-[0.62rem] font-normal uppercase tracking-[0.12em] text-muted-foreground">
-                      Shell {SAAS_SHELL_VERSION}
+                      {messages.shell} {SAAS_SHELL_VERSION}
                     </DropdownMenuLabel>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -281,24 +325,32 @@ function ShellScaffold({
           <header className="sticky top-0 z-10 flex h-14 items-center gap-3 border-b border-border/70 bg-background/88 px-4 backdrop-blur-xl sm:px-6">
             <SidebarTrigger />
             <span className="h-4 w-px bg-border" aria-hidden="true" />
-            <span className="truncate text-sm font-medium">{currentAppLabel}</span>
-            <span className="ml-auto flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-muted-foreground">
+            <span className="truncate text-sm font-medium">
+              {currentAppLabel}
+            </span>
+            <div className="ml-auto flex items-center gap-2">
+              {headerActions}
+            </div>
+            <span className="hidden sm:flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-muted-foreground">
               <span
                 className={`size-1.5 rounded-full ${error ? "bg-destructive" : isLoading || isSaving ? "bg-[var(--saas-warning)]" : "bg-[var(--saas-positive)]"}`}
                 aria-hidden="true"
               />
               {error
-                ? "local state"
+                ? messages.localState
                 : isLoading
-                  ? "syncing"
+                  ? messages.syncing
                   : isSaving
-                    ? "saving"
+                    ? messages.saving
                     : mode === "local"
-                      ? "local"
-                      : "synced"}
+                      ? messages.local
+                      : messages.synced}
             </span>
           </header>
-          <main className="relative min-h-[calc(100dvh-3.5rem)] overflow-hidden">
+          <div
+            data-slot="saas-content"
+            className="relative min-h-[calc(100dvh-3.5rem)] overflow-hidden"
+          >
             <div
               className="pointer-events-none absolute inset-0 opacity-70 [background-image:linear-gradient(var(--saas-grid)_1px,transparent_1px),linear-gradient(90deg,var(--saas-grid)_1px,transparent_1px)] [background-size:32px_32px] [mask-image:linear-gradient(to_bottom,black,transparent_68%)]"
               aria-hidden="true"
@@ -306,7 +358,7 @@ function ShellScaffold({
             <div className="relative mx-auto w-full max-w-[92rem] px-5 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
               {children}
             </div>
-          </main>
+          </div>
         </SidebarInset>
       </SidebarProvider>
     </TooltipProvider>
@@ -320,6 +372,8 @@ export function SaasShell({
   currentAppName,
   homeHref = "/",
   initialPreferences,
+  messages = SAAS_SHELL_MESSAGES_EN,
+  headerActions,
   navigation,
   preferencesEndpoint,
   preferencesMode = "portal",
@@ -331,6 +385,8 @@ export function SaasShell({
   currentAppName: string;
   homeHref?: string;
   initialPreferences: SaasPreferences;
+  messages?: SaasShellMessages;
+  headerActions?: ReactNode;
   navigation: readonly SaasNavigationItem[];
   preferencesEndpoint?: string;
   preferencesMode?: SaasPreferencesMode;
@@ -348,6 +404,8 @@ export function SaasShell({
           currentAppLabel={currentAppLabel}
           currentAppName={currentAppName}
           homeHref={homeHref}
+          messages={messages}
+          headerActions={headerActions}
           user={user}
         >
           {children}

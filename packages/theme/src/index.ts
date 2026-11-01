@@ -24,7 +24,9 @@ export const DEFAULT_SAAS_PREFERENCES: SaasPreferences = Object.freeze({
 });
 
 export function isSaasTheme(value: unknown): value is SaasTheme {
-  return typeof value === "string" && SAAS_THEME_VALUES.includes(value as SaasTheme);
+  return (
+    typeof value === "string" && SAAS_THEME_VALUES.includes(value as SaasTheme)
+  );
 }
 
 export function createInitialSaasPreferences(
@@ -33,7 +35,29 @@ export function createInitialSaasPreferences(
 ): SaasPreferences {
   return {
     ...DEFAULT_SAAS_PREFERENCES,
-    theme: isSaasTheme(themeValue) ? themeValue : DEFAULT_SAAS_PREFERENCES.theme,
+    theme: isSaasTheme(themeValue)
+      ? themeValue
+      : DEFAULT_SAAS_PREFERENCES.theme,
     sidebarCollapsed: sidebarCollapsedValue === "true",
+  };
+}
+
+/** Presentation only: these values never grant identity or authorization. */
+export const SAAS_LOCALE_COOKIE = "saas-locale";
+export type SaasLocale = "zh" | "en";
+export type SaasPresentation = Readonly<{
+  theme: SaasTheme;
+  sidebarCollapsed: boolean;
+  locale: SaasLocale;
+}>;
+export function createSaasPresentation(value: unknown = {}): SaasPresentation {
+  const input =
+    value && typeof value === "object"
+      ? (value as Record<string, unknown>)
+      : {};
+  return {
+    theme: isSaasTheme(input.theme) ? input.theme : "light",
+    sidebarCollapsed: input.sidebarCollapsed === true,
+    locale: input.locale === "en" ? "en" : "zh",
   };
 }

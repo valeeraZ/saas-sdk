@@ -1,0 +1,19 @@
+{
+  "App": {
+    "tenant": "Tenant: {id}",
+    "portal": "Back to Portal",
+    "notesLink": "Notes",
+    "resources": "Application assets and streaming",
+    "publicAsset": "Public asset",
+    "optimizedAsset": "Optimized image",
+    "streaming": "Loading streamed content…",
+    "streamed": "Streamed content loaded",
+    "notes": "Tenant notes",
+    "home": "Application home",
+    "noteBody": "Note content",
+    "save": "Save Server Action",
+    "checkFetch": "Check SDK fetch",
+    "apiTenant": "API tenant: {id}",
+    "apiFailed": "API request failed"
+  }
+}

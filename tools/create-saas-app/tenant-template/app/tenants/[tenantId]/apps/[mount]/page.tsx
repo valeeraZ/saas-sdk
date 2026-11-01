@@ -2,35 +2,61 @@ import { Suspense } from "react";
 import { getSaasTenant } from "@saas-platform/sdk/tenant-next";
 import { SaasTenantLink } from "@saas-platform/sdk/tenant-react";
 import { tenantImageUrl, tenantHref } from "@saas-platform/sdk/tenant";
+import { getTranslations } from "next-intl/server";
+import { SaasPageHeader } from "@saas-platform/shell/page-header";
+import { Button } from "@saas-platform/ui/components/button";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "@saas-platform/ui/components/card";
 async function Streaming() {
+  const t = await getTranslations("App");
   await new Promise((resolve) => setTimeout(resolve, 80));
-  return <p>流式内容已加载</p>;
+  return <p>{t("streamed")}</p>;
 }
 export default async function Page() {
-  const context = await getSaasTenant();
+  const context = await getSaasTenant(),
+    t = await getTranslations("App");
   return (
-    <>
-      <h1>__APP_TITLE__</h1>
-      <p>租户：{context.tenantId}</p>
-      <nav>
-        <SaasTenantLink href="/notes">记录页面</SaasTenantLink>
-        <a href="/">返回 Portal</a>
-      </nav>
-      <img
-        alt="公共资源"
-        width="32"
-        height="32"
-        src={tenantHref(context, "/public/pixel.png")}
+    <div className="flex flex-col gap-8">
+      <SaasPageHeader
+        title="__APP_TITLE__"
+        description={t("tenant", { id: context.tenantId })}
+        actions={
+          <Button asChild>
+            <SaasTenantLink href="/notes">{t("notesLink")}</SaasTenantLink>
+          </Button>
+        }
       />
-      <img
-        alt="优化图片"
-        width="64"
-        height="64"
-        src={tenantImageUrl(context, "/public/pixel.png", 64)}
-      />
-      <Suspense fallback={<p>加载流式内容…</p>}>
-        <Streaming />
-      </Suspense>
-    </>
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("resources")}</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-6">
+          <div className="flex items-center gap-4">
+            <img
+              alt={t("publicAsset")}
+              width="32"
+              height="32"
+              src={tenantHref(context, "/public/pixel.png")}
+            />
+            <img
+              alt={t("optimizedAsset")}
+              width="64"
+              height="64"
+              src={tenantImageUrl(context, "/public/pixel.png", 64)}
+            />
+          </div>
+          <Suspense fallback={<p>{t("streaming")}</p>}>
+            <Streaming />
+          </Suspense>
+        </CardContent>
+      </Card>
+      <Button asChild variant="outline">
+        <a href="/">{t("portal")}</a>
+      </Button>
+    </div>
   );
 }

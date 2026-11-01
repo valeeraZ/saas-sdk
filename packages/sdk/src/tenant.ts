@@ -1,3 +1,7 @@
+import {
+  createSaasPresentation,
+  type SaasPresentation,
+} from "@saas-platform/theme";
 export type SaasTenantContext = Readonly<{
   tenantId: string;
   userId: string;
@@ -6,6 +10,7 @@ export type SaasTenantContext = Readonly<{
   mount: string;
   basePath: string;
   roles: readonly string[];
+  presentation?: SaasPresentation;
 }>;
 const uuid = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
 export function tenantBasePath(tenantId: string, mount: string): string {
@@ -43,6 +48,7 @@ export function publicTenantContext(
     mount: context.mount,
     basePath: tenantBasePath(context.tenantId, context.mount),
     roles: Object.freeze([...context.roles]),
+    presentation: Object.freeze(createSaasPresentation(context.presentation)),
   });
 }
 export async function tenantFetch(

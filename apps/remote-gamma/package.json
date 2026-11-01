@@ -2,7 +2,29 @@
   "name": "@saas-platform/remote-gamma",
   "version": "0.1.0",
   "private": true,
-  "scripts": { "dev": "SAAS_RUNTIME_MODE=standalone next dev --port 3103", "dev:integrated": "SAAS_RUNTIME_MODE=integrated next dev --port 3103", "build": "next build", "start": "next start --port 3103", "start:standalone": "SAAS_RUNTIME_MODE=standalone next start --port 3103", "typecheck": "tsc --noEmit" },
-  "dependencies": { "@saas-platform/auth": "0.1.0", "@saas-platform/shell": "0.1.0", "@saas-platform/spike-app": "0.1.0", "@saas-platform/theme": "0.1.0", "@saas-platform/ui": "0.1.0", "next": "16.2.10", "react": "19.2.0", "react-dom": "19.2.0" },
-  "devDependencies": { "@tailwindcss/postcss": "^4.3.3", "@types/node": "24.10.1", "@types/react": "19.2.2", "@types/react-dom": "19.2.2", "typescript": "5.9.3" }
+  "scripts": {
+    "dev": "SAAS_RUNTIME_MODE=standalone next dev --port 3103",
+    "dev:integrated": "SAAS_RUNTIME_MODE=integrated next dev --port 3103",
+    "build": "next build",
+    "start": "next start --port 3103",
+    "start:standalone": "SAAS_RUNTIME_MODE=standalone next start --port 3103",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@saas-platform/auth": "0.1.0",
+    "@saas-platform/shell": "0.1.1",
+    "@saas-platform/spike-app": "0.1.0",
+    "@saas-platform/theme": "0.1.1",
+    "@saas-platform/ui": "0.1.1",
+    "next": "16.3.8",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "24.10.1",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "typescript": "5.9.3"
+  }
 }

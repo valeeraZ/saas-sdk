@@ -1,6 +1,6 @@
 {
   "name": "@saas-platform/sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "exports": {
@@ -52,14 +52,14 @@
   "dependencies": {
     "@saas-platform/auth": "0.1.0",
     "@saas-platform/manifest-schema": "0.1.0",
-    "@saas-platform/shell": "0.1.0",
-    "@saas-platform/theme": "0.1.0",
+    "@saas-platform/shell": "0.1.1",
+    "@saas-platform/theme": "0.1.1",
     "jose": "6.2.2"
   },
   "devDependencies": {
     "@types/node": "24.10.1",
     "@types/react": "19.2.2",
-    "next": "16.3.5",
+    "next": "16.3.8",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "typescript": "5.9.3"
