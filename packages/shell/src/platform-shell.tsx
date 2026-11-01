@@ -24,8 +24,10 @@ export function SaasPlatformShell({children,user,currentAppId='portal',currentAp
     };
     refresh();
     window.addEventListener('focus',refresh);
-    return()=>{controller?.abort();window.removeEventListener('focus',refresh);};
+    window.addEventListener('saas:navigation-refresh',refresh);
+    const timer=window.setInterval(()=>{if(document.visibilityState==='visible')refresh();},15000);
+    return()=>{controller?.abort();window.removeEventListener('focus',refresh);window.removeEventListener('saas:navigation-refresh',refresh);window.clearInterval(timer);};
   },[authenticated,retry]);
-  const navigation:SaasNavigationItem[]=[{appName:null,href:'/',label:messages.applications,description:messages.unified,kind:'home',section:'platform'},...apps.map(app=>({appName:app.id,href:'/apps'+app.suffix+'/',label:app.name,description:app.description,kind:'app' as const,section:'apps' as const}))];
+  const navigation:SaasNavigationItem[]=[{appName:null,href:'/',label:messages.applications,description:messages.unified,kind:'home',section:'platform'},...(authenticated?[{appName:'more-apps',href:'/more-apps',label:messages.moreApps,description:messages.moreApps,kind:'home' as const,section:'platform' as const}]:[]),...apps.map(app=>({appName:app.id,href:'/apps'+app.suffix+'/',label:app.name,description:app.description,kind:'app' as const,section:'apps' as const}))];
   return <SaasShell navigationVisibility="all" canAccessAdmin={false} currentAppName={currentAppId} currentAppLabel={currentAppLabel} homeHref='/' navigation={navigation} user={{displayName:user.displayName,secondaryLabel:user.email}} preferencesMode='local' initialPreferences={{...DEFAULT_SAAS_PREFERENCES,theme:presentation.theme,sidebarCollapsed:presentation.sidebarCollapsed}} messages={messages} headerActions={<SaasPresentationControls locale={presentation.locale}/>}>{failed?<Alert variant='destructive'><AlertDescription>{messages.navigationUnavailable}<Button variant='outline' onClick={()=>setRetry(x=>x+1)}>{messages.retry}</Button></AlertDescription></Alert>:null}{children}</SaasShell>;
 }
